@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ChartAndSound" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="JvE-3P-EMs">
+                                <rect key="frame" x="20" y="775" width="374" height="77"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="b2X-3f-00Y">
+                                        <rect key="frame" x="146" y="33.5" width="81" height="0.0"/>
+                                        <segments>
+                                            <segment title="Abbr."/>
+                                            <segment title="Suff."/>
+                                            <segment title="Long"/>
+                                            <segment title="10s"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="audiographSegmentedControlChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="sgd-w7-q1O"/>
+                                        </connections>
+                                    </segmentedControl>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DrF-Yx-MEi">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="41"/>
+                                        <string key="text">Demo data only contains day-end courses.
+Therefore five days will look quite empty.</string>
+                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="SLC-b1-SRe">
+                                        <rect key="frame" x="0.0" y="46" width="374" height="32"/>
+                                        <segments>
+                                            <segment title="5T"/>
+                                            <segment title="1M"/>
+                                            <segment title="6m"/>
+                                            <segment title="1Y"/>
+                                            <segment title="5Y"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="segmentedControlValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="DKa-cg-lej"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v4a-w2-qIr" customClass="ChartView" customModule="ChartAndSound" customModuleProvider="target">
+                                <rect key="frame" x="20" y="248" width="374" height="400"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="400" id="6Wp-dS-Nyg"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A1N-jz-rTg">
+                                <rect key="frame" x="20" y="206.5" width="59" height="33.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y7m-nS-Xk8">
+                                <rect key="frame" x="168.5" y="656" width="77" height="30"/>
+                                <state key="normal" title="Play Sound"/>
+                                <connections>
+                                    <action selector="playSoundButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sxx-AX-d8X"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="y7m-nS-Xk8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="02b-9W-qI9"/>
+                            <constraint firstItem="y7m-nS-Xk8" firstAttribute="top" secondItem="v4a-w2-qIr" secondAttribute="bottom" constant="8" id="2ll-e0-OKw"/>
+                            <constraint firstItem="JvE-3P-EMs" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Gqi-Hd-tsr"/>
+                            <constraint firstItem="v4a-w2-qIr" firstAttribute="top" secondItem="A1N-jz-rTg" secondAttribute="bottom" constant="8" id="McT-nn-XGp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="v4a-w2-qIr" secondAttribute="trailing" constant="20" id="OcX-6l-owi"/>
+                            <constraint firstItem="v4a-w2-qIr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="VQp-X0-ha2"/>
+                            <constraint firstItem="v4a-w2-qIr" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ak4-vG-vlW"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="JvE-3P-EMs" secondAttribute="trailing" constant="20" id="fpW-Ld-dIq"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="JvE-3P-EMs" secondAttribute="bottom" constant="10" id="kT4-0p-kdD"/>
+                            <constraint firstItem="A1N-jz-rTg" firstAttribute="leading" secondItem="v4a-w2-qIr" secondAttribute="leading" id="tXB-lS-K2J"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="audiographSegmentedControl" destination="b2X-3f-00Y" id="x1L-Lh-rdM"/>
+                        <outlet property="chartView" destination="v4a-w2-qIr" id="lIN-Qv-mb7"/>
+                        <outlet property="demoDataExplanationLabel" destination="DrF-Yx-MEi" id="d8Q-qj-DCu"/>
+                        <outlet property="priceLabel" destination="A1N-jz-rTg" id="Meg-YJ-sRK"/>
+                        <outlet property="segmentedControl" destination="SLC-b1-SRe" id="MPj-ri-cr4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="135.9375"/>
+        </scene>
+    </scenes>
+</document>

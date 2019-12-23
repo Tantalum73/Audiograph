@@ -13,13 +13,9 @@ I'll work on that as soon as I got some feedback about using it :)
 ## Background
 iOS 13 introduced an awsome way to provide stocks-charts to visually impaired users. Using a custom accessibility-rotor they are providing spoken chart analysis and an audiograph that renders the chart by using audio. That's the most accurate way of describing a chart that otherwise would only available visually.
 
-<a href="Media/iOS_13_Audiograph.mp4">
-<video
-<source src="Media/iOS_13_Audiograph.mp4" type="video/mp4" controls height="480" autostart="false" alt="Video of iOS 13 Stocks accessibility feature.">
+**I need to update this screenshot to reflect the link to the iOS 13 video!**
+<a href="Media/iOS_13_Audiograph.mp4"><img height=600 src="Media/Screenshot.png" alt="Screenshot" /></a>
 
-</video>
-
-</a>
 
 ## Example
 The example app provides many things related to presenting a cool chart. I wrote about the chart in my [blog](https://anerma.de/blog/tear-down-trade-republic-charts). However, this project is about accessibility.  

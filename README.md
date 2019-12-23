@@ -34,8 +34,7 @@ audiograph.play(graphContent: points)
 ```
 The argument is of type `[CGPoint]` and should be the same points you are using to draw your UI.
 
-You now can trigger the Audiograph at any time you like. However, it is recommended to use it as accessibility feature.
-
+You now can trigger the Audiograph at any time you like. However, it is recommended to use it as accessibility feature.  
 There are several ways to provide it to your users as such. One way is to play it as soon as the chart-view gets activated by the Accessibility System.
 ```swift
 func setupAccessibility() {
@@ -60,7 +59,7 @@ override func accessibilityActivate() -> Bool {
 }
 ```
 
-When the view loses focus, you might want to restore the you accessibility attributes:
+When the view loses focus, you might want to restore the accessibility attributes:
 ```swift
 override func accessibilityElementDidLoseFocus() {
     // Restore usual accessibility attributes.
@@ -69,7 +68,7 @@ override func accessibilityElementDidLoseFocus() {
 }
 ```
 
-This project is still young. When you find a better way of playing Audiograph in response to accessibility events *please* update that file!
+This project is still young. When you find a better way of playing Audiograph in response to accessibility events *please* update that file or [tell me](https://twitter.com/Klaarname/)!
 
 ## Installation
 

@@ -1,20 +1,3 @@
-# ALMOST DONE :walking_woman: :running_woman: :biking_woman:
-
-Thank you for using Swift 5 Module Template. Before you release your awesome project to the world, complete the following steps.
-
-THIS LIST IS EASY, CHECK IT OFF ONE-BY-ONE BABY! ✔️ ✔️ ✔️
-
- - [ ] Open the project in Xcode and add features to Audiograph
- - [ ] Make sure you are using Swift 5 (Edit > Convert > To Current Swift Syntax…)
- - [ ] Fix all build errors and warnings, add tests (yes really)
- - [ ] Add a screenshot or AT LEAST some picture below in this README
- - [ ] Delete all this crap up here
- - [ ] Make one release (full steps are in [CONTRIBUTING.md] in case you forget)
-
-THEN YOU'RE DONE, GO STAR [swift5-module-template](https://github.com/fulldecent/swift5-module-template) FOR UPDATES.
-
-----
-
 # Audiograph
 Audio-Feedback on Charts for visually impaired Users
 
@@ -24,9 +7,20 @@ Audio-Feedback on Charts for visually impaired Users
 <a href="https://placehold.it/400?text=Screen+shot"><img width=200 height=200 src="https://placehold.it/400?text=Screen+shot" alt="Screenshot" /></a>
 
 
+**This Readme is far from being complete!** I just added the most basic information about using it with a dependency manager. Examples are working but not well documented here, yet.  
+I'll work on that as soon as I got some feedback about using it :)
+
 ## Example
+The example app provides many things related to presenting a cool chart. I wrote about the chart in my blog. However, this project is about accessibility.  
+You can find everything related to accessibility in the file `ChartView+Accessibility`.
 
 To run the example project, clone this repo, and open iOS Example.xcworkspace from the iOS Example directory.
+
+## Points to improve on the next Iteration
+* [ ] Computing samples on a background queue
+* [ ] Removing debug print statements
+
+A 1.0 will not launch until those points are addressed.
 
 
 ## Requirements
@@ -53,7 +47,7 @@ Then run `carthage update` to build the framework and drag the built `Audiograph
 
 ## Author
 
-Andreas Neusuess
+Andreas Neusüß
 
 
 ## License

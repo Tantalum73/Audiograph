@@ -11,7 +11,7 @@ Audio-Feedback on Charts for visually impaired Users
 I'll work on that as soon as I got some feedback about using it :)
 
 ## Example
-The example app provides many things related to presenting a cool chart. I wrote about the chart in my blog. However, this project is about accessibility.  
+The example app provides many things related to presenting a cool chart. I wrote about the chart in my [blog](https://anerma.de/blog/tear-down-trade-republic-charts). However, this project is about accessibility.  
 You can find everything related to accessibility in the file `ChartView+Accessibility`.
 
 To run the example project, clone this repo, and open iOS Example.xcworkspace from the iOS Example directory.
@@ -19,13 +19,57 @@ To run the example project, clone this repo, and open iOS Example.xcworkspace fr
 ## Points to improve on the next Iteration
 * [ ] Computing samples on a background queue
 * [ ] Removing debug print statements
-* [ ] Design a cool icon (since all OS projects need a logo, obviously)
+* [ ] Design a cool icon (because all OS projects need a logo, obviously)
 
 A 1.0 will not launch until those points are addressed.
 
+## Usage
+After stating `import Audiograph` you keep a strong reference to it
+```Swift
+let audiograph = Audiograph()
+```
+Now you are ready to play the audiograph by calling:
+```swift
+audiograph.play(graphContent: points)
+```
+The argument is of type `[CGPoint]` and should be the same points you are using to draw your UI.
 
-## Requirements
+You now can trigger the Audiograph at any time you like. However, it is recommended to use it as accessibility feature.
 
+There are several ways to provide it to your users as such. One way is to play it as soon as the chart-view gets activated by the Accessibility System.
+```swift
+func setupAccessibility() {
+    isAccessibilityElement = true
+    shouldGroupAccessibilityChildren = true
+
+    accessibilityTraits = .button
+    accessibilityLabel = "Chart"
+    accessibilityHint = "Double tap for audiograph."
+}
+override func accessibilityActivate() -> Bool {
+    // Remove label and hint because they are read when activated. That intefers with audiograph.
+    accessibilityLabel = ""
+    accessibilityHint = ""
+
+    playAudiograph()
+    return true
+}
+
+@objc private func playAudiograph() {
+    audiograph.play(graphContent: points)
+}
+```
+
+When the view loses focus, you might want to restore the you accessibility attributes:
+```swift
+override func accessibilityElementDidLoseFocus() {
+    // Restore usual accessibility attributes.
+    accessibilityLabel = "Chart"
+    accessibilityHint = "Double tap for audiograph."
+}
+```
+
+This project is still young. When you find a better way of playing Audiograph in response to accessibility events *please* update that file!
 
 ## Installation
 
@@ -48,7 +92,9 @@ Then run `carthage update` to build the framework and drag the built `Audiograph
 
 ## Author
 
-Andreas Neusüß
+**Andreas Neusüß**
+
+I would love to hear feedback from you. You can send me an email or contact me on [Twitter](https://twitter.com/Klaarname/)! 😊
 
 
 ## License

@@ -7,7 +7,7 @@ Audio-Feedback on Charts for visually impaired Users
 <a href="Media/Screenshot.png"><img height=600 src="Media/Screenshot.png" alt="Screenshot" /></a>
 
 
-**This Readme is far from being complete!** I just added the most basic information about using it with a dependency manager. Examples are working but not well documented here, yet.  
+**This Readme is far from being complete!** I just added the most basic information about using it with a dependency manager. Currently, CocoaPods is not supported, as this is a private repo. Examples are working but not well documented here, yet.  
 I'll work on that as soon as I got some feedback about using it :)
 
 ## Background

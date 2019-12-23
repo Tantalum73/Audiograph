@@ -4,7 +4,7 @@ Audio-Feedback on Charts for visually impaired Users
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/Tantalum73/Audiograph)
 [![License](https://img.shields.io/github/license/Tantalum73/Audiograph)](LICENSE)
 
-<a href="https://placehold.it/400?text=Screen+shot"><img width=200 height=200 src="https://placehold.it/400?text=Screen+shot" alt="Screenshot" /></a>
+<a href="Media/Screenshot.png"><img width=200 height=200 src="Media/Screenshot.png" alt="Screenshot" /></a>
 
 
 **This Readme is far from being complete!** I just added the most basic information about using it with a dependency manager. Examples are working but not well documented here, yet.  
@@ -19,6 +19,7 @@ To run the example project, clone this repo, and open iOS Example.xcworkspace fr
 ## Points to improve on the next Iteration
 * [ ] Computing samples on a background queue
 * [ ] Removing debug print statements
+* [ ] Design a cool icon (since all OS projects need a logo, obviously)
 
 A 1.0 will not launch until those points are addressed.
 

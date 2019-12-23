@@ -1,7 +1,7 @@
 # Audiograph
 Audio-Feedback on Charts for visually impaired Users
 
-![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/Tantalum73/Audiograph)
+![GitHub tag (0.1.0)](https://img.shields.io/github/v/tag/Tantalum73/Audiograph)
 [![License](https://img.shields.io/github/license/Tantalum73/Audiograph)](LICENSE)
 
 <a href="Media/Screenshot.png"><img height=600 src="Media/Screenshot.png" alt="Screenshot" /></a>
@@ -11,8 +11,8 @@ Audio-Feedback on Charts for visually impaired Users
 I'll work on that as soon as I got some feedback about using it :)
 
 ## Background
-iOS 13 introduced an awsome way to provide stocks-charts to visually impaired users. Using a custom accessibility-rotor they are providing spoken chart analysis and an audiograph that renders the chart by using audio. That's the most accurate way of describing a chart that otherwise would only available visually.
-
+iOS 13 introduced an awsome way to provide stocks-charts to visually impaired users. Using a custom accessibility-rotor they are providing spoken chart analysis and an audiograph that renders the chart by using audio. That's the most accurate way of describing a chart that otherwise would only available visually.  
+Take a look at the following video if you haven't tried it out yourself:
 <a href="https://anerma.de/uploads/iOS_13_Audiograph.mp4"><img height=600 src="Media/iOS_13_preview.png" alt="Screenshot" /></a>
 
 

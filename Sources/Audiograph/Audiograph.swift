@@ -72,7 +72,7 @@ public class Audiograph {
     
     /// If set, errors are printed to standard-output for the programmer to diagnose what went wrong. Those log statements can be suppressed as needed.
     public var printDiagnostics = true
-    
+        
     private let synthesizer = Synthesizer()
     private let dataProcessor = DataProcessor()
     
@@ -80,23 +80,28 @@ public class Audiograph {
         
     }
     
-    
     /// Call this function to compute and play the Audiograph for the given input. Playing starts immediately.
-    /// - Parameter graphContent: The points used for deriving the Audiograph. Should be the same as used for UI representation of the graph.
+    /// - Parameters:
+    ///   - graphContent: Call this function to compute and play the Audiograph for the given input. Playing starts immediately.
+    ///   - completion: This block is executed when playing the Audiograph is completed. If done so successfully, `true` is passed into the completion block as argument. If any error occured or the playback was stopped, `false` is passed into.
     public func play(graphContent: [CGPoint], completion: ((_ success: Bool) -> Void)? = nil) {
         //TODO: Do the computation in seperate queue.
         let audioInformation = AudioInformation(points: graphContent)
         
-        guard sanityCheckPassing(for: audioInformation) else { return }
+        guard sanityCheckPassing(for: audioInformation) else {
+            completion?(false)
+            return
+        }
         
-        // TODO: use the completion, pass it aorund and call it when completed!
         do {
             
             let scaledAudioInformation = try dataProcessor.scaledInFrequencyAndTime(information: audioInformation)
+            synthesizer.completion = completion
             synthesizer.playScaledContent(scaledAudioInformation)
             
         } catch let error as SanityCheckError {
             printSanityCheckDiagnostics(for: error)
+            completion?(false)
         } catch {
             assertionFailure("The sanity check threw an unknown error.")
         }
@@ -104,8 +109,8 @@ public class Audiograph {
     }
     
     public func stop() {
-        // TODO: implement
-        // TODO: decide if the completion handler should be called with negative result.
+        // TODO: also stop processing when async processing is implemented.
+        synthesizer.stop()
     }
     
     private func sanityCheckPassing(for information: AudioInformation) -> Bool {

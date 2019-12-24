@@ -14,6 +14,7 @@ final class Synthesizer {
     private let playerNode = AVAudioPlayerNode()
     private static let sampleRate = 44100.0
     private let audioFormat = AVAudioFormat(standardFormatWithSampleRate: Synthesizer.sampleRate, channels: 1)
+    var completion: ((_ success: Bool) -> Void)?
     
     init() {
         
@@ -33,6 +34,13 @@ final class Synthesizer {
         configureBufferAndPlay(finalBuffer)
     }
     
+    /// Stops the playback immediately and calls the completion-block with argument `false`.
+    func stop() {
+        playerNode.stop()
+        completion?(false)
+        completion = nil
+    }
+    
     private func configureBufferAndPlay(_ bufferContent: [Float]) {
         startEngineIfNeeded()
         
@@ -47,6 +55,10 @@ final class Synthesizer {
             rightChannel?[index] = sample
         }
         playerNode.scheduleBuffer(buffer) {
+            DispatchQueue.main.async { [weak self] in
+                self?.completion?(true)
+                self?.completion = nil
+            }
             print("Completed")
         }
         

@@ -24,8 +24,9 @@ extension Samples {
     
     func numberOfElementsToRemoveAtEnd() -> Int {
         // Find the last transition from <0 to >= 0
+        guard let last = last else { return 0 }
         
-        let latestNumberIsPositive = last! > 0
+        let latestNumberIsPositive = last > 0
         if latestNumberIsPositive {
             // Next negative number is the right one
             let indexOfLatestNegative = indexOfLatestNegativeNumber() ?? index(before: endIndex)

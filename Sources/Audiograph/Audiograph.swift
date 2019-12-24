@@ -74,12 +74,13 @@ public class Audiograph {
     
     /// Call this function to compute and play the Audiograph for the given input. Playing starts immediately.
     /// - Parameter graphContent: The points used for deriving the Audiograph. Should be the same as used for UI representation of the graph.
-    public func play(graphContent: [CGPoint]) {
+    public func play(graphContent: [CGPoint], completion: ((success: Bool) -> Void)? = nil) {
         //TODO: Do the computation in seperate queue.
         let audioInformation = AudioInformation(points: graphContent)
         
         guard sanityCheckPassing(for: audioInformation) else { return }
         
+        // TODO: use the completion, pass it aorund and call it when completed!
         do {
             
             let scaledAudioInformation = try dataProcessor.scaledInFrequencyAndTime(information: audioInformation)
@@ -91,6 +92,11 @@ public class Audiograph {
             assertionFailure("The sanity check threw an unknown error.")
         }
         
+    }
+    
+    public func stop() {
+        // TODO: implement
+        // TODO: decide if the completion handler should be called with negative result.
     }
     
     private func sanityCheckPassing(for information: AudioInformation) -> Bool {

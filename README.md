@@ -26,6 +26,7 @@ To run the example project, clone this repo, and open iOS Example.xcworkspace fr
 ## Points to improve on the next Iteration
 * [ ] Computing samples on a background queue
 * [ ] Removing debug print statements
+* [ ] Performance tests and analysis
 * [ ] Design a cool icon (because all OS projects need a logo, obviously)
 
 A version 1.0 will not launch until those points are addressed.

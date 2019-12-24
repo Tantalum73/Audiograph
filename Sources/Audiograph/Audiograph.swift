@@ -37,15 +37,21 @@ public enum PlayingDuration {
  */
 public class Audiograph {
     /// The minimum frequency of the Audiograph. The lowest data point will be represented using this frequency.
-    public private (set) var minFrequency: Float32 = 150 {
-        didSet {
-            dataProcessor.minFrequency = minFrequency
+    public var minFrequency: Float32 {
+        get {
+            dataProcessor.minFrequency
+        }
+        set {
+            dataProcessor.minFrequency = newValue
         }
     }
     /// The maximum frequency of the Audiograph. The largest data point will be represented using this frequency.
-    public private (set) var maxFrequency: Float32 = 2800 {
-        didSet {
-            dataProcessor.maxFrequency = maxFrequency
+    public var maxFrequency: Float32 {
+        get {
+            dataProcessor.maxFrequency
+        }
+        set {
+            dataProcessor.maxFrequency = newValue
         }
     }
     
@@ -55,9 +61,12 @@ public class Audiograph {
      That duration serves as a guideline. It may be the case that points need to be dropped in order to achieve the requested duration.
      Also the duration might be enlarged in order to fit the data points into.
      */
-    public var playingDuration: PlayingDuration = .recommended {
-        didSet {
-            dataProcessor.playingDuration = playingDuration
+    public var playingDuration: PlayingDuration {
+        get {
+            dataProcessor.playingDuration
+        }
+        set {
+            dataProcessor.playingDuration = newValue
         }
     }
     
@@ -74,7 +83,7 @@ public class Audiograph {
     
     /// Call this function to compute and play the Audiograph for the given input. Playing starts immediately.
     /// - Parameter graphContent: The points used for deriving the Audiograph. Should be the same as used for UI representation of the graph.
-    public func play(graphContent: [CGPoint], completion: ((success: Bool) -> Void)? = nil) {
+    public func play(graphContent: [CGPoint], completion: ((_ success: Bool) -> Void)? = nil) {
         //TODO: Do the computation in seperate queue.
         let audioInformation = AudioInformation(points: graphContent)
         

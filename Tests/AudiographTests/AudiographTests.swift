@@ -62,7 +62,7 @@ final class AudiographTests: XCTestCase {
         let expect: [Float32] = [-2, -1, 0]
         
         input.postprocess()
-        XCTAssertEqual(expect, expect)
+        XCTAssertEqual(input, expect)
     }
     
     func test_cutOffIndex_whenEndingOnNegative() {
@@ -70,7 +70,7 @@ final class AudiographTests: XCTestCase {
         let expect: [Float32] = [-2, -1, 0]
         
         input.postprocess()
-        XCTAssertEqual(expect, expect)
+        XCTAssertEqual(input, expect)
     }
     
     func test_cutOffIndex_whenNoZeroIncluded() {
@@ -78,7 +78,7 @@ final class AudiographTests: XCTestCase {
         let expect: [Float32] = [2, 1, 1, 2, 1, 1, 0]
         
         input.postprocess()
-        XCTAssertEqual(expect, expect)
+        XCTAssertEqual(input, expect)
     }
     
     

@@ -28,7 +28,9 @@ extension Samples {
         let latestNumberIsPositive = last! > 0
         if latestNumberIsPositive {
             // Next negative number is the right one
-            return indexOfLatestNegativeNumber() ?? 0
+            let indexOfLatestNegative = indexOfLatestNegativeNumber() ?? index(before: endIndex)
+            let numberOfElementsToRemove = index(before: endIndex) - indexOfLatestNegative
+            return numberOfElementsToRemove
         } else {
             // Find latest tansition from -· to +·
             return numberOfElementsToRemovedUntilLatestChangeInSignTowardsPositive() ?? 0

@@ -13,6 +13,7 @@ I'll work on that as soon as I got some feedback about using it :)
 ## Background
 iOS 13 introduced an awsome way to provide stocks-charts to visually impaired users. Using a custom accessibility-rotor they are providing spoken chart analysis and an audiograph that renders the chart by using audio. That's the most accurate way of describing a chart that otherwise would only available visually.  
 Take a look at the following video if you haven't tried it out yourself:
+
 <a href="https://anerma.de/uploads/iOS_13_Audiograph.mp4"><img height=600 src="Media/iOS_13_preview.png" alt="Screenshot" /></a>
 
 
@@ -27,7 +28,7 @@ To run the example project, clone this repo, and open iOS Example.xcworkspace fr
 * [ ] Removing debug print statements
 * [ ] Design a cool icon (because all OS projects need a logo, obviously)
 
-A 1.0 will not launch until those points are addressed.
+A version 1.0 will not launch until those points are addressed.
 
 ## Usage
 After stating `import Audiograph` you keep a strong reference to it

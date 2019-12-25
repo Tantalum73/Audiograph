@@ -10,11 +10,13 @@ import Foundation
 import AVFoundation
 
 final class Synthesizer {
+    var completion: ((_ success: Bool) -> Void)?
+    var volumeCorrectionFactor: Float32 = 1.0
+    
     private let audioEngine = AVAudioEngine()
     private let playerNode = AVAudioPlayerNode()
     private static let sampleRate = 44100.0
     private let audioFormat = AVAudioFormat(standardFormatWithSampleRate: Synthesizer.sampleRate, channels: 1)
-    var completion: ((_ success: Bool) -> Void)?
     
     init() {
         
@@ -27,7 +29,7 @@ final class Synthesizer {
     }
     
     func playScaledContent(_ content: AudioInformation) {
-        let generator = SoundGenerator(sampleRate: Synthesizer.sampleRate)
+        let generator = SoundGenerator(sampleRate: Synthesizer.sampleRate, volumeCorrectionFactor: volumeCorrectionFactor)
 
         let finalBuffer = generator.sweep(content)
         
@@ -83,7 +85,7 @@ final class Synthesizer {
         audioEngine.prepare()
     }
     
-    @objc  func audioEngineConfigurationChange(_ notification: Notification) -> Void {
+    @objc func audioEngineConfigurationChange(_ notification: Notification) -> Void {
         configureEngine()
     }
 }

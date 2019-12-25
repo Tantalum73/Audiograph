@@ -14,6 +14,8 @@ final class DataProcessor {
     
     var playingDuration: PlayingDuration = .short
     
+    var completion: (() -> Void)?
+    
     private var maximumPlayingDuration: TimeInterval {
         switch playingDuration {
         case .short:
@@ -31,6 +33,10 @@ final class DataProcessor {
     private var currentFrequencies = [Frequency]()
     
     func scaledInFrequencyAndTime(information: AudioInformation) throws -> AudioInformation {
+        
+        defer {
+            completion?()
+        }
         
         currentFrequencies = information.frequencies
         currentRelativeTimes = information.relativeTimes

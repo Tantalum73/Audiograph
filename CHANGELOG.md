@@ -6,6 +6,6 @@ Audiograph adheres to [Semantic Versioning](http://semver.org/).
 - Change of public API in a non-breaking way: 
     - Completion-block can be passed by calling `start`
     - Added a `stop` function to stop playback immediately
-
+    - Added `volumeCorrectionFactor` to give control over the final volume of the Audiograph.
 ## 0.1.0 (23.12.2019):
 - Initial setup of project and documentation

@@ -64,12 +64,16 @@ extension Samples {
 }
 
 final class SoundGenerator {
+    /// Final volume is set to a default level. This property can be changed to influence that loudness volume. The final volume is computed by multiplying the default volumen by that correction.
+    var volumeCorrectionFactor: Float32
+    
     private let sampleRate: Double
     
     private var currentPhi: Float32 = 0
     
-    init(sampleRate: Double) {
+    init(sampleRate: Double, volumeCorrectionFactor: Float32) {
         self.sampleRate = sampleRate
+        self.volumeCorrectionFactor = volumeCorrectionFactor
     }
     
     func sweep(_ content: AudioInformation) -> [Float32] {
@@ -96,7 +100,7 @@ final class SoundGenerator {
     }
 
     private func generateSample() -> Float32 {
-        0.5 * sin(currentPhi)
+        volumeCorrectionFactor * 0.5 * sin(currentPhi)
     }
     
     private func updatedDeltaPhi(at currentF: Float32) -> Float32 {
@@ -108,7 +112,7 @@ final class SoundGenerator {
     }
 }
 
-class FrequencyGenerator: Sequence, IteratorProtocol {
+final class FrequencyGenerator: Sequence, IteratorProtocol {
     
     typealias Element = Frequency
     typealias Iterator = FrequencyGenerator

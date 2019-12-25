@@ -38,21 +38,13 @@ public enum PlayingDuration {
 public class Audiograph {
     /// The minimum frequency of the Audiograph. The lowest data point will be represented using this frequency.
     public var minFrequency: Float32 {
-        get {
-            dataProcessor.minFrequency
-        }
-        set {
-            dataProcessor.minFrequency = newValue
-        }
+        get { dataProcessor.minFrequency }
+        set { dataProcessor.minFrequency = newValue }
     }
     /// The maximum frequency of the Audiograph. The largest data point will be represented using this frequency.
     public var maxFrequency: Float32 {
-        get {
-            dataProcessor.maxFrequency
-        }
-        set {
-            dataProcessor.maxFrequency = newValue
-        }
+        get { dataProcessor.maxFrequency }
+        set { dataProcessor.maxFrequency = newValue }
     }
     
     /**
@@ -62,16 +54,32 @@ public class Audiograph {
      Also the duration might be enlarged in order to fit the data points into.
      */
     public var playingDuration: PlayingDuration {
-        get {
-            dataProcessor.playingDuration
-        }
-        set {
-            dataProcessor.playingDuration = newValue
-        }
+        get { dataProcessor.playingDuration }
+        set { dataProcessor.playingDuration = newValue }
+    }
+    
+    /**
+     This value can be used to control the final loudness volume.
+     
+     The final volume is computed by multiplying the default volume by that value. Default is `1.0` to apply standard loundness.
+     
+     When running unit tests, for example, that value might be set to 0 in order to avoid unnecessary sound.
+     */
+    public var volumeCorrectionFactor: Float32 {
+        get { synthesizer.volumeCorrectionFactor }
+        set { synthesizer.volumeCorrectionFactor = newValue }
     }
     
     /// If set, errors are printed to standard-output for the programmer to diagnose what went wrong. Those log statements can be suppressed as needed.
     public var printDiagnostics = true
+    
+    /// Called when processing data is completed.
+    var processingCompletion: (() -> Void)? {
+        set {
+            dataProcessor.completion = newValue
+        }
+        get { dataProcessor.completion }
+    }
         
     private let synthesizer = Synthesizer()
     private let dataProcessor = DataProcessor()

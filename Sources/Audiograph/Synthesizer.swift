@@ -10,6 +10,7 @@ import Foundation
 import AVFoundation
 
 final class Synthesizer {
+    /// Called when playing the audio samples has completed with `true`, when stopped or an error occured with argument set to `false`. Called on the main queue. Will be discarded when called once.
     var completion: ((_ success: Bool) -> Void)?
     var volumeCorrectionFactor: Float32 = 1.0
     
@@ -26,21 +27,30 @@ final class Synthesizer {
     }
     deinit {
         audioEngine.stop()
+        callCompletionAndRemove(with: false)
     }
     
+    /// Expects scaled audio information that already have the correct duration and frequencies.
+    ///
+    /// That data will be converted into sound samples.
+    /// When done, the samples are played using the main queue.
+    /// - Parameters:
+    ///   - content: In time and frequency preprocessed audio information.
     func playScaledContent(_ content: AudioInformation) {
-        let generator = SoundGenerator(sampleRate: Synthesizer.sampleRate, volumeCorrectionFactor: volumeCorrectionFactor)
-
+        let generator = SoundGenerator(sampleRate: Synthesizer.sampleRate, volumeCorrectionFactor: self.volumeCorrectionFactor)
+        
         let finalBuffer = generator.sweep(content)
         
-        configureBufferAndPlay(finalBuffer)
+        // Play the sound on the main queue.
+        DispatchQueue.main.async {
+            self.configureBufferAndPlay(finalBuffer)
+        }
     }
     
     /// Stops the playback immediately and calls the completion-block with argument `false`.
     func stop() {
         playerNode.stop()
-        completion?(false)
-        completion = nil
+        callCompletionAndRemove(with: false)
     }
     
     private func configureBufferAndPlay(_ bufferContent: [Float]) {
@@ -58,8 +68,7 @@ final class Synthesizer {
         }
         playerNode.scheduleBuffer(buffer) {
             DispatchQueue.main.async { [weak self] in
-                self?.completion?(true)
-                self?.completion = nil
+                self?.callCompletionAndRemove(with: true)
             }
             print("Completed")
         }
@@ -78,6 +87,7 @@ final class Synthesizer {
     
     private func configureEngine() {
         audioEngine.reset()
+        callCompletionAndRemove(with: false)
         
         // Attach and connect the player node.
         audioEngine.attach(playerNode)
@@ -87,5 +97,10 @@ final class Synthesizer {
     
     @objc func audioEngineConfigurationChange(_ notification: Notification) -> Void {
         configureEngine()
+    }
+    
+    private func callCompletionAndRemove(with argument: Bool) {
+        completion?(argument)
+        completion = nil
     }
 }

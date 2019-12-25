@@ -24,7 +24,7 @@ You can find everything related to accessibility in the file `ChartView+Accessib
 To run the example project, clone this repo, and open iOS Example.xcworkspace from the iOS Example directory.
 
 ## Points to improve on the next Iteration
-* [ ] Computing samples on a background queue
+* [x] Computing samples on a background queue
 * [ ] Removing debug print statements
 * [ ] Performance tests and analysis
 * [ ] Design a cool icon (because all OS projects need a logo, obviously)

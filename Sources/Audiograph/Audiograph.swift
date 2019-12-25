@@ -73,7 +73,7 @@ public class Audiograph {
     /// If set, errors are printed to standard-output for the programmer to diagnose what went wrong. Those log statements can be suppressed as needed.
     public var printDiagnostics = true
     
-    /// Called when processing data is completed.
+    /// Called when processing data is completed. Will be called on the main queue.
     var processingCompletion: (() -> Void)? {
         set {
             dataProcessor.completion = newValue
@@ -81,6 +81,7 @@ public class Audiograph {
         get { dataProcessor.completion }
     }
         
+    private let preprocessingQueue = DispatchQueue(label: "de.anerma.Audiograph.PreprocessingQueue", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: .global())
     private let synthesizer = Synthesizer()
     private let dataProcessor = DataProcessor()
     
@@ -88,32 +89,37 @@ public class Audiograph {
         
     }
     
-    /// Call this function to compute and play the Audiograph for the given input. Playing starts immediately.
+    /// Call this function to compute and play the Audiograph for the given input. Computation of the data is done on a separate worker queue. Playback start immediately after processing data is done.
     /// - Parameters:
     ///   - graphContent: Call this function to compute and play the Audiograph for the given input. Playing starts immediately.
     ///   - completion: This block is executed when playing the Audiograph is completed. If done so successfully, `true` is passed into the completion block as argument. If any error occured or the playback was stopped, `false` is passed into.
+    ///   Will be called on the main queue.
     public func play(graphContent: [CGPoint], completion: ((_ success: Bool) -> Void)? = nil) {
-        //TODO: Do the computation in seperate queue.
-        let audioInformation = AudioInformation(points: graphContent)
         
-        guard sanityCheckPassing(for: audioInformation) else {
-            completion?(false)
-            return
-        }
-        
-        do {
+        preprocessingQueue.async {
             
-            let scaledAudioInformation = try dataProcessor.scaledInFrequencyAndTime(information: audioInformation)
-            synthesizer.completion = completion
-            synthesizer.playScaledContent(scaledAudioInformation)
+            let audioInformation = AudioInformation(points: graphContent)
             
-        } catch let error as SanityCheckError {
-            printSanityCheckDiagnostics(for: error)
-            completion?(false)
-        } catch {
-            assertionFailure("The sanity check threw an unknown error.")
+            guard self.sanityCheckPassing(for: audioInformation) else {
+                completion?(false)
+                return
+            }
+            
+            do {
+                
+                let scaledAudioInformation = try self.dataProcessor.scaledInFrequencyAndTime(information: audioInformation)
+                self.synthesizer.completion = completion
+                
+                self.synthesizer.playScaledContent(scaledAudioInformation)
+                
+            } catch let error as SanityCheckError {
+                self.printSanityCheckDiagnostics(for: error)
+                completion?(false)
+            } catch {
+                assertionFailure("The sanity check threw an unknown error.")
+            }
+            
         }
-        
     }
     
     public func stop() {

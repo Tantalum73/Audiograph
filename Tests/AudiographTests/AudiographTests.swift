@@ -18,10 +18,11 @@ final class AudiographTests: XCTestCase {
         ("test_edgeCaseNoCrash_noTimeDifference", test_edgeCaseNoCrash_noTimeDifference),
         ("test_edgeCaseNoCrash_noFrequencyDifference", test_edgeCaseNoCrash_noFrequencyDifference),
         ("test_edgeCaseNoCrash_sameDataMultipleTimes", test_edgeCaseNoCrash_sameDataMultipleTimes),
-        ("test_edgeCaseNoCrash_inputNotSorted", test_edgeCaseNoCrash_inputNotSorted)
+        ("test_edgeCaseNoCrash_inputNotSorted", test_edgeCaseNoCrash_inputNotSorted),
+        ("test_performance_realData", test_performance_realData)
     ]
     
-    let generator = SoundGenerator(sampleRate: 44100.0)
+    let generator = SoundGenerator(sampleRate: 44100.0, volumeCorrectionFactor: 1)
     
     func test_indexOfLatestChangeInSign_whenEndIsPositive() {
         let input: [Float32] = [-2, -1, 1, 2]
@@ -148,5 +149,30 @@ final class AudiographTests: XCTestCase {
             CGPoint(x: 20, y: 20)
         ]
         audiograph.play(graphContent: input)
+    }
+    
+    // MARK: - Performance
+    func test_performance_realData() {
+        let points = TestData.points
+        let audiograph = Audiograph()
+        
+        let options: XCTMeasureOptions = XCTMeasureOptions()
+        options.iterationCount = 11
+        options.invocationOptions = [.manuallyStop]
+        audiograph.volumeCorrectionFactor = 0
+        
+        if #available(iOS 13.0, *) {
+            measure(options: options) {
+                
+                let expectation = XCTestExpectation(description: "Wait for audio completion.")
+                audiograph.processingCompletion = {
+                    expectation.fulfill()
+                }
+                audiograph.play(graphContent: points)
+                
+                wait(for: [expectation], timeout: 10.0)
+                self.stopMeasuring()
+            }
+        }
     }
 }

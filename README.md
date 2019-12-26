@@ -1,4 +1,6 @@
 # Audiograph
+
+![](Media/Logo.jpg)
 Audio-Feedback on Charts for visually impaired Users
 
 ![GitHub tag (0.1.0)](https://img.shields.io/github/v/tag/Tantalum73/Audiograph)

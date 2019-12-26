@@ -16,6 +16,8 @@ import AppKit
 
 typealias Frequency = Float32
 typealias RelativeTime = Double
+typealias Sample = Float32
+typealias Samples = [Sample]
 
 struct GraphElement {
     let relativeTime: RelativeTime
@@ -93,5 +95,58 @@ extension TimeInterval {
         @unknown default:
             fatalError("This time interval is not supported as playing duration. Please use a different one.")
         }
+    }
+}
+
+extension Samples {
+    /** Ends the samples on a zero and cuts off elements to achieve that.
+     The samples are cut where the sign changes from negative to positive. A trailing 0 is also added to improve perceived audio quality.
+     */
+    mutating func postprocess() {
+        
+        let numberOfElementsToRemove = numberOfElementsToRemoveAtEnd()
+        
+        removeLast(numberOfElementsToRemove)
+        append(0)
+    }
+    
+    func numberOfElementsToRemoveAtEnd() -> Int {
+        // Find the last transition from <0 to >= 0
+        guard let last = last else { return 0 }
+        
+        let latestNumberIsPositive = last > 0
+        if latestNumberIsPositive {
+            // Next negative number is the right one
+            let indexOfLatestNegative = indexOfLatestNegativeNumber() ?? index(before: endIndex)
+            let numberOfElementsToRemove = index(before: endIndex) - indexOfLatestNegative
+            return numberOfElementsToRemove
+        } else {
+            // Find latest tansition from -· to +·
+            return numberOfElementsToRemovedUntilLatestChangeInSignTowardsPositive() ?? 0
+        }
+    }
+    
+    func indexOfLatestNegativeNumber() -> Int? {
+        return lastIndex(where: { $0 < 0 })
+    }
+    
+    /// Counts the number of elements that need to be removed in order to end on the latest contained negative number. One element after that number the sign is positive again.
+    ///
+    /// The result might be `nil` indicating that there is no change in sign and not enough elements can be removed.
+    /// The result should not be interpreted using zero-based-counting, when the last 3 elements should be removed, start counting from 1 to 3.
+    func numberOfElementsToRemovedUntilLatestChangeInSignTowardsPositive() -> Int? {
+        var elementsToRemove: Int = 0
+        
+        for startAndEnd in zip(self, dropFirst()).reversed() {
+            let prior = startAndEnd.0
+            let after = startAndEnd.1
+            
+            elementsToRemove += 1
+            if prior < 0 && after > 0 {
+                return elementsToRemove
+            }
+        }
+        
+        return nil
     }
 }

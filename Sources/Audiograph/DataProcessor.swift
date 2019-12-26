@@ -9,8 +9,8 @@
 import Foundation
 
 final class DataProcessor {
-    var minFrequency: Float32 = 150
-    var maxFrequency: Float32 = 2800
+    var minFrequency: Frequency = 150
+    var maxFrequency: Frequency = 2800
     
     var playingDuration: PlayingDuration = .short
     
@@ -182,7 +182,7 @@ final class DataProcessor {
     }
 }
 
-extension Array where Element == RelativeTime {
+private extension Array where Element == RelativeTime {
     func playingDuration() -> TimeInterval {
         var duration: TimeInterval = 0
         for (start, end) in zip(self, dropFirst()) {

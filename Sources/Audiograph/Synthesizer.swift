@@ -53,7 +53,7 @@ final class Synthesizer {
         callCompletionAndRemove(with: false)
     }
     
-    private func configureBufferAndPlay(_ bufferContent: [Float]) {
+    private func configureBufferAndPlay(_ bufferContent: Samples) {
         startEngineIfNeeded()
         
         let numberOfSamples = AVAudioFrameCount(bufferContent.count)

@@ -159,7 +159,6 @@ final class ChartView: UIView {
     /// - Parameter newPoints: The new points the graph view should display.
     func transform(to newPoints: [CGPoint]) {
         guard newPoints.count > 0 else { return }
-        newPoints.printPoints()
         
         let newPath = CGMutablePath()
         let scaledPoints = scale(newPoints, for: frame.size).reversed()
@@ -354,15 +353,5 @@ final class ChartView: UIView {
     /// Fades out and removes the handle. Implicitly animated.
     private func hideSelectedPointHandle() {
         touchindicatorLayer.opacity = 0
-    }
-}
-
-private extension Array where Element == CGPoint {
-    func printPoints() {
-        print("let points: CGPoint = [")
-        for point in self {
-            print("CGPoint(x: \(point.x), y: \(point.y)),")
-        }
-        print("]")
     }
 }

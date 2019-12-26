@@ -1,5 +1,3 @@
-# Audiograph
-
 ![](Media/Logo.jpg)
 Audio-Feedback on Charts for visually impaired Users
 

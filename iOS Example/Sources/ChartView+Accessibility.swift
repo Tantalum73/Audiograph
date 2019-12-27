@@ -11,19 +11,22 @@ import UIKit
 // MARK: - Accessibility
 extension ChartView {
     
+    var accessibilityLabelText: String { "Chart, price over time" }
+    var accessibilityHintText: String { "Double tap for audiograph." }
+    
     func setupAccessibility() {
         isAccessibilityElement = true
         shouldGroupAccessibilityChildren = true
         
         accessibilityTraits = .button
-        accessibilityLabel = "Chart"
-        accessibilityHint = "Double tap for audiograph."
+        accessibilityLabel = accessibilityLabelText
+        accessibilityHint = accessibilityHintText
     }
     
     override func accessibilityActivate() -> Bool {
         // Remove label and hint because they are read when activated. That intefers with audiograph.
-        accessibilityLabel = ""
-        accessibilityHint = ""
+        accessibilityLabel = nil
+        accessibilityHint = nil
         
         playAudiograph()
         return true
@@ -31,8 +34,8 @@ extension ChartView {
     
     override func accessibilityElementDidLoseFocus() {
         // Restore usual accessibility attributes.
-        accessibilityLabel = "Chart"
-        accessibilityHint = "Double tap for audiograph."
+        accessibilityLabel = accessibilityLabelText
+        accessibilityHint = accessibilityHintText
     }
     
     @objc private func playAudiograph() {

@@ -63,11 +63,13 @@ public class Audiograph {
      
      The final volume is computed by multiplying the default volume by that value. Default is `1.0` to apply standard loundness.
      
+     It gets clamped between `0` and `2`.
+     
      When running unit tests, for example, that value might be set to 0 in order to avoid unnecessary sound.
      */
     public var volumeCorrectionFactor: Float32 {
         get { synthesizer.volumeCorrectionFactor }
-        set { synthesizer.volumeCorrectionFactor = newValue }
+        set { synthesizer.volumeCorrectionFactor = max(min(newValue, 2), 0) }
     }
     
     /// If set, errors are printed to standard-output for the programmer to diagnose what went wrong. Those log statements can be suppressed as needed.

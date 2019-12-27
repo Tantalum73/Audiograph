@@ -6,9 +6,8 @@ Audio-Feedback on Charts for visually impaired Users
 
 <a href="Media/Screenshot.png"><img height=600 src="Media/Screenshot.png" alt="Screenshot" /></a>
 
-
-**This Readme is far from being complete!** I just added the most basic information about using it with a dependency manager. Currently, CocoaPods is not supported, as this is a private repo. Examples are working but not well documented here, yet.  
-I'll work on that as soon as I got some feedback about using it :)
+**Currently, CocoaPods is not supported, as this is a private repo.**  
+**Please** provide feedback on the API, its integration, documentation and examples! :)
 
 ## Background
 iOS 13 introduced an awsome way to provide stocks-charts to visually impaired users. Using a custom accessibility-rotor they are providing spoken chart analysis and an audiograph that renders the chart by using audio. That's the most accurate way of describing a chart that otherwise would only available visually.  
@@ -36,7 +35,7 @@ After stating `import Audiograph` you keep a strong reference to it
 ```Swift
 let audiograph = Audiograph()
 ```
-Now you are ready to play the audiograph by calling:
+Now you are ready to play the Audiograph by calling:
 ```swift
 audiograph.play(graphContent: points)
 ```
@@ -79,6 +78,9 @@ override func accessibilityElementDidLoseFocus() {
 This project is still young. When you find a better way of playing Audiograph in response to accessibility events *please* update that file or [tell me](https://twitter.com/Klaarname/)!
 
 ## Configuration
+
+All of the mentioned customizations need to be set before a call to `play(graphContent:completion:)` starts the playback.
+
 ### Playback-Duration
 Specifies the amount of seconds the audio should be played. Possible options are:
 ```swift
@@ -98,8 +100,12 @@ The above options (with exception of `.exactly`) are **a suggestion only**. The 
 However, some data points might be dropped in order to keep the playback duration within a reasonable range.
 
 ### Frequencies
+The input points are scaled so that they fit in between a minimum and a maximum frequency. The Audiograph's lowest frequency is specified in `minFrequency`, its maximum frequency is stored in `maxFrequency`.  
+Those frequencies can be altered depending on the use-case.
 
 ### Volume
+The volume is configurable by setting `volumeCorrectionFactor`. That factor is applied to the final volume of the sound.  
+It might be convenient to specify `0` when running unit tests. If the use-case requires higher volumes, that factor might be set up to a value of `2`.
 
 ## Installation
 

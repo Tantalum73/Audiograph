@@ -96,7 +96,7 @@ public enum PlayingDuration {
 * `.long`: The maximum duration. Depending on your input it might produce a great deal of samples which introduces memory pressure.
 * `.exactly`: Specify the exact amount of time the playback should take. The longer it takes the more samples need to be stored in memory: *With great power comes great responsibility.*
 
-The above options (with exception of `.exactly`) are **a suggestion only**. The final Audiograph might take longer depending on the input. It is ensured that each segment has enough time to play so that the user is able to hear the difference between two elements of the graph.  
+The above options (with exception of `.exactly`) are **a suggestion only**. The final Audiograph might take longer depending on the input. It is ensured that each segment has enough time to play so that the user is able to hear the difference between two points of the graph.  
 However, some data points might be dropped in order to keep the playback duration within a reasonable range.
 
 ### Frequencies

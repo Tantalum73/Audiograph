@@ -78,6 +78,29 @@ override func accessibilityElementDidLoseFocus() {
 
 This project is still young. When you find a better way of playing Audiograph in response to accessibility events *please* update that file or [tell me](https://twitter.com/Klaarname/)!
 
+## Configuration
+### Playback-Duration
+Specifies the amount of seconds the audio should be played. Possible options are:
+```swift
+public enum PlayingDuration {
+    case short
+    case recommended
+    case long
+    case exactly(DispatchTimeInterval)
+}
+```
+* `.short`: The most abbreviated way to present the Audiograph.
+* `.recommended`: The best tradeoff between playback duration and maximum length to avoid skipping data points.
+* `.long`: The maximum duration. Depending on your input it might produce a great deal of samples which introduces memory pressure.
+* `.exactly`: Specify the exact amount of time the playback should take. The longer it takes the more samples need to be stored in memory: *With great power comes great responsibility.*
+
+The above options (with exception of `.exactly`) are **a suggestion only**. The final Audiograph might take longer depending on the input. It is ensured that each segment has enough time to play so that the user is able to hear the difference between two elements of the graph.  
+However, some data points might be dropped in order to keep the playback duration within a reasonable range.
+
+### Frequencies
+
+### Volume
+
 ## Installation
 
 Add this to your project using Swift Package Manager. In Xcode that is simply: File > Swift Packages > Add Package Dependency... and you're done. Alternative installations options are shown below for legacy projects.

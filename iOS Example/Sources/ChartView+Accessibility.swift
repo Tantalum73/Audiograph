@@ -39,6 +39,6 @@ extension ChartView {
     }
     
     @objc private func playAudiograph() {
-        audiograph.play(graphContent: points)
+        audiograph.play(graphContent: scaledPoints)
     }
 }

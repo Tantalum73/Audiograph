@@ -32,7 +32,7 @@ A version 1.0 will not launch until those points are addressed.
 
 ## Usage
 After stating `import Audiograph` you keep a strong reference to it
-```Swift
+```swift
 let audiograph = Audiograph()
 ```
 Now you are ready to play the Audiograph by calling:

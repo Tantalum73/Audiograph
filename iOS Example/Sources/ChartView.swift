@@ -37,12 +37,9 @@ final class ChartView: UIView {
             graphLayer.strokeColor = chartColor.cgColor
         }
     }
-
-    /// The raw points that were added to the chart before scaling. Might be used in the future to accomodate for changing bounds.
-    var points = [CGPoint]()
     
     /// Stores the scaled points that exactly fit whithin the view's bounds. Also updates the `touchesMovedThreshold` when set.
-    private var scaledPoints = [CGPoint]() {
+    private (set) var scaledPoints = [CGPoint]() {
         didSet {
             // Update the threshold for moving the finger
             if scaledPoints.count > 1 {
@@ -69,32 +66,28 @@ final class ChartView: UIView {
     private var selectedElement: (point: CGPoint, indexInData: Int)?
     
     /// The layer that highlights the baseline.
-    private let baselineLayer: CAShapeLayer = {
-        let layer = CAShapeLayer()
-        layer.backgroundColor = UIColor.clear.cgColor
+    private let baselineLayer: BaselineLayer = {
+        let layer = BaselineLayer()
         layer.name = "BaselineOfGraph"
-        layer.opacity = 1
-        layer.strokeColor = UIColor.lightGray.cgColor
-        layer.lineWidth = 1.0
-        layer.lineJoin = .round
-        layer.lineDashPattern = [2, 3]
+        layer.animationDuration = 1.2
+        layer.timingFunction = ChartView.timingFunction
         return layer
     }()
-
+    
     /// Layer that draws the graph.
-    private let graphLayer: CAShapeLayer = {
-        let layer = CAShapeLayer()
+    private let graphLayer: GraphLayer = {
+        let layer = GraphLayer()
         layer.name = "GraphLayer"
-        layer.strokeColor = UIColor.red.cgColor
-        layer.fillColor = UIColor.clear.cgColor
-        layer.lineWidth = 1
-        layer.lineJoin = .bevel
         layer.isGeometryFlipped = true
+        layer.animationDuration = 1.2
+        layer.timingFunction = ChartView.timingFunction
         
         return layer
     }()
     
-    private let timingFunction = CAMediaTimingFunction(controlPoints: 0.64, 0, 0, 1)
+    private static let timingFunction = CAMediaTimingFunction(controlPoints: 0.64, 0, 0, 1)
+    
+    private let dataProcessor = ChartViewDataProcessor()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -109,45 +102,26 @@ final class ChartView: UIView {
     }
     
     private func setupViewHierarchy() {
+        layer.addSublayer(baselineLayer)
         layer.addSublayer(graphLayer)
         layer.addSublayer(touchindicatorLayer)
     }
     
-    // MARK: - Layout
     override func layoutSubviews() {
         super.layoutSubviews()
         graphLayer.frame = bounds
         touchindicatorLayer.frame = CGRect(origin: touchindicatorLayer.frame.origin, size: CGSize(width: 2.0, height: bounds.height))
         
         // Set the width and the new positions of baseline layer
-        updateBaselineLayer()
+        baselineLayer.frame = bounds
+        updateBaselineLayerPosition(animated: false)
     }
     
-    /// Updates the frame and the path of the baseline layer. Will be set to y-position of leftmost point.
-    private func updateBaselineLayer() {
-        baselineLayer.removeFromSuperlayer()
-        if let leftmostPoint = scaledPoints.last {
-            baselineLayer.frame = CGRect(x: 0, y: leftmostPoint.y, width: bounds.width, height: 2.0)
-        } else {
-            baselineLayer.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 2.0)
-        }
-        let baselinePath = CGMutablePath()
-        baselinePath.move(to: CGPoint(x: 0, y: baselineLayer.bounds.midY))
-        baselinePath.addLine(to: CGPoint(x: baselineLayer.bounds.maxX, y: baselineLayer.bounds.midY))
-        baselineLayer.path = baselinePath
-        
-        graphLayer.addSublayer(baselineLayer)
+    private func updateBaselineLayerPosition(animated: Bool) {
+        guard let significantPoint = scaledPoints.first else { return }
+        let newBaselinePosition = CGPoint(x: baselineLayer.position.x, y: significantPoint.y)
+        baselineLayer.transformPosition(to: newBaselinePosition, animated: animated)
     }
-    
-    
-    /// Adds random points of a given amount to the graph.
-    ///
-    /// - Parameter newAmount: The number of random points.
-    func updateRandomPoints(to newAmount: Int) {
-        let newRandomPoints = randomPoints(amount: newAmount, in: 0...200)
-        transform(to: newRandomPoints)
-    }
-
     
     /// Draws a graph consisting of `newPoints` in an animated way.
     ///
@@ -158,103 +132,21 @@ final class ChartView: UIView {
     ///
     /// - Parameter newPoints: The new points the graph view should display.
     func transform(to newPoints: [CGPoint]) {
+        layoutIfNeeded()
         guard newPoints.count > 0 else { return }
         
-        let newPath = CGMutablePath()
-        let scaledPoints = scale(newPoints, for: frame.size).reversed()
+        scaledPoints = dataProcessor.scaledPoints(for: newPoints, toFitInto: bounds)
+        let newPath = dataProcessor.path(for: scaledPoints)
         
-        newPath.move(to: scaledPoints.first!)
-        for point in scaledPoints.dropFirst() {
-            newPath.addLine(to: point)
-        }
-        
-        let newBaselinePosition = CGPoint(x: baselineLayer.position.x, y: scaledPoints.last!.y)
-        
-        let pathAnimation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.path))
-        pathAnimation.fromValue = graphLayer.presentation()?.path
-        pathAnimation.toValue = newPath
-        pathAnimation.duration = 1.2
-        pathAnimation.timingFunction = timingFunction
-        
-        let baselineAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.position))
-        baselineAnimation.fromValue = baselineLayer.presentation()?.position
-        baselineAnimation.toValue = newBaselinePosition
-        baselineAnimation.timingFunction = timingFunction
-        baselineAnimation.duration = 1.2
-        
-        graphLayer.add(pathAnimation, forKey: "PathAnimation")
-        baselineLayer.add(baselineAnimation, forKey: "BaselineAnimation")
-        
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        baselineLayer.position = newBaselinePosition
-        graphLayer.path = newPath
-        CATransaction.commit()
-        
-        points = newPoints
-        self.scaledPoints = Array(scaledPoints)
-    }
-    
-    
-    /// Generates random points with a given amount in a given range. The result is sorted by the x-value of the points.
-    ///
-    /// - Parameters:
-    ///   - amount: The number of random points there should be.
-    ///   - range: The range in between which the random points should be.
-    /// - Returns: Random points of a given amount. Sorted by their x-value.
-    private func randomPoints(amount: Int, in range: ClosedRange<Int>) -> [CGPoint] {
-        var random = [CGPoint]()
-        for _ in 1...amount {
-            let randomY = range.randomElement()!
-            let randomX = range.randomElement()!
-            let randomPoint = CGPoint(x: randomX, y: randomY)
-            random.append(randomPoint)
-        }
-        return random.sorted(by: { $0.x < $1.x })
-    }
-    
-    
-    /// Scales given points so that their values fit the given frame exactly. The smallest x-value will be on position x=0, the smallest y-value will be on position y=0, the maximum x-value will be on x=size.width and the maximum y-value will be on y=size.height.
-    ///
-    /// - Parameters:
-    ///   - points: The points that should be scaled.
-    ///   - size: The size in which the points should fit into.
-    /// - Returns: The points scaled in respect to their releative distance to one-another.
-    private func scale(_ points: [CGPoint], for size: CGSize) -> [CGPoint] {
-        let xValues = points.map( { $0.x } )
-        let yValues = points.map( { $0.y } )
-        
-        let max = (x: xValues.max() ?? 0, y: yValues.max() ?? 0)
-        let min = (x: xValues.min() ?? 0, y: yValues.min() ?? 0)
-        
-        let scaleFactorX: CGFloat
-        if max.x - min.x == 0 {
-            scaleFactorX = 0
-        } else {
-            scaleFactorX = size.width / (max.x - min.x)
-        }
-        
-        let scaleFactorY: CGFloat
-        if max.y - min.y == 0 {
-            scaleFactorY = 0
-        } else {
-            scaleFactorY = size.height / (max.y - min.y)
-        }
-        
-        let scaledPoints = points.map { point -> CGPoint in
-            let scaledX = scaleFactorX * (point.x - min.x)
-            let scaledY = scaleFactorY * (point.y - min.y)
-            
-            return CGPoint(x: scaledX, y: scaledY)
-        }
-        return scaledPoints
+        updateBaselineLayerPosition(animated: true)
+        graphLayer.transform(towards: newPath, animated: true)
     }
     
     // MARK: - Touch handling
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        guard !points.isEmpty, !scaledPoints.isEmpty else { return }
+        guard !scaledPoints.isEmpty else { return }
         guard let location = touches.first?.location(in: self) else { return }
         
         // Store where the finger hit the screen to calculate relative movement.
@@ -307,8 +199,7 @@ final class ChartView: UIView {
     /// - Parameter touch: The location of the touch.
     /// - Returns: The point that is closest to the users interaction and its index in the `scaledPoints` array.
     private func pointNextTo(touch: CGPoint) -> (point: CGPoint, indexInData: Int)? {
-        guard !points.isEmpty, !scaledPoints.isEmpty else { return nil }
-        
+        guard !scaledPoints.isEmpty else { return nil }
         
         var pointNextToTouchLocation: CGPoint = .zero
         var bestDistancePointToLocationOfTouch: CGFloat?
@@ -329,8 +220,7 @@ final class ChartView: UIView {
             }
         }
         
-        let indexInModelOrder = scaledPoints.count - 1 - indexOfFoundPoint
-        return (point: pointNextToTouchLocation, indexInData: indexInModelOrder)
+        return (point: pointNextToTouchLocation, indexInData: indexOfFoundPoint)
     }
     
     /// Shows the highlight indicator. Implicitly animated.

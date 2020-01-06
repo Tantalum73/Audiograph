@@ -8,6 +8,12 @@
 
 import Foundation
 import AVFoundation
+#if canImport(UIKit)
+import UIKit
+#endif
+#if os(macOS)
+import AppKit
+#endif
 
 final class Synthesizer {
     /// Called when playing the audio samples has completed with `true`, when stopped or an error occured with argument set to `false`. Called on the main queue. Will be discarded when called once.
@@ -24,6 +30,9 @@ final class Synthesizer {
         configureEngine()
         
         NotificationCenter.default.addObserver(self, selector: #selector(Synthesizer.audioEngineConfigurationChange(_:)), name: NSNotification.Name.AVAudioEngineConfigurationChange, object: audioEngine)
+        #if canImport(UIKit)
+            NotificationCenter.default.addObserver(self, selector: #selector(Synthesizer.stop), name: UIApplication.willResignActiveNotification, object: nil)
+        #endif
     }
     deinit {
         audioEngine.stop()
@@ -48,7 +57,7 @@ final class Synthesizer {
     }
     
     /// Stops the playback immediately and calls the completion-block with argument `false`.
-    func stop() {
+    @objc func stop() {
         playerNode.stop()
         callCompletionAndRemove(with: false)
     }
@@ -77,6 +86,10 @@ final class Synthesizer {
     }
     
     private func startEngineIfNeeded() {
+        // When connected, the users audio will pause. Do that at the latest possible.
+        audioEngine.connect(playerNode, to: audioEngine.mainMixerNode, format: audioFormat)
+        audioEngine.prepare()
+        
         guard !audioEngine.isRunning else { return }
         do {
             try audioEngine.start()
@@ -91,8 +104,6 @@ final class Synthesizer {
         
         // Attach and connect the player node.
         audioEngine.attach(playerNode)
-        audioEngine.connect(playerNode, to: audioEngine.mainMixerNode, format: audioFormat)
-        audioEngine.prepare()
     }
     
     @objc func audioEngineConfigurationChange(_ notification: Notification) -> Void {

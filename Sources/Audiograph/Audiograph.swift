@@ -7,7 +7,7 @@
 //
 
 import Foundation
-#if !os(macOS)
+#if canImport(UIKit)
 import UIKit
 #endif
 #if os(macOS)

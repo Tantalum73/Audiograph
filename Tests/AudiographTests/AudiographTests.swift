@@ -161,7 +161,7 @@ final class AudiographTests: XCTestCase {
         options.invocationOptions = [.manuallyStop]
         audiograph.volumeCorrectionFactor = 0
         
-        if #available(iOS 13.0, *) {
+        if #available(iOS 13.0, *), #available(OSX 10.15, *) {
             measure(options: options) {
                 
                 let expectation = XCTestExpectation(description: "Wait for audio completion.")
@@ -174,5 +174,6 @@ final class AudiographTests: XCTestCase {
                 self.stopMeasuring()
             }
         }
+        
     }
 }

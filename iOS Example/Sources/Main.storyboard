@@ -55,7 +55,7 @@ Therefore five days will look quite empty.</string>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v4a-w2-qIr" customClass="ChartView" customModule="iOS_Example" customModuleProvider="target">
                                 <rect key="frame" x="20" y="248" width="374" height="400"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="400" id="6Wp-dS-Nyg"/>
                                 </constraints>
@@ -74,7 +74,7 @@ Therefore five days will look quite empty.</string>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="y7m-nS-Xk8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="02b-9W-qI9"/>
                             <constraint firstItem="y7m-nS-Xk8" firstAttribute="top" secondItem="v4a-w2-qIr" secondAttribute="bottom" constant="8" id="2ll-e0-OKw"/>

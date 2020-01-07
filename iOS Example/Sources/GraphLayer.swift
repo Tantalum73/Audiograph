@@ -34,6 +34,7 @@ final class GraphLayer: CAShapeLayer {
         fillColor = UIColor.clear.cgColor
         lineWidth = 1
         lineJoin = .bevel
+        contentsScale = UIScreen.main.scale
     }
     
     func transform(towards newPath: CGPath, animated: Bool) {

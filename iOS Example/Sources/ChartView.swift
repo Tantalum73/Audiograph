@@ -78,9 +78,6 @@ final class ChartView: UIView {
     private let graphLayer: GraphLayer = {
         let layer = GraphLayer()
         layer.name = "GraphLayer"
-        layer.isGeometryFlipped = true
-        layer.animationDuration = 1.2
-        layer.timingFunction = ChartView.timingFunction
         
         return layer
     }()
@@ -91,17 +88,18 @@ final class ChartView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViewHierarchy()
+        setupLayers()
         setupAccessibility()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupViewHierarchy()
+        setupLayers()
         setupAccessibility()
     }
     
-    private func setupViewHierarchy() {
+    private func setupLayers() {
+        layer.isGeometryFlipped = true
         layer.addSublayer(baselineLayer)
         layer.addSublayer(graphLayer)
         layer.addSublayer(touchindicatorLayer)
@@ -109,12 +107,15 @@ final class ChartView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        
         graphLayer.frame = bounds
         touchindicatorLayer.frame = CGRect(origin: touchindicatorLayer.frame.origin, size: CGSize(width: 2.0, height: bounds.height))
         
-        // Set the width and the new positions of baseline layer
-        baselineLayer.frame = bounds
-        updateBaselineLayerPosition(animated: false)
+        baselineLayer.frame = CGRect(x: 0, y: baselineLayer.frame.origin.y, width: bounds.width, height: 1.0)
+        
+        CATransaction.commit()
     }
     
     private func updateBaselineLayerPosition(animated: Bool) {

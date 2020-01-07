@@ -8,13 +8,10 @@
 
 import UIKit
 
-final class BaselineLayer: CALayer {
+final class BaselineLayer: CAShapeLayer {
     var timingFunction = CAMediaTimingFunction(controlPoints: 0.64, 0, 0, 1)
     var animationDuration = 1.2
-    
-    private let shape = CAShapeLayer()
-    private var latestBaselineYPosition: CGFloat = .zero
-    
+        
     override init(layer: Any) {
         super.init(layer: layer)
         setupLayer()
@@ -29,43 +26,42 @@ final class BaselineLayer: CALayer {
     }
     
     private func setupLayer() {
-        isGeometryFlipped = true
-        addSublayer(shape)
         backgroundColor = UIColor.clear.cgColor
         opacity = 1
-        shape.strokeColor = UIColor.lightGray.cgColor
-        shape.lineWidth = 1.0
-        shape.lineJoin = .round
-        shape.lineDashPattern = [2, 3]
+        strokeColor = UIColor.lightGray.cgColor
+        lineWidth = 1.0
+        lineJoin = .round
+        lineDashPattern = [2, 3]
+        contentsScale = UIScreen.main.scale
     }
     
     override func layoutSublayers() {
         super.layoutSublayers()
         
         let baselinePath = CGMutablePath()
-        baselinePath.move(to: CGPoint(x: 0, y: latestBaselineYPosition))
-        baselinePath.addLine(to: CGPoint(x: bounds.maxX, y: latestBaselineYPosition))
-        shape.path = baselinePath
+        baselinePath.move(to: bounds.origin)
+        baselinePath.addLine(to: CGPoint(x: bounds.maxX, y: bounds.origin.y))
+        path = baselinePath
     }
     
     func transformPosition(to newPosition: CGPoint, animated: Bool) {
-        latestBaselineYPosition = newPosition.y
+        
+        if animated {
+            add(positionAnimation(to: newPosition), forKey: "BaselineAnimation")
+        }
         
         // In any case set the final values to the model layer without having an implicit animation:
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         
-        if animated {
-            shape.add(positionAnimation(to: newPosition), forKey: "BaselineAnimation")
-        }
-        shape.position = newPosition
+        position = newPosition
         
         CATransaction.commit()
     }
     
     private func positionAnimation(to newPosition: CGPoint) -> CABasicAnimation {
         let baselineAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.position))
-        baselineAnimation.fromValue = shape.presentation()?.position
+        baselineAnimation.fromValue = presentation()?.position
         baselineAnimation.toValue = newPosition
         baselineAnimation.timingFunction = timingFunction
         baselineAnimation.duration = animationDuration

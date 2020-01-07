@@ -107,7 +107,7 @@ class ViewController: UIViewController {
     /// Converts `currentData` from the model into an array of `[CGPoint]`. They can be used to pass into chart view or to derive audiograph data.
     /// The first element is the leftmost point.
     private func displayablePoints() -> [CGPoint] {
-        model.currentDataSet.map { data -> CGPoint in
+        model.currentDataSet.reversed().map { data -> CGPoint in
             let xComponent = data.date.timeIntervalSince1970
             let yComponent = data.close
             

@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 Audiograph adheres to [Semantic Versioning](http://semver.org/).
 
 ## Next Release:
+
+## 0.2.0 (07.01.2020):
 - Change of public API in a non-breaking way: 
     - Completion-block can be passed by calling `start`
     - Added a `stop` function to stop playback immediately

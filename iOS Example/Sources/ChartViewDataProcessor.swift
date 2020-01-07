@@ -31,8 +31,8 @@ final class ChartViewDataProcessor {
             assertionFailure("Chart View asked for a path with not enough elements.")
             return path
         }
-        path.move(to: scaledPoints.first!)
-        for point in scaledPoints.dropFirst() {
+        path.move(to: scaledPoints.last!)
+        for point in scaledPoints.dropLast().reversed() {
             path.addLine(to: point)
         }
         

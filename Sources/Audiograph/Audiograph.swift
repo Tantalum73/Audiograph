@@ -35,7 +35,7 @@ public enum PlayingDuration {
  
  The input is scaled to fit the desired duration and in between `minFrequency` and `maxFrequency`, which can be configured as well.
  */
-public class Audiograph {
+@objc public final class Audiograph: NSObject {
     /// The minimum frequency of the Audiograph. The lowest data point will be represented using this frequency.
     public var minFrequency: Float32 {
         get { dataProcessor.minFrequency }
@@ -87,8 +87,8 @@ public class Audiograph {
     private let synthesizer = Synthesizer()
     private let dataProcessor = DataProcessor()
     
-    public init() {
-        
+    public override init() {
+        super.init()
     }
     
     /// Call this function to compute and play the Audiograph for the given input. Computation of the data is done on a separate worker queue. Playback start immediately after processing data is done.
@@ -96,7 +96,7 @@ public class Audiograph {
     ///   - graphContent: Call this function to compute and play the Audiograph for the given input. Playing starts immediately.
     ///   - completion: This block is executed when playing the Audiograph is completed. If done so successfully, `true` is passed into the completion block as argument. If any error occured or the playback was stopped, `false` is passed into.
     ///   Will be called on the main queue.
-    public func play(graphContent: [CGPoint], completion: ((_ success: Bool) -> Void)? = nil) {
+    @objc public func play(graphContent: [CGPoint], completion: ((_ success: Bool) -> Void)? = nil) {
         
         preprocessingQueue.async {
             

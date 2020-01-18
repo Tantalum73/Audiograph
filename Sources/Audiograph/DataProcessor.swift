@@ -10,7 +10,7 @@ import Foundation
 
 final class DataProcessor {
     var minFrequency: Frequency = 150
-    var maxFrequency: Frequency = 2800
+    var maxFrequency: Frequency = 2700
     
     var playingDuration: PlayingDuration = .short
     
@@ -19,7 +19,7 @@ final class DataProcessor {
     private var maximumPlayingDuration: TimeInterval {
         switch playingDuration {
         case .short:
-            return TimeInterval(dispatchTimeInterval: .seconds(4))
+            return TimeInterval(dispatchTimeInterval: .seconds(2))
         case .recommended:
             return TimeInterval(dispatchTimeInterval: .seconds(10))
         case .exactly(let duration):

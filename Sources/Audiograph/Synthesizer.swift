@@ -15,17 +15,26 @@ import UIKit
 import AppKit
 #endif
 
-final class Synthesizer {
+final class Synthesizer: NSObject {
     /// Called when playing the audio samples has completed with `true`, when stopped or an error occured with argument set to `false`. Called on the main queue. Will be discarded when called once.
     var completion: ((_ success: Bool) -> Void)?
     var volumeCorrectionFactor: Float32 = 1.0
+    //TODO: Documentation
+    var completionIndicatorUtterance: String = "Complete"
     
     private let audioEngine = AVAudioEngine()
     private let playerNode = AVAudioPlayerNode()
     private static let sampleRate = 44100.0
     private let audioFormat = AVAudioFormat(standardFormatWithSampleRate: Synthesizer.sampleRate, channels: 1)
+    private let speechSynthesizer = AVSpeechSynthesizer()
+    private var completionUtterance: AVSpeechUtterance {
+        AVSpeechUtterance(string: completionIndicatorUtterance)
+    }
+    /// Delay between speaking the `completionIndicatorUtterance` and the end of the Audiograph playback.
+    private let completionSpeachDelay: Double = 0.5
     
-    init() {
+    override init() {
+        super.init()
         
         configureEngine()
         
@@ -33,10 +42,12 @@ final class Synthesizer {
         #if canImport(UIKit)
             NotificationCenter.default.addObserver(self, selector: #selector(Synthesizer.stop), name: UIApplication.willResignActiveNotification, object: nil)
         #endif
+        
+        speechSynthesizer.delegate = self
     }
     deinit {
         audioEngine.stop()
-        callCompletionAndRemove(with: false)
+        callCompletionAndReset(completedSuccessfully: false)
     }
     
     /// Expects scaled audio information that already have the correct duration and frequencies.
@@ -59,7 +70,7 @@ final class Synthesizer {
     /// Stops the playback immediately and calls the completion-block with argument `false`.
     @objc func stop() {
         playerNode.stop()
-        callCompletionAndRemove(with: false)
+        callCompletionAndReset(completedSuccessfully: false)
     }
     
     private func configureBufferAndPlay(_ bufferContent: Samples) {
@@ -76,13 +87,17 @@ final class Synthesizer {
             rightChannel?[index] = sample
         }
         playerNode.scheduleBuffer(buffer) {
-            DispatchQueue.main.async { [weak self] in
-                self?.callCompletionAndRemove(with: true)
-            }
             print("Completed")
+            self.readDelayedCompletionUtterance()
         }
         
         playerNode.play()
+    }
+    
+    private func readDelayedCompletionUtterance() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + completionSpeachDelay) {
+            self.speechSynthesizer.speak(self.completionUtterance)
+        }
     }
     
     private func startEngineIfNeeded() {
@@ -100,7 +115,7 @@ final class Synthesizer {
     
     private func configureEngine() {
         audioEngine.reset()
-        callCompletionAndRemove(with: false)
+        callCompletionAndReset(completedSuccessfully: false)
         
         // Attach and connect the player node.
         audioEngine.attach(playerNode)
@@ -110,8 +125,17 @@ final class Synthesizer {
         configureEngine()
     }
     
-    private func callCompletionAndRemove(with argument: Bool) {
+    private func callCompletionAndReset(completedSuccessfully argument: Bool) {
         completion?(argument)
         completion = nil
+    }
+}
+
+extension Synthesizer: AVSpeechSynthesizerDelegate {
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        callCompletionAndReset(completedSuccessfully: true)
+    }
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
+        callCompletionAndReset(completedSuccessfully: false)
     }
 }

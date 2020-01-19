@@ -58,6 +58,12 @@ public enum PlayingDuration {
         set { dataProcessor.playingDuration = newValue }
     }
     
+    //TODO: Documentation
+    public var completionIndicatorUtterance: String {
+        get { synthesizer.completionIndicatorUtterance }
+        set { synthesizer.completionIndicatorUtterance = newValue }
+    }
+    
     /**
      This value can be used to control the final loudness volume.
      

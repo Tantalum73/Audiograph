@@ -4,17 +4,20 @@ Audio-Feedback on Charts for visually impaired Users
 ![GitHub tag (0.1.0)](https://img.shields.io/github/v/tag/Tantalum73/Audiograph)
 [![License](https://img.shields.io/github/license/Tantalum73/Audiograph)](LICENSE)
 
-<a href="Media/Screenshot.png"><img height=600 src="Media/Screenshot.png" alt="Screenshot" /></a>
-
 **Currently, CocoaPods is not supported, as this is a private repo.**  
 **Please** provide feedback on the API, its integration, documentation and examples! :)
 
 ## Background
-iOS 13 introduced an awsome way to provide stocks-charts to visually impaired users. Using a custom accessibility-rotor they are providing spoken chart analysis and an audiograph that renders the chart by using audio. That's the most accurate way of describing a chart that otherwise would only available visually.  
+iOS 13 introduced an awesome way to provide stocks-charts to visually impaired users. Using a custom accessibility-rotor they are providing spoken chart analysis and an audiograph that renders the chart by using audio. That's the most accurate way of describing a chart that otherwise would only available visually.  
 Take a look at the following video if you haven't tried it out yourself:
 
 <a href="https://anerma.de/uploads/iOS_13_Audiograph.mp4"><img height=600 src="Media/iOS_13_preview.png" alt="Screenshot" /></a>
 
+## Audiograph
+Unfortunately there is no public API from Apple that enables developers to implement it in their apps (yet). I think that charts can provide a great way of presenting information, but we should not limit their use to those users without impairments.  
+This is where Audiograph comes into play:
+
+<a href="https://anerma.de/uploads/Audiograph_Demo_small.mp4"><img height=600 src="Media/Audiograph_preview.png" alt="Screenshot" /></a>
 
 ## Example
 The example app provides many things related to presenting a cool chart. I wrote about the chart in my [blog](https://anerma.de/blog/tear-down-trade-republic-charts). However, this project is about accessibility.  
@@ -24,7 +27,7 @@ To run the example project, clone this repo, and open iOS Example.xcworkspace fr
 
 ## Points to improve on the next Iteration
 * [x] Computing samples on a background queue
-* [ ] Removing debug print statements
+* [ ] Remove debug print statements
 * [ ] Performance tests and analysis
 * [ ] Design a cool icon (because all OS projects need a logo, obviously)
 

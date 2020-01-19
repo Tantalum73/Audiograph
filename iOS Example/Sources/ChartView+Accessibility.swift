@@ -40,6 +40,7 @@ extension ChartView {
     }
     
     @objc private func playAudiograph() {
+        // Optional, read "complete" after playing Audiograph.
         audiograph.completionIndicationUtterance = completionPhrase
         audiograph.play(graphContent: scaledPoints)
     }

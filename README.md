@@ -52,29 +52,29 @@ func setupAccessibility() {
     shouldGroupAccessibilityChildren = true
 
     accessibilityTraits = .button
-    accessibilityLabel = "Chart"
-    accessibilityHint = "Double tap for audiograph."
+    accessibilityLabel = accessibilityLabelText
+    accessibilityHint = accessibilityHintText
 }
+
 override func accessibilityActivate() -> Bool {
     // Remove label and hint because they are read when activated. That intefers with audiograph.
-    accessibilityLabel = ""
-    accessibilityHint = ""
+    accessibilityLabel = nil
+    accessibilityHint = nil
 
     playAudiograph()
     return true
 }
 
-@objc private func playAudiograph() {
-    audiograph.play(graphContent: points)
-}
-```
-
-When the view loses focus, you might want to restore the accessibility attributes:
-```swift
 override func accessibilityElementDidLoseFocus() {
     // Restore usual accessibility attributes.
-    accessibilityLabel = "Chart"
-    accessibilityHint = "Double tap for audiograph."
+    accessibilityLabel = accessibilityLabelText
+    accessibilityHint = accessibilityHintText
+}
+
+@objc private func playAudiograph() {
+    // Optional, read "complete" after playing Audiograph.
+    audiograph.completionIndicationUtterance = completionPhrase
+    audiograph.play(graphContent: scaledPoints)
 }
 ```
 
@@ -109,6 +109,11 @@ Those frequencies can be altered depending on the use-case.
 ### Volume
 The volume is configurable by setting `volumeCorrectionFactor`. That factor is applied to the final volume of the sound.  
 It might be convenient to specify `0` when running unit tests. If the use-case requires higher volumes, that factor might be set up to a value of `2`.
+
+### Completion Phrase
+The video above was ended by a Siri-voice saying "complete". The parameter `completionIndicationUtterance` controls what phrase the system says after playing Audiograph was completed.  
+Even though this phrase can be set to an empty string, it is recommended to inform the user that there is nothing more to expect. However, it must be set by the application because a Swift-Package can not contain localization files at the time of the development.
+
 
 ## Installation
 

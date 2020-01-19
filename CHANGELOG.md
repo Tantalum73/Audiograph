@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 Audiograph adheres to [Semantic Versioning](http://semver.org/).
 
 ## Next Release:
+- Introduction of `completionIndicationUtterance` to indicate verbally that Audiograph has finished. 
 
 ## 0.2.0 (07.01.2020):
 - Change of public API in a non-breaking way: 

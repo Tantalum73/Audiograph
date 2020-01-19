@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  iOS Example
+
+  Created by Andreas Neusüß on 19.01.20.
+  Copyright © 2020 Anerma. All rights reserved.
+*/
+
+/* This phrase is read when the Audiograph has completed describing the chart using audio. Should be something like 'complete'. */
+
+"CHART_ACCESSIBILITY_AUDIOGRAPH_COMPLETION_PHREASE" = "complete";

@@ -13,6 +13,7 @@ extension ChartView {
     
     var accessibilityLabelText: String { "Chart, price over time" }
     var accessibilityHintText: String { "Double tap for audiograph." }
+    var completionPhrase: String { NSLocalizedString("CHART_ACCESSIBILITY_AUDIOGRAPH_COMPLETION_PHREASE", comment: "This phrase is read when the Audiograph has completed describing the chart using audio. Should be something like 'complete'.") }
     
     func setupAccessibility() {
         isAccessibilityElement = true
@@ -39,6 +40,7 @@ extension ChartView {
     }
     
     @objc private func playAudiograph() {
+        audiograph.completionIndicationUtterance = completionPhrase
         audiograph.play(graphContent: scaledPoints)
     }
 }

@@ -58,10 +58,14 @@ public enum PlayingDuration {
         set { dataProcessor.playingDuration = newValue }
     }
     
-    //TODO: Documentation
-    public var completionIndicatorUtterance: String {
-        get { synthesizer.completionIndicatorUtterance }
-        set { synthesizer.completionIndicatorUtterance = newValue }
+    /**
+     A phrase that is read when the Audiograph completes. Defaults to "complete".
+     
+     Because Swift-PM projects can not contain .strings-files at the time of implementation, the phrase needs to be localized by the containing app.
+     */
+    public var completionIndicationUtterance: String {
+        get { synthesizer.completionIndicationString }
+        set { synthesizer.completionIndicationString = newValue }
     }
     
     /**

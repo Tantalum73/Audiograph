@@ -100,6 +100,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func playSoundButtonPressed(_ sender: Any) {
+        audiograph.completionIndicationUtterance = NSLocalizedString("CHART_ACCESSIBILITY_AUDIOGRAPH_COMPLETION_PHREASE", comment: "This phrase is read when the Audiograph has completed describing the chart using audio. Should be something like 'complete'.")
         let pointsFromLeftToRight = displayablePoints()
         audiograph.play(graphContent: Array(pointsFromLeftToRight))
     }

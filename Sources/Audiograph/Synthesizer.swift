@@ -19,8 +19,9 @@ final class Synthesizer: NSObject {
     /// Called when playing the audio samples has completed with `true`, when stopped or an error occured with argument set to `false`. Called on the main queue. Will be discarded when called once.
     var completion: ((_ success: Bool) -> Void)?
     var volumeCorrectionFactor: Float32 = 1.0
-    //TODO: Documentation
-    var completionIndicatorUtterance: String = "Complete"
+    
+    /// This word is read after the Audiograph has finished playing.
+    var completionIndicationString: String = "Complete"
     
     private let audioEngine = AVAudioEngine()
     private let playerNode = AVAudioPlayerNode()
@@ -28,9 +29,9 @@ final class Synthesizer: NSObject {
     private let audioFormat = AVAudioFormat(standardFormatWithSampleRate: Synthesizer.sampleRate, channels: 1)
     private let speechSynthesizer = AVSpeechSynthesizer()
     private var completionUtterance: AVSpeechUtterance {
-        AVSpeechUtterance(string: completionIndicatorUtterance)
+        AVSpeechUtterance(string: completionIndicationString)
     }
-    /// Delay between speaking the `completionIndicatorUtterance` and the end of the Audiograph playback.
+    /// Delay between speaking the `completionIndicationUtterance` and the end of the Audiograph playback.
     private let completionSpeachDelay: Double = 0.5
     
     override init() {
@@ -95,6 +96,13 @@ final class Synthesizer: NSObject {
     }
     
     private func readDelayedCompletionUtterance() {
+        guard !completionIndicationString.isEmpty else {
+            DispatchQueue.main.async {
+                self.callCompletionAndReset(completedSuccessfully: true)
+            }
+            return
+        }
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + completionSpeachDelay) {
             self.speechSynthesizer.speak(self.completionUtterance)
         }

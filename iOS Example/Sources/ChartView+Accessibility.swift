@@ -20,7 +20,6 @@ extension ChartView: AudiographPlayable {
     var graphContent: [CGPoint] {
         scaledPoints
     }
-    
     var accessibilityLabelText: String { "Chart, price over time" }
     var accessibilityHintText: String { "Actions for playing Audiograph available." }
     
@@ -37,7 +36,7 @@ extension ChartView: AudiographPlayable {
 
 /*
  **************
- Solution that plays Audiograph when activated (user only needs to double-tap the chart).
+ Solution that plays Audiograph manually when activated (user only needs to double-tap the chart).
  **************
  */
 //extension ChartView {

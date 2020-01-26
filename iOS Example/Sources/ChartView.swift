@@ -30,6 +30,9 @@ final class ChartView: UIView {
     
     /// Responsible for playing audiograph. Must be held in memory.
     let audiograph: Audiograph = {
+        
+        // Initialize the Audiograph with localized phrases to make it easier for your user to discover the feature.
+        
         let completion = NSLocalizedString("CHART_ACCESSIBILITY_AUDIOGRAPH_COMPLETION_PHREASE", comment: "This phrase is read when the Audiograph has completed describing the chart using audio. Should be something like 'complete'.")
         let indication = NSLocalizedString("CHART_PLAY_AUDIOGRAPH_ACTION", comment: "The title of the accessibility action that starts playing the audiograph. 'Play audiograph.' for example.")
         let localizations = AudiographLocalizations(completionIndicationUtterance: completion, accessibilityIndicationTitle: indication)

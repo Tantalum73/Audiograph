@@ -34,49 +34,51 @@ To run the example project, clone this repo, and open iOS Example.xcworkspace fr
 A version 1.0 will not launch until those points are addressed.
 
 ## Usage
-After stating `import Audiograph` you keep a strong reference to it
+After stating `import Audiograph` you can initialize Audiograph with localized phrases. Those phrases will improve  the experience of your users.  
+They describe how the Audiograph can be started *(`accessibilityIndicationTitle`, eg. "Play Audiograph")* and what phrase should indicate that the playback has ended *(`completionIndicationUtterance`, eg. "Complete")*.  
+You need to store a strong reference to `Audiograph`.
+
 ```swift
-let audiograph = Audiograph()
+let audiograph: Audiograph = {
+    let completion = NSLocalizedString("CHART_ACCESSIBILITY_AUDIOGRAPH_COMPLETION_PHREASE", comment: "This phrase is read when the Audiograph has completed describing the chart using audio. Should be something like 'complete'.")
+    let indication = NSLocalizedString("CHART_PLAY_AUDIOGRAPH_ACTION", comment: "The title of the accessibility action that starts playing the audiograph. 'Play audiograph.' for example.")
+    let localizations = AudiographLocalizations(completionIndicationUtterance: completion, accessibilityIndicationTitle: indication)
+
+    return Audiograph(localizations: localizations)
+}()
 ```
-Now you are ready to play the Audiograph by calling:
+
+Now you have multiple options to play the Audiograph.
+1. Use a custom accessibility action
+2. Call `.play(graphContent: )` directly, the argument is of type `[CGPoint]` and should be the same points you are using to draw your UI.
+
+The second option is only encouraged if you exactly know when to play the Audiograph. In any other cases, option one will work best for you.
+
+In order to make use of the system, start making you chart conform to `AudiographPlayable`.  
+When doing so, the view can deliver data points by setting `graphContent` to the [CGPoint]s that are also used to draw the UI.
+
+When you configure the accessibility attributes, make sure to use `audiograph.createCustomAccessibilityAction(for: )` as a custom action:
+
 ```swift
-audiograph.play(graphContent: points)
-```
-The argument is of type `[CGPoint]` and should be the same points you are using to draw your UI.
+extension ChartView: AudiographPlayable {
+    var graphContent: [CGPoint] {
+        scaledPoints
+    }
+    var accessibilityLabelText: String { "Chart, price over time" }
+    var accessibilityHintText: String { "Actions for playing Audiograph available." }
 
-You now can trigger the Audiograph at any time you like. However, it is recommended to use it as accessibility feature.  
-There are several ways to provide it to your users as such. One way is to play it as soon as the chart-view gets activated by the Accessibility System.
-```swift
-func setupAccessibility() {
-    isAccessibilityElement = true
-    shouldGroupAccessibilityChildren = true
+    func setupAccessibility() {
+        isAccessibilityElement = true
+        shouldGroupAccessibilityChildren = true
+        accessibilityLabel = accessibilityLabelText
+        accessibilityHint = accessibilityHintText
 
-    accessibilityTraits = .button
-    accessibilityLabel = accessibilityLabelText
-    accessibilityHint = accessibilityHintText
-}
-
-override func accessibilityActivate() -> Bool {
-    // Remove label and hint because they are read when activated. That intefers with audiograph.
-    accessibilityLabel = nil
-    accessibilityHint = nil
-
-    playAudiograph()
-    return true
-}
-
-override func accessibilityElementDidLoseFocus() {
-    // Restore usual accessibility attributes.
-    accessibilityLabel = accessibilityLabelText
-    accessibilityHint = accessibilityHintText
-}
-
-@objc private func playAudiograph() {
-    // Optional, read "complete" after playing Audiograph.
-    audiograph.completionIndicationUtterance = completionPhrase
-    audiograph.play(graphContent: scaledPoints)
+        accessibilityCustomActions = [audiograph.createCustomAccessibilityAction(for: self)]
+    }
 }
 ```
+
+You can find examples on how to configure it in the file "ChatzChartView+Accessibility.swift"
 
 This project is still young. When you find a better way of playing Audiograph in response to accessibility events *please* update that file or [tell me](https://twitter.com/Klaarname/)!
 
@@ -116,6 +118,8 @@ Even though this phrase can be set to an empty string, it is recommended to info
 
 
 ## Installation
+
+### Swift Package-Manager
 
 Add this to your project using Swift Package Manager. In Xcode that is simply: File > Swift Packages > Add Package Dependency... and you're done. Alternative installations options are shown below for legacy projects.
 

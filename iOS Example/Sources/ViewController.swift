@@ -31,9 +31,8 @@ class ViewController: UIViewController {
     private let colorMinus = UIColor(named: "ColorMinus")!
     private let colorPlus = UIColor(named: "ColorPlus")!
     let audiograph: Audiograph = {
-        let completion = NSLocalizedString("CHART_ACCESSIBILITY_AUDIOGRAPH_COMPLETION_PHREASE", comment: "This phrase is read when the Audiograph has completed describing the chart using audio. Should be something like 'complete'.")
-        let indication = NSLocalizedString("CHART_PLAY_AUDIOGRAPH_ACTION", comment: "The title of the accessibility action that starts playing the audiograph. 'Play audiograph.' for example.")
-        let localizations = AudiographLocalizations(completionIndicationUtterance: completion, accessibilityIndicationTitle: indication)
+        // Being lazy is ok for showcase. The ChartView uses a more sophisticated language.
+        let localizations = AudiographLocalizations.defaultEnglish
         
         return Audiograph(localizations: localizations)
     }()
@@ -107,6 +106,10 @@ class ViewController: UIViewController {
     
     @IBAction func playSoundButtonPressed(_ sender: Any) {
         let pointsFromLeftToRight = displayablePoints()
+        
+        /*
+         The first way: manually triggering the Audiograph by calling `.play`.
+         */
         audiograph.play(graphContent: Array(pointsFromLeftToRight))
     }
     

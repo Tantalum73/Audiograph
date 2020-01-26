@@ -48,6 +48,8 @@ public struct AudiographLocalizations {
         self.completionIndicationUtterance = completionIndicationUtterance
         self.accessibilityIndicationTitle = accessibilityIndicationTitle
     }
+    
+    public static let defaultEnglish = AudiographLocalizations(completionIndicationUtterance: "Complete", accessibilityIndicationTitle: "Play Audiograph")
 }
 
 /**

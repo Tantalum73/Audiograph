@@ -12,7 +12,7 @@ final class DataProcessor {
     var minFrequency: Frequency = 150
     var maxFrequency: Frequency = 2600
     
-    var playingDuration: PlayingDuration = .short
+    var playingDuration: PlayingDuration = .recommended
     
     var completion: (() -> Void)?
     

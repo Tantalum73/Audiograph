@@ -7,5 +7,7 @@
 */
 
 /* This phrase is read when the Audiograph has completed describing the chart using audio. Should be something like 'complete'. */
-
 "CHART_ACCESSIBILITY_AUDIOGRAPH_COMPLETION_PHREASE" = "fertig";
+
+/* The title of the accessibility action that starts playing the audiograph. 'Play audiograph.' for example. */
+"CHART_PLAY_AUDIOGRAPH_ACTION" = "Audiograph abspielen";

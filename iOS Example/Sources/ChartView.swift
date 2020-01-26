@@ -29,7 +29,13 @@ final class ChartView: UIView {
     weak var delegate: ChartViewDelegate?
     
     /// Responsible for playing audiograph. Must be held in memory.
-    let audiograph = Audiograph()
+    let audiograph: Audiograph = {
+        let completion = NSLocalizedString("CHART_ACCESSIBILITY_AUDIOGRAPH_COMPLETION_PHREASE", comment: "This phrase is read when the Audiograph has completed describing the chart using audio. Should be something like 'complete'.")
+        let indication = NSLocalizedString("CHART_PLAY_AUDIOGRAPH_ACTION", comment: "The title of the accessibility action that starts playing the audiograph. 'Play audiograph.' for example.")
+        let localizations = AudiographLocalizations(completionIndicationUtterance: completion, accessibilityIndicationTitle: indication)
+        
+        return Audiograph(localizations: localizations)
+    }()
     
     /// The color of the graph. Changes will be animated.
     var chartColor: UIColor = .red {

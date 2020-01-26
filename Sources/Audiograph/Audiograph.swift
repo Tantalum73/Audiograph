@@ -26,6 +26,30 @@ public enum PlayingDuration {
     case exactly(DispatchTimeInterval)
 }
 
+/// Indicates that this view is capable of playing an Audiograph. If so, it must provide the right data to the system but stopping the playback when the view loses focus is done automatically.
+public protocol AudiographPlayable: UIView, AudiographProvider {
+}
+
+/// The conformant object can provide the correct set of chart data to the Audiograph.
+public protocol AudiographProvider: AnyObject {
+    var graphContent: [CGPoint] { get }
+}
+
+/// A wrapper around localized strings used during discovery and playback of the chart.
+///
+/// Because Swift-PM projects can not contain .strings-files at the time of implementation, the phrase needs to be localized by the containing app.
+public struct AudiographLocalizations {
+    /// A phrase that is read when the Audiograph completes. Should say something like "complete".
+    let completionIndicationUtterance: String
+    /// This title is used as custom accessibility action title. Should say something like "Play Audiograph".
+    let accessibilityIndicationTitle: String
+    
+    public init(completionIndicationUtterance: String, accessibilityIndicationTitle: String) {
+        self.completionIndicationUtterance = completionIndicationUtterance
+        self.accessibilityIndicationTitle = accessibilityIndicationTitle
+    }
+}
+
 /**
  Provides API to create and play an Audiograph from a given set of points. Those points define given frequencies at given times.
  
@@ -35,7 +59,7 @@ public enum PlayingDuration {
  
  The input is scaled to fit the desired duration and in between `minFrequency` and `maxFrequency`, which can be configured as well.
  */
-@objc public final class Audiograph: NSObject {
+public final class Audiograph {
     /// The minimum frequency of the Audiograph. The lowest data point will be represented using this frequency.
     public var minFrequency: Float32 {
         get { dataProcessor.minFrequency }
@@ -56,16 +80,6 @@ public enum PlayingDuration {
     public var playingDuration: PlayingDuration {
         get { dataProcessor.playingDuration }
         set { dataProcessor.playingDuration = newValue }
-    }
-    
-    /**
-     A phrase that is read when the Audiograph completes. Defaults to "complete".
-     
-     Because Swift-PM projects can not contain .strings-files at the time of implementation, the phrase needs to be localized by the containing app.
-     */
-    public var completionIndicationUtterance: String {
-        get { synthesizer.completionIndicationString }
-        set { synthesizer.completionIndicationString = newValue }
     }
     
     /**
@@ -96,9 +110,31 @@ public enum PlayingDuration {
     private let preprocessingQueue = DispatchQueue(label: "de.anerma.Audiograph.PreprocessingQueue", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: .global())
     private let synthesizer = Synthesizer()
     private let dataProcessor = DataProcessor()
+    private let localizationConfigurations: AudiographLocalizations
     
-    public override init() {
-        super.init()
+    private weak var chartView: AudiographPlayable?
+    private weak var chartDataProvider: AudiographProvider?
+
+    //TODO: Documentation
+    public init(localizations: AudiographLocalizations) {
+        self.localizationConfigurations = localizations
+        synthesizer.completionIndicationString = localizations.completionIndicationUtterance
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    // MARK: - Public Functions
+    public func createCustomAccessibilityAction(using dataProvider: AudiographProvider) -> UIAccessibilityCustomAction {
+        chartDataProvider = dataProvider
+        let title = localizationConfigurations.accessibilityIndicationTitle
+        
+        return UIAccessibilityCustomAction(name: title, target: self, selector: #selector(playAudiographUsingDataProvider))
+    }
+    
+    public func createCustomAccessibilityAction(for chartView: AudiographPlayable) -> UIAccessibilityCustomAction {
+        self.chartView = chartView
+        return createCustomAccessibilityAction(using: chartView)
     }
     
     /// Call this function to compute and play the Audiograph for the given input. Computation of the data is done on a separate worker queue. Playback start immediately after processing data is done.
@@ -135,10 +171,38 @@ public enum PlayingDuration {
     }
     
     public func stop() {
-        // TODO: also stop processing when async processing is implemented.
+        // TODO: also stop processing when the queue is currently preparing the data.
+        
         synthesizer.stop()
     }
     
+    // MARK: - Private Configurations
+    
+    /// Plays the Audiograph using the data points presented by the current `chartDataProvider`.
+    @objc private func playAudiographUsingDataProvider() {
+        guard let provider = chartDataProvider,
+            !provider.graphContent.isEmpty else { return }
+        
+        play(graphContent: provider.graphContent)
+    }
+    
+    /// Adds a receiver to the notification that changes focus of the accessibility element. When the current `chartView` loses focus playing the Audiograph is stopped.
+    /// Only works when `chartView` is set to the correct view.
+    private func setupLoseFocusNotificationObservation() {
+        if #available(iOS 9.0, *) {
+            NotificationCenter.default.addObserver(forName: UIAccessibility.elementFocusedNotification, object: nil, queue: nil) { [weak self] notification in
+                
+                guard let chartView = self?.chartView,
+                    let viewThatLostFocus =
+                    notification.userInfo?[UIAccessibility.unfocusedElementUserInfoKey] as? UIView,
+                    viewThatLostFocus === chartView else { return }
+                self?.stop()
+            }
+        }
+    }
+    
+    
+    // MARK: - Sanity Checking
     private func sanityCheckPassing(for information: AudioInformation) -> Bool {
         do {
             try dataProcessor.inputSanityCheck(for: information)

@@ -55,7 +55,7 @@ Now you have multiple options to play the Audiograph.
 The second option is only encouraged if you exactly know when to play the Audiograph. In any other cases, option one will work best for you.
 
 In order to make use of the system, start making you chart conform to `AudiographPlayable`.  
-When doing so, the view can deliver data points by setting `graphContent` to the [CGPoint]s that are also used to draw the UI.
+When doing so, the view can deliver data points by setting `graphContent` to the `[CGPoint]`s that are also used to draw the UI.
 
 When you configure the accessibility attributes, make sure to use `audiograph.createCustomAccessibilityAction(for: )` as a custom action:
 

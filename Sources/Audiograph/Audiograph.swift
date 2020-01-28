@@ -117,7 +117,13 @@ public final class Audiograph {
     private weak var chartView: AudiographPlayable?
     private weak var chartDataProvider: AudiographProvider?
 
-    //TODO: Documentation
+    
+    /// Creates an instance of Audiograph. The localizations passed in are used to improve the Audiograph experience.
+    ///
+    /// Use a custom accessibility action retrieved from `Audiograph.createCustomAccessibilityAction(using:)` or `Audiograph.createCustomAccessibilityAction(for:)` in your view. This will play the Audiograph automatically.
+    ///
+    ///Audiograph can also be started by calling `Audiograph.play(graphContent:completion:)` passing in the points that are used to draw the UI.
+    /// - Parameter localizations: <#localizations description#>
     public init(localizations: AudiographLocalizations) {
         self.localizationConfigurations = localizations
         synthesizer.completionIndicationString = localizations.completionIndicationUtterance
@@ -173,8 +179,6 @@ public final class Audiograph {
     }
     
     public func stop() {
-        // TODO: also stop processing when the queue is currently preparing the data.
-        
         synthesizer.stop()
     }
     

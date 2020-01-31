@@ -84,37 +84,37 @@ final class AudiographTests: XCTestCase {
     
     
     func test_edgeCaseNoCrash_NoInput() {
-        let audiograph = Audiograph()
+        let audiograph = Audiograph(localizations: .defaultEnglish)
         
         let input = [CGPoint]()
         audiograph.play(graphContent: input)
     }
     func test_edgeCaseNoCrash_OneInput() {
-        let audiograph = Audiograph()
+        let audiograph = Audiograph(localizations: .defaultEnglish)
         
         let input = [CGPoint(x: 10, y: 10)]
         audiograph.play(graphContent: input)
     }
     func test_edgeCaseNoCrash_input_zero() {
-        let audiograph = Audiograph()
+        let audiograph = Audiograph(localizations: .defaultEnglish)
         
         let input = [CGPoint(x: 0, y: 0)]
         audiograph.play(graphContent: input)
     }
     func test_edgeCaseNoCrash_inputTimes_negative() {
-        let audiograph = Audiograph()
+        let audiograph = Audiograph(localizations: .defaultEnglish)
         
         let input = [CGPoint(x: -10, y: 10)]
         audiograph.play(graphContent: input)
     }
     func test_edgeCaseNoCrash_inputFrequency_negative() {
-        let audiograph = Audiograph()
+        let audiograph = Audiograph(localizations: .defaultEnglish)
         
         let input = [CGPoint(x: 10, y: -10)]
         audiograph.play(graphContent: input)
     }
     func test_edgeCaseNoCrash_noTimeDifference() {
-        let audiograph = Audiograph()
+        let audiograph = Audiograph(localizations: .defaultEnglish)
         
         let input = [CGPoint(x: 10, y: 10),
                      CGPoint(x: 10, y: 20)]
@@ -122,7 +122,7 @@ final class AudiographTests: XCTestCase {
     }
     
     func test_edgeCaseNoCrash_noFrequencyDifference() {
-        let audiograph = Audiograph()
+        let audiograph = Audiograph(localizations: .defaultEnglish)
         
         let input = [CGPoint(x: 10, y: 10),
                      CGPoint(x: 20, y: 10)]
@@ -130,7 +130,7 @@ final class AudiographTests: XCTestCase {
     }
     
     func test_edgeCaseNoCrash_sameDataMultipleTimes() {
-        let audiograph = Audiograph()
+        let audiograph = Audiograph(localizations: .defaultEnglish)
         
         let input = [
             CGPoint(x: 10, y: 10),
@@ -141,7 +141,7 @@ final class AudiographTests: XCTestCase {
     }
     
     func test_edgeCaseNoCrash_inputNotSorted() {
-        let audiograph = Audiograph()
+        let audiograph = Audiograph(localizations: .defaultEnglish)
         
         let input = [
             CGPoint(x: 10, y: 10),
@@ -154,7 +154,7 @@ final class AudiographTests: XCTestCase {
     // MARK: - Performance
     func test_performance_realData() {
         let points = TestData.points
-        let audiograph = Audiograph()
+        let audiograph = Audiograph(localizations: .defaultEnglish)
         
         let options: XCTMeasureOptions = XCTMeasureOptions()
         options.iterationCount = 11

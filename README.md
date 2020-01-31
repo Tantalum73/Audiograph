@@ -8,30 +8,22 @@ Audio-Feedback on Charts for visually impaired Users
 **Please** provide feedback on the API, its integration, documentation and examples! :)
 
 ## Background
-iOS 13 introduced an awesome way to provide stocks-charts to visually impaired users. Using a custom accessibility-rotor they are providing spoken chart analysis and an audiograph that renders the chart by using audio. That's the most accurate way of describing a chart that otherwise would only available visually.  
+iOS 13 introduced an awesome way to provide stocks-charts to visually impaired users. Using a custom accessibility-rotor they are providing spoken chart analysis and an audiograph that renders the chart by using audio. That's the most accurate way of describing a chart that otherwise would only be available visually.  
 Take a look at the following video if you haven't tried it out yourself:
 
 <a href="https://anerma.de/uploads/iOS_13_Audiograph.mp4"><img height=600 src="Media/iOS_13_preview.png" alt="Screenshot" /></a>
 
 ## Audiograph
-Unfortunately there is no public API from Apple that enables developers to implement it in their apps (yet). I think that charts can provide a great way of presenting information, but we should not limit their use to those users without impairments.  
+Unfortunately there is no public API from Apple that enables developers to implement it in their apps (yet). I think that charts can provide a great way of presenting information, but we should not limit their use to those without impairments.  
 This is where Audiograph comes into play:
 
 <a href="https://anerma.de/uploads/Audiograph_Demo_small.mp4"><img height=600 src="Media/Audiograph_preview.png" alt="Screenshot" /></a>
 
 ## Example
 The example app provides many things related to presenting a cool chart. I wrote about the chart in my [blog](https://anerma.de/blog/tear-down-trade-republic-charts). However, this project is about accessibility.  
-You can find everything related to accessibility in the file `ChartView+Accessibility`.
+You can find everything related to accessibility in the file `ChartView+Accessibility.swift`.
 
 To run the example project, clone this repo, and open iOS Example.xcworkspace from the iOS Example directory.
-
-## Points to improve on the next Iteration
-* [x] Computing samples on a background queue
-* [x] Remove debug print statements
-* [x] Performance tests and analysis
-* [ ] Design a cool icon (because all OS projects need a logo, obviously)
-
-A version 1.0 will not launch until those points are addressed.
 
 ## Usage
 After stating `import Audiograph` you can initialize Audiograph with localized phrases. Those phrases will improve  the experience of your users.  
@@ -54,7 +46,7 @@ Now you have multiple options to play the Audiograph.
 
 The second option is only encouraged if you exactly know when to play the Audiograph. In any other cases, option one will work best for you.
 
-In order to make use of the system, start making you chart conform to `AudiographPlayable`.  
+In order to make use of the system, start making your chart conform to `AudiographPlayable`.  
 When doing so, the view can deliver data points by setting `graphContent` to the `[CGPoint]`s that are also used to draw the UI.
 
 When you configure the accessibility attributes, make sure to use `audiograph.createCustomAccessibilityAction(for: )` as a custom action:
@@ -101,7 +93,7 @@ public enum PlayingDuration {
 * `.long`: The maximum duration. Depending on your input it might produce a great deal of samples which introduces memory pressure.
 * `.exactly`: Specify the exact amount of time the playback should take. The longer it takes the more samples need to be stored in memory: *With great power comes great responsibility.*
 
-The above options (with exception of `.exactly`) are **a suggestion only**. The final Audiograph might take longer depending on the input. It is ensured that each segment has enough time to play so that the user is able to hear the difference between two points of the graph.  
+The above options (with exception of `.exactly`) act as **suggestions only**. The final Audiograph might take longer depending on the input. It is ensured that each segment has enough time to play so that the user is able to hear the difference between two points of the graph.  
 However, some data points might be dropped in order to keep the playback duration within a reasonable range.
 
 ### Frequencies

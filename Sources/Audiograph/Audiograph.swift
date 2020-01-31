@@ -32,6 +32,7 @@ public protocol AudiographPlayable: UIView, AudiographProvider {
 
 /// The conformant object can provide the correct set of chart data to the Audiograph.
 public protocol AudiographProvider: AnyObject {
+    /// The points that will participate in the Audiograph. They most likely will be the same as used to draw the chart UI.
     var graphContent: [CGPoint] { get }
 }
 

@@ -37,7 +37,9 @@ final class ChartView: UIView {
         let indication = NSLocalizedString("CHART_PLAY_AUDIOGRAPH_ACTION", comment: "The title of the accessibility action that starts playing the audiograph. 'Play audiograph.' for example.")
         let localizations = AudiographLocalizations(completionIndicationUtterance: completion, accessibilityIndicationTitle: indication)
         
-        return Audiograph(localizations: localizations)
+        let audiograph = Audiograph(localizations: localizations)
+        audiograph.printDiagnostics = true
+        return audiograph
     }()
     
     /// The color of the graph. Changes will be animated.

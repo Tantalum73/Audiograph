@@ -99,7 +99,11 @@ public final class Audiograph {
     }
     
     /// If set, errors are printed to standard-output for the programmer to diagnose what went wrong. Those log statements can be suppressed as needed.
-    public var printDiagnostics = true
+    public var printDiagnostics = true {
+        didSet {
+            Logger.shared.loggingEnabled = printDiagnostics
+        }
+    }
     
     /// Called when processing data is completed. Will be called on the main queue.
     var processingCompletion: (() -> Void)? {
@@ -180,6 +184,8 @@ public final class Audiograph {
     
     public func stop() {
         synthesizer.stop()
+        
+//        NotificationCenter.default.post(name: <#T##NSNotification.Name#>, object: <#T##Any?#>)
     }
     
     // MARK: - Private Configurations

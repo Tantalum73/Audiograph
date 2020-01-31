@@ -55,8 +55,6 @@ final class FrequencyGenerator: Sequence, IteratorProtocol {
             }
         }
         
-        print("Min segment duration: \(segmentDurations.min()!)")
-        print("max segment duration: \(segmentDurations.max()!)")
         self.frequencies = frequencies
     }
     

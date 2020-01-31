@@ -91,7 +91,7 @@ final class Synthesizer: NSObject {
             rightChannel?[index] = sample
         }
         playerNode.scheduleBuffer(buffer) {
-            print("Completed")
+            Logger.shared.log(message: "Complete.")
             if !self.stoppedByUser {
                 self.readDelayedCompletionUtterance()
             }
@@ -122,7 +122,7 @@ final class Synthesizer: NSObject {
         do {
             try audioEngine.start()
         } catch {
-            print("AudioEngine didn't start")
+            Logger.shared.log(message: "AudioEngine didn't start")
         }
     }
     

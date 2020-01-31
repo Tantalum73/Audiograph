@@ -61,7 +61,7 @@ final class DataProcessor {
    
     private func scaleTimesInPlace(desiredDuration: TimeInterval) throws {
         let duration = min(desiredDuration, maximumPlayingDuration)
-        print("Setting desired duration to \(duration) instead of \(desiredDuration)")
+        Logger.shared.log(message: "Setting desired duration to \(duration) instead of \(desiredDuration)")
         
         try performScalingInPlace(toFit: duration)
     }
@@ -69,9 +69,11 @@ final class DataProcessor {
     private func performScalingInPlace(toFit desiredDuration: TimeInterval) throws {
         // At this point the desired duration is already <= maximum duration
         
-        print("Before scaling, duration is \(currentRelativeTimes.playingDuration())s")
+        Logger.shared.log(message: "Before scaling, duration is \(currentRelativeTimes.playingDuration())s")
         scaleCurrentTimesInPlace(toFit: desiredDuration)
-        print("After scaling, duration is \(currentRelativeTimes.playingDuration())s")
+        
+        Logger.shared.log(message: "After scaling, duration is \(currentRelativeTimes.playingDuration())s")
+
         
         try enlargedAndScaledSoThatSegmentDurationIsLongEnoughInPlace(desiredDuration: desiredDuration)
     }
@@ -80,15 +82,15 @@ final class DataProcessor {
 
         if let neccessaryExtension = try currentPlayingDurationExtensionIfNeccessary(toMeet: desiredDuration) {
             let newDesiredDuration = desiredDuration + neccessaryExtension
-            print("Duration of \(desiredDuration)s was too short to match minimum segment size.")
-            print("Enlarging it to \(newDesiredDuration)s")
+            Logger.shared.log(message: "Duration of \(desiredDuration)s was too short to match minimum segment size.")
+            Logger.shared.log(message: "Enlarging it to \(newDesiredDuration)s")
             
             // Trim if the neccessary duration would be too long:
             if newDesiredDuration > maximumPlayingDuration {
                 let beforeCount = currentRelativeTimes.count
                 removeElementsInPlace(level: 10)
                 
-                print("Removed \(beforeCount - currentRelativeTimes.count) elements from \(beforeCount)")
+                Logger.shared.log(message: "Removed \(beforeCount - currentRelativeTimes.count) elements from \(beforeCount)")
                 
                 try scaleTimesInPlace(desiredDuration: newDesiredDuration)
             }
@@ -109,7 +111,8 @@ final class DataProcessor {
         var minContainedFrequency = currentFrequencies.min() ?? 0
         
         if abs(maxContainedFrequency - minContainedFrequency) < 0.003 {
-            print("⚠️ The data does not contain frequencies that are distinct enough from each other!")
+            Logger.shared.log(message: "⚠️ The data does not contain frequencies that are distinct enough from each other!")
+            
             maxContainedFrequency = 1
             minContainedFrequency = 0
         }
@@ -126,7 +129,7 @@ final class DataProcessor {
         var minContainedRelativeTime = currentRelativeTimes.min() ?? 0
         
         if abs(maxContainedRelativeTime - minContainedRelativeTime) < 0.003 {
-            print("⚠️ The data does not contain timestamps that are distinct enough from each other!")
+            Logger.shared.log(message: "⚠️ The data does not contain timestamps that are distinct enough from each other!")
             maxContainedRelativeTime = 1
             minContainedRelativeTime = 0
         }
@@ -175,8 +178,8 @@ final class DataProcessor {
             minSegmentDurationForDiagnostics = min(minSegmentDurationForDiagnostics, segmentDuration)
         }
         
-        print("Minimum segment duration: \(minSegmentDurationForDiagnostics)")
-        print("suggesting a playing duration of \(suggestedPlayingDuration), requested: \(requestedDuaration)")
+        Logger.shared.log(message: "Minimum segment duration: \(minSegmentDurationForDiagnostics)")
+        Logger.shared.log(message: "suggesting a playing duration of \(suggestedPlayingDuration), requested: \(requestedDuaration)")
         let difference = requestedDuaration - suggestedPlayingDuration
         return difference < 0 ? -difference : nil
     }

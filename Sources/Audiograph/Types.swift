@@ -19,6 +19,10 @@ typealias RelativeTime = Double
 typealias Sample = Float32
 typealias Samples = [Sample]
 
+extension NSNotification.Name {
+    static let StopAudiograph = "de.anerma.stopAudiograph"
+}
+
 struct GraphElement {
     let relativeTime: RelativeTime
     let frequency: Frequency

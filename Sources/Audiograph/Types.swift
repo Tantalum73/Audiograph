@@ -7,12 +7,7 @@
 //
 
 import Foundation
-#if !os(macOS)
 import UIKit
-#endif
-#if os(macOS)
-import AppKit
-#endif
 
 typealias Frequency = Float32
 typealias RelativeTime = Double
@@ -20,7 +15,7 @@ typealias Sample = Float32
 typealias Samples = [Sample]
 
 extension NSNotification.Name {
-    static let StopAudiograph = "de.anerma.stopAudiograph"
+    static let stopAudiograph = Notification.Name("de.anerma.Audiograph.stop")
 }
 
 struct GraphElement {

@@ -8,7 +8,12 @@
 
 import Foundation
 
+/// This class is responsible for translating `Audioinformation` into `Samples` that can then be used by the synthesizer to play the audio.
+/// An internal frequency generator emits the frequencies used to generate samples.
+///
+/// Stoppable because the internal frequency generator is stoppable and won't produce any more frequencies after `Notification.Name.stopAudiograph` was received.
 final class SoundGenerator {
+    
     /// Final volume is set to a default level. This property can be changed to influence that loudness volume. The final volume is computed by multiplying the default volumen by that correction.
     var volumeCorrectionFactor: Float32
     

@@ -7,12 +7,7 @@
 //
 
 import Foundation
-#if canImport(UIKit)
 import UIKit
-#endif
-#if os(macOS)
-import AppKit
-#endif
 
 /// Specify the desired playing duration of the Audiograph.
 public enum PlayingDuration {
@@ -184,9 +179,7 @@ public final class Audiograph {
     }
     
     public func stop() {
-        synthesizer.stop()
-        
-//        NotificationCenter.default.post(name: <#T##NSNotification.Name#>, object: <#T##Any?#>)
+        NotificationCenter.default.post(name: .stopAudiograph, object: nil)
     }
     
     // MARK: - Private Configurations

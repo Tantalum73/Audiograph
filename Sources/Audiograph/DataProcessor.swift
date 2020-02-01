@@ -8,6 +8,13 @@
 
 import Foundation
 
+/**
+ This class is responsible for pre-processing chart data so that `AudioInformation` are produced, that are directly interpretable by the `Synthesizer`.
+ 
+ By scaling the frequencies, the configurable `minFrequency` and `maxFrequency` is used. For scaling the time, a `playingDuration` can give suggestions to the playing duration. When scaling time, it is ensured that each chart segment (the line between two points) will have enough playback duration to per perceivable by the user.
+ If that's not possible, the entire playback duration is increased until every segment is long enough.
+ Eventually the entire duration would simply take too long. In this case, some graph points are dropped in order to fulfill the requirements.
+ */
 final class DataProcessor {
     var minFrequency: Frequency = 150
     var maxFrequency: Frequency = 2600
@@ -31,6 +38,10 @@ final class DataProcessor {
         
     private var currentRelativeTimes = [RelativeTime]()
     private var currentFrequencies = [Frequency]()
+    
+    init() {
+        NotificationCenter.default.addObserver(self, selector: #selector(stopNotificationReceived), name: .stopAudiograph, object: nil)
+    }
     
     func scaledInFrequencyAndTime(information: AudioInformation) throws -> AudioInformation {
         
@@ -57,6 +68,10 @@ final class DataProcessor {
         guard information.count > 1 else {
             throw SanityCheckError.inputTooShort
         }
+    }
+    
+    @objc private func stopNotificationReceived() {
+        
     }
    
     private func scaleTimesInPlace(desiredDuration: TimeInterval) throws {

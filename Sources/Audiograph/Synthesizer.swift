@@ -8,13 +8,13 @@
 
 import Foundation
 import AVFoundation
-#if canImport(UIKit)
 import UIKit
-#endif
-#if os(macOS)
-import AppKit
-#endif
 
+/// This class plays `AudioInformation` that it receives through a call to `Synthesizer.playScaledContent(_:)`. The content needs to be scaled in frequency and time. Corresponding samples will be derived and played.
+///
+/// It's possible to specify for example the phrase that is read when playing the Audiograph is completed or providing a custom loudness-factor.
+///
+/// Stoppable by receiving a notification with name `Notification.Name.stopAudiograph`.
 final class Synthesizer: NSObject {
     /// Called when playing the audio samples has completed with `true`, when stopped or an error occured with argument set to `false`. Called on the main queue. Will be discarded when called once.
     var completion: ((_ success: Bool) -> Void)?
@@ -40,10 +40,9 @@ final class Synthesizer: NSObject {
         
         configureEngine()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(Synthesizer.audioEngineConfigurationChange(_:)), name: NSNotification.Name.AVAudioEngineConfigurationChange, object: audioEngine)
-        #if canImport(UIKit)
-            NotificationCenter.default.addObserver(self, selector: #selector(Synthesizer.stop), name: UIApplication.willResignActiveNotification, object: nil)
-        #endif
+        NotificationCenter.default.addObserver(self, selector: #selector(Synthesizer.audioEngineConfigurationChange(_:)), name: .AVAudioEngineConfigurationChange, object: audioEngine)
+        NotificationCenter.default.addObserver(self, selector: #selector(Synthesizer.stop), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Synthesizer.stop), name: .stopAudiograph, object: nil)
         
         speechSynthesizer.delegate = self
     }

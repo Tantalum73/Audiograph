@@ -21,5 +21,5 @@ When you commit a change, please add a note to [CHANGELOG.md](CHANGELOG.md).
    1. `pod trunk push`
 4. Create Carthage binaries
    1. `carthage build --no-skip-current`
-   2. `carthage archive __PROJECT_NAME__`
+   2. `carthage archive Audiograph`
    3. Add to the GitHub release

@@ -4,7 +4,6 @@ Audio-Feedback on Charts for visually impaired Users
 ![GitHub tag (0.1.0)](https://img.shields.io/github/v/tag/Tantalum73/Audiograph)
 [![License](https://img.shields.io/github/license/Tantalum73/Audiograph)](LICENSE)
 
-**Currently, CocoaPods is not supported, as this is a private repo.**  
 **Please** provide feedback on the API, its integration, documentation and examples! :)
 
 ## Background

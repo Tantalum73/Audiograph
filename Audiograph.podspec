@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Audiograph'
-  s.version          = '0.1.0'
+  s.version          = '0.3.0'
   s.summary          = 'Audio-Feedback on Charts for visually impaired Users'
 
 # This description is used to generate tags and improve search results.
@@ -18,17 +18,21 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+iOS 13 introduced an awesome way to provide stocks-charts to visually impaired users.
+Unfortunately there is no public API from Apple that enables developers to implement it in other apps (yet).
+
+I think that charts can provide a great way of presenting information, but we should not limit their use to those without impairments.
+This is where Audiograph comes into play.
                        DESC
 
   s.homepage         = 'https://github.com/Tantalum73/Audiograph'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
+  s.screenshots     = 'https://github.com/Tantalum73/Audiograph/raw/master/Media/Audiograph_preview.png'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Andreas Neusüß' => 'developer@anerma.de' }
   s.source           = { :git => 'https://github.com/Tantalum73/Audiograph.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/Klaarname'
 
-  s.ios.deployment_target = '13.0'
+  s.ios.deployment_target = '10.3'
   s.swift_version = "5.1"
 
   s.source_files = 'Sources/Audiograph/*'
@@ -38,6 +42,6 @@ TODO: Add long description of the pod here.
   # }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
+  s.frameworks = 'UIKit', 'Foundation', 'AVFoundation'
   # s.dependency 'AFNetworking', '~> 2.3'
 end

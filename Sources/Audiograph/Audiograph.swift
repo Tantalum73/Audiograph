@@ -59,12 +59,12 @@ public struct AudiographLocalizations {
  */
 public final class Audiograph {
     /// The minimum frequency of the Audiograph. The lowest data point will be represented using this frequency.
-    public var minFrequency: Float32 {
+    public var minFrequency: Double {
         get { dataProcessor.minFrequency }
         set { dataProcessor.minFrequency = newValue }
     }
     /// The maximum frequency of the Audiograph. The largest data point will be represented using this frequency.
-    public var maxFrequency: Float32 {
+    public var maxFrequency: Double {
         get { dataProcessor.maxFrequency }
         set { dataProcessor.maxFrequency = newValue }
     }
@@ -89,7 +89,7 @@ public final class Audiograph {
      
      When running unit tests, for example, that value might be set to 0 in order to avoid unnecessary sound.
      */
-    public var volumeCorrectionFactor: Float32 {
+    public var volumeCorrectionFactor: Double {
         get { synthesizer.volumeCorrectionFactor }
         set { synthesizer.volumeCorrectionFactor = max(min(newValue, 2), 0) }
     }

@@ -18,7 +18,7 @@ import UIKit
 final class Synthesizer: NSObject {
     /// Called when playing the audio samples has completed with `true`, when stopped or an error occured with argument set to `false`. Called on the main queue. Will be discarded when called once.
     var completion: ((_ success: Bool) -> Void)?
-    var volumeCorrectionFactor: Float32 = 1.0
+    var volumeCorrectionFactor: Double = 1.0
     
     /// This word is read after the Audiograph has finished playing.
     var completionIndicationString: String = "Complete"
@@ -86,8 +86,9 @@ final class Synthesizer: NSObject {
         let rightChannel = buffer.floatChannelData?[1]
         // Copy into the buffer:
         for (index, sample) in bufferContent.enumerated() {
-            leftChannel?[index] = sample
-            rightChannel?[index] = sample
+            // Converting to Float at the latest possible moment:
+            leftChannel?[index] = Float32(sample)
+            rightChannel?[index] = Float32(sample)
         }
         playerNode.scheduleBuffer(buffer) {
             Logger.shared.log(message: "Complete.")

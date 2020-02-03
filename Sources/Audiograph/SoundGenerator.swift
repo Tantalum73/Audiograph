@@ -15,13 +15,13 @@ import Foundation
 final class SoundGenerator {
     
     /// Final volume is set to a default level. This property can be changed to influence that loudness volume. The final volume is computed by multiplying the default volumen by that correction.
-    var volumeCorrectionFactor: Float32
+    var volumeCorrectionFactor: Double
     
     private let sampleRate: Double
     
     private var currentPhi: Sample = 0
     
-    init(sampleRate: Double, volumeCorrectionFactor: Float32) {
+    init(sampleRate: Double, volumeCorrectionFactor: Double) {
         self.sampleRate = sampleRate
         self.volumeCorrectionFactor = volumeCorrectionFactor
     }

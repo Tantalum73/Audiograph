@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-typealias Frequency = Float32
+typealias Frequency = Double
 typealias RelativeTime = Double
-typealias Sample = Float32
+typealias Sample = Double
 typealias Samples = [Sample]
 
 extension NSNotification.Name {
@@ -24,7 +24,7 @@ struct GraphElement {
     
     init(from point: CGPoint) {
         relativeTime = Double(point.x)
-        frequency = Float(point.y)
+        frequency = Frequency(point.y)
     }
     init(relativeTime: RelativeTime, frequency: Frequency) {
         self.relativeTime = relativeTime

@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 Audiograph adheres to [Semantic Versioning](http://semver.org/).
 
 ## Next Release:
+- Improved audio experience by using Double instead of Float32.
+- Fixed a bug where the playback in .recommended duration only took the minimum amount of time possible.
 
 ## 0.3.0 (02.02.2020):
 - Introduction of `completionIndicationUtterance` to indicate verbally that Audiograph has finished.

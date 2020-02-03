@@ -103,7 +103,7 @@ final class DataProcessor {
             // Trim if the neccessary duration would be too long:
             if newDesiredDuration > maximumPlayingDuration {
                 let beforeCount = currentRelativeTimes.count
-                removeElementsInPlace(level: 10)
+                removeElementsInPlace(level: 30)
                 
                 Logger.shared.log(message: "Removed \(beforeCount - currentRelativeTimes.count) elements from \(beforeCount)")
                 

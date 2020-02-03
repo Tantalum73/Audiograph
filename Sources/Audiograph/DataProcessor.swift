@@ -133,6 +133,8 @@ final class DataProcessor {
                 Logger.shared.log(message: "Removed \(beforeCount - currentRelativeTimes.count) elements from \(beforeCount)")
                 
             }
+            // Try to scale again but now into the suggested/instrinsic duration:
+            try scaleTimes(desiredDuration: newDesiredDuration)
         }
     }
     

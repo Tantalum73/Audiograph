@@ -101,7 +101,7 @@ final class Synthesizer: NSObject {
     }
     
     private func readDelayedCompletionUtterance() {
-        guard !completionIndicationString.isEmpty else {
+        guard !completionIndicationString.isEmpty, volumeCorrectionFactor != 0 else {
             DispatchQueue.main.async {
                 self.callCompletionAndReset(completedSuccessfully: true)
             }

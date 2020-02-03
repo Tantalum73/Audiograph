@@ -52,8 +52,8 @@ final class DataProcessor {
         currentFrequencies = information.frequencies
         currentRelativeTimes = information.relativeTimes
 
-        try scaleTimesInPlace(desiredDuration: requestedPlayingDuration())
-        scaleCurrentFrequenciesInPlace()
+        try scaleTimes(desiredDuration: requestedPlayingDuration())
+        scaleCurrentFrequencies()
         
         return AudioInformation(relativeTimes: currentRelativeTimes, frequencies: currentFrequencies)
     }
@@ -74,26 +74,25 @@ final class DataProcessor {
         
     }
    
-    private func scaleTimesInPlace(desiredDuration: TimeInterval) throws {
+    private func scaleTimes(desiredDuration: TimeInterval) throws {
         let duration = min(desiredDuration, maximumPlayingDuration)
         Logger.shared.log(message: "Setting desired duration to \(duration) instead of \(desiredDuration)")
         
-        try performScalingInPlace(toFit: duration)
+        try performScaling(toFit: duration)
     }
     
-    private func performScalingInPlace(toFit desiredDuration: TimeInterval) throws {
-        // At this point the desired duration is already <= maximum duration
+    private func performScaling(toFit desiredDuration: TimeInterval) throws {
         
         Logger.shared.log(message: "Before scaling, duration is \(currentRelativeTimes.playingDuration())s")
-        scaleCurrentTimesInPlace(toFit: desiredDuration)
+        scaleCurrentTimes(toFit: desiredDuration)
         
         Logger.shared.log(message: "After scaling, duration is \(currentRelativeTimes.playingDuration())s")
 
         
-        try enlargedAndScaledSoThatSegmentDurationIsLongEnoughInPlace(desiredDuration: desiredDuration)
+        try enlargedAndScaledSoThatSegmentDurationIsLongEnough(desiredDuration: desiredDuration)
     }
     
-    private func enlargedAndScaledSoThatSegmentDurationIsLongEnoughInPlace(desiredDuration: TimeInterval) throws {
+    private func enlargedAndScaledSoThatSegmentDurationIsLongEnough(desiredDuration: TimeInterval) throws {
 
         if let neccessaryExtension = try currentPlayingDurationExtensionIfNeccessary(toMeet: desiredDuration) {
             let newDesiredDuration = desiredDuration + neccessaryExtension
@@ -103,16 +102,16 @@ final class DataProcessor {
             // Trim if the neccessary duration would be too long:
             if newDesiredDuration > maximumPlayingDuration {
                 let beforeCount = currentRelativeTimes.count
-                removeElementsInPlace(level: 30)
+                removeElements(level: 30)
                 
                 Logger.shared.log(message: "Removed \(beforeCount - currentRelativeTimes.count) elements from \(beforeCount)")
                 
-                try scaleTimesInPlace(desiredDuration: newDesiredDuration)
+                try scaleTimes(desiredDuration: newDesiredDuration)
             }
         }
     }
     
-    private func removeElementsInPlace(level: Int) {
+    private func removeElements(level: Int) {
         let intermediary = zip(currentRelativeTimes, currentFrequencies).enumerated().compactMap { (offset, element) -> (RelativeTime, Frequency)? in
             return offset % level == 0 ? nil : element
         }
@@ -121,7 +120,7 @@ final class DataProcessor {
         currentFrequencies = intermediary.map { $0.1 }
     }
     
-    private func scaleCurrentFrequenciesInPlace() {
+    private func scaleCurrentFrequencies() {
         var maxContainedFrequency = currentFrequencies.max() ?? 0
         var minContainedFrequency = currentFrequencies.min() ?? 0
         
@@ -139,7 +138,7 @@ final class DataProcessor {
         }
     }
     
-    private func scaleCurrentTimesInPlace(toFit duration: TimeInterval) {
+    private func scaleCurrentTimes(toFit duration: TimeInterval) {
         var maxContainedRelativeTime = currentRelativeTimes.max() ?? 0
         var minContainedRelativeTime = currentRelativeTimes.min() ?? 0
         

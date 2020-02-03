@@ -28,7 +28,7 @@ final class DataProcessor {
     private var maximumPlayingDuration: TimeInterval {
         switch playingDuration {
         case .short:
-            return TimeInterval(dispatchTimeInterval: .seconds(2))
+            return TimeInterval(dispatchTimeInterval: .seconds(3))
         case .recommended:
             return TimeInterval(dispatchTimeInterval: .seconds(10))
         case .exactly(let duration):

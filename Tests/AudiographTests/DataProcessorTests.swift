@@ -30,7 +30,7 @@ final class DataProcessorTests: XCTestCase {
     func test_scalingFrequenciesMinMax() {
         dataProcessor.playingDuration = .short
         
-        let inputFrequencies: [Float] = [1, 2, 3]
+        let inputFrequencies: [Double] = [1, 2, 3]
         let inputTimes = [0.0, 0.3, 0.8]
         
         let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
@@ -43,7 +43,7 @@ final class DataProcessorTests: XCTestCase {
     func test_scaling_abbreviative() {
         dataProcessor.playingDuration = .short
         
-        let inputFrequencies: [Float] = [1, 2, 3]
+        let inputFrequencies: [Double] = [1, 2, 3]
         let inputTimes = [0.0, 5, 10]
         
         let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
@@ -54,7 +54,7 @@ final class DataProcessorTests: XCTestCase {
     func test_scaling_longEnough() {
         dataProcessor.playingDuration = .recommended
         
-        let inputFrequencies: [Float] = [1, 2, 3]
+        let inputFrequencies: [Double] = [1, 2, 3]
         let inputTimes = [0.0, 5, 10]
         
         let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
@@ -65,7 +65,7 @@ final class DataProcessorTests: XCTestCase {
     func test_scaling_10seconds() {
         dataProcessor.playingDuration = .exactly(.seconds(10))
         
-        let inputFrequencies: [Float] = [1, 2, 3]
+        let inputFrequencies: [Double] = [1, 2, 3]
         let inputTimes = [0.0, 5, 10]
         
         let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
@@ -76,7 +76,7 @@ final class DataProcessorTests: XCTestCase {
     func test_scaling_veryLong() {
         dataProcessor.playingDuration = .long
         
-        let inputFrequencies: [Float] = [1, 2, 3]
+        let inputFrequencies: [Double] = [1, 2, 3]
         let inputTimes = [0.0, 5, 10]
         
         let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
@@ -89,27 +89,27 @@ final class DataProcessorTests: XCTestCase {
     func test_scaling_capingAtMaximum_abbreviative() {
         dataProcessor.playingDuration = .short
         
-        var inputFrequencies: [Float] = []
+        var inputFrequencies: [Double] = []
         var inputTimes: [TimeInterval] = []
         for index in 0...200 {
-            inputFrequencies.append(Float(index))
+            inputFrequencies.append(Double(index))
             inputTimes.append(TimeInterval(index) / 10.0)
         }
         
         let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
         
         let result = try! dataProcessor.scaledInFrequencyAndTime(information: inputInformation)
-        XCTAssertEqual(result.count, 27)
-        // For .abbreviative, maximum duration is 4
-        assertFrequenciesAndTime(in: result, haveDurationOf: 4.0)
+        XCTAssertEqual(result.count, 40)
+        // For .abbreviative, maximum duration is 3
+        assertFrequenciesAndTime(in: result, haveDurationOf: 3.0)
     }
     func test_scaling_capingAtMaximum_longEnough() {
         dataProcessor.playingDuration = .recommended
         
-        var inputFrequencies: [Float] = []
+        var inputFrequencies: [Double] = []
         var inputTimes: [TimeInterval] = []
         for index in 0...2000 {
-            inputFrequencies.append(Float(index))
+            inputFrequencies.append(Double(index))
             inputTimes.append(TimeInterval(index) / 10.0)
         }
         
@@ -122,10 +122,10 @@ final class DataProcessorTests: XCTestCase {
     func test_scaling_capingAtMaximum_10seconds() {
         dataProcessor.playingDuration = .exactly(.seconds(10))
         
-        var inputFrequencies: [Float] = []
+        var inputFrequencies: [Double] = []
         var inputTimes: [TimeInterval] = []
         for index in 0...2000 {
-            inputFrequencies.append(Float(index))
+            inputFrequencies.append(Double(index))
             inputTimes.append(TimeInterval(index) / 10.0)
         }
         
@@ -139,17 +139,17 @@ final class DataProcessorTests: XCTestCase {
     func test_scaling_capingAtMaximum_whateverItTakes() {
         dataProcessor.playingDuration = .long
         
-        var inputFrequencies: [Float] = []
+        var inputFrequencies: [Double] = []
         var inputTimes: [TimeInterval] = []
         for index in 0...2000 {
-            inputFrequencies.append(Float(index))
+            inputFrequencies.append(Double(index))
             inputTimes.append(TimeInterval(index) / 10.0)
         }
         
         let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
         
         let result = try! dataProcessor.scaledInFrequencyAndTime(information: inputInformation)
-        XCTAssertEqual(result.count, 40)
+        XCTAssertEqual(result.count, 46)
 
         assertFrequenciesAndTime(in: result, haveDurationOf: 20)
     }

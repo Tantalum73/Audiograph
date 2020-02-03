@@ -25,7 +25,7 @@ final class AudiographTests: XCTestCase {
     let generator = SoundGenerator(sampleRate: 44100.0, volumeCorrectionFactor: 1)
     
     func test_indexOfLatestChangeInSign_whenEndIsPositive() {
-        let input: [Float32] = [-2, -1, 1, 2]
+        let input: [Double] = [-2, -1, 1, 2]
         let expectedRemovedElements = 2
         
         let resultIndex = input.numberOfElementsToRemovedUntilLatestChangeInSignTowardsPositive()
@@ -34,7 +34,7 @@ final class AudiographTests: XCTestCase {
     }
     
     func test_indexOfLatestChangeInSign_whenEndIsNegative() {
-        let input: [Float32] = [-2, -1, 1, 2, 1, -1]
+        let input: [Double] = [-2, -1, 1, 2, 1, -1]
         let expectedRemovedElements = 4
         
         let resultIndex = input.numberOfElementsToRemovedUntilLatestChangeInSignTowardsPositive()
@@ -42,7 +42,7 @@ final class AudiographTests: XCTestCase {
         XCTAssertEqual(resultIndex, expectedRemovedElements)
     }
     func test_indexOfLatestChangeInSign_whenNoChange_negative() {
-        let input: [Float32] = [-2, -1, -1, -2, -1, -1]
+        let input: [Double] = [-2, -1, -1, -2, -1, -1]
         let expectedRemovedElements: Int? = nil
         
         let resultIndex = input.numberOfElementsToRemovedUntilLatestChangeInSignTowardsPositive()
@@ -50,7 +50,7 @@ final class AudiographTests: XCTestCase {
         XCTAssertEqual(resultIndex, expectedRemovedElements)
     }
     func test_indexOfLatestChangeInSign_whenNoChange_positive() {
-        let input: [Float32] = [2, 1, 1, 2, 1, 1]
+        let input: [Double] = [2, 1, 1, 2, 1, 1]
         let expectedIndex: Int? = nil
         
         let resultIndex = input.numberOfElementsToRemovedUntilLatestChangeInSignTowardsPositive()
@@ -59,24 +59,24 @@ final class AudiographTests: XCTestCase {
     }
     
     func test_cutOffIndex_whenEndingOnPositive() {
-        var input: [Float32] = [-2, -1, 1, 2, 1]
-        let expect: [Float32] = [-2, -1, 0]
+        var input: [Double] = [-2, -1, 1, 2, 1]
+        let expect: [Double] = [-2, -1, 0]
         
         input.postprocess()
         XCTAssertEqual(input, expect)
     }
     
     func test_cutOffIndex_whenEndingOnNegative() {
-        var input: [Float32] = [-2, -1, 1, 2, 1, -1]
-        let expect: [Float32] = [-2, -1, 0]
+        var input: [Double] = [-2, -1, 1, 2, 1, -1]
+        let expect: [Double] = [-2, -1, 0]
         
         input.postprocess()
         XCTAssertEqual(input, expect)
     }
     
     func test_cutOffIndex_whenNoZeroIncluded() {
-        var input: [Float32] = [2, 1, 1, 2, 1, 1]
-        let expect: [Float32] = [2, 1, 1, 2, 1, 1, 0]
+        var input: [Double] = [2, 1, 1, 2, 1, 1]
+        let expect: [Double] = [2, 1, 1, 2, 1, 1, 0]
         
         input.postprocess()
         XCTAssertEqual(input, expect)
@@ -85,36 +85,42 @@ final class AudiographTests: XCTestCase {
     
     func test_edgeCaseNoCrash_NoInput() {
         let audiograph = Audiograph(localizations: .defaultEnglish)
+        audiograph.volumeCorrectionFactor = 0
         
         let input = [CGPoint]()
         audiograph.play(graphContent: input)
     }
     func test_edgeCaseNoCrash_OneInput() {
         let audiograph = Audiograph(localizations: .defaultEnglish)
+        audiograph.volumeCorrectionFactor = 0
         
         let input = [CGPoint(x: 10, y: 10)]
         audiograph.play(graphContent: input)
     }
     func test_edgeCaseNoCrash_input_zero() {
         let audiograph = Audiograph(localizations: .defaultEnglish)
+        audiograph.volumeCorrectionFactor = 0
         
         let input = [CGPoint(x: 0, y: 0)]
         audiograph.play(graphContent: input)
     }
     func test_edgeCaseNoCrash_inputTimes_negative() {
         let audiograph = Audiograph(localizations: .defaultEnglish)
+        audiograph.volumeCorrectionFactor = 0
         
         let input = [CGPoint(x: -10, y: 10)]
         audiograph.play(graphContent: input)
     }
     func test_edgeCaseNoCrash_inputFrequency_negative() {
         let audiograph = Audiograph(localizations: .defaultEnglish)
+        audiograph.volumeCorrectionFactor = 0
         
         let input = [CGPoint(x: 10, y: -10)]
         audiograph.play(graphContent: input)
     }
     func test_edgeCaseNoCrash_noTimeDifference() {
         let audiograph = Audiograph(localizations: .defaultEnglish)
+        audiograph.volumeCorrectionFactor = 0
         
         let input = [CGPoint(x: 10, y: 10),
                      CGPoint(x: 10, y: 20)]
@@ -123,6 +129,7 @@ final class AudiographTests: XCTestCase {
     
     func test_edgeCaseNoCrash_noFrequencyDifference() {
         let audiograph = Audiograph(localizations: .defaultEnglish)
+        audiograph.volumeCorrectionFactor = 0
         
         let input = [CGPoint(x: 10, y: 10),
                      CGPoint(x: 20, y: 10)]
@@ -131,6 +138,7 @@ final class AudiographTests: XCTestCase {
     
     func test_edgeCaseNoCrash_sameDataMultipleTimes() {
         let audiograph = Audiograph(localizations: .defaultEnglish)
+        audiograph.volumeCorrectionFactor = 0
         
         let input = [
             CGPoint(x: 10, y: 10),
@@ -142,6 +150,7 @@ final class AudiographTests: XCTestCase {
     
     func test_edgeCaseNoCrash_inputNotSorted() {
         let audiograph = Audiograph(localizations: .defaultEnglish)
+        audiograph.volumeCorrectionFactor = 0
         
         let input = [
             CGPoint(x: 10, y: 10),

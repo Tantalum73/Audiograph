@@ -15,6 +15,7 @@ typealias Sample = Double
 typealias Samples = [Sample]
 
 extension NSNotification.Name {
+    /// When this notification is sent, every component tries to abort the computation and/or stop the playback.
     static let stopAudiograph = Notification.Name("de.anerma.Audiograph.stop")
 }
 

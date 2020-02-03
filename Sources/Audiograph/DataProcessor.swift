@@ -120,7 +120,7 @@ final class DataProcessor {
     /// - Parameter desiredDuration: The duration that the playback should take.
     private func enlargedAndScaledSoThatSegmentDurationIsLongEnough(desiredDuration: TimeInterval) throws {
 
-        if let neccessaryExtension = try currentPlayingDurationExtensionIfNeccessary(toMeet: desiredDuration), neccessaryExtension > comparisonThreshold {
+        if let neccessaryExtension = try currentPlayingDurationExtensionIfNeccessary(toMeet: desiredDuration) {
             let newDesiredDuration = desiredDuration + neccessaryExtension
             Logger.shared.log(message: "Duration of \(desiredDuration)s was too short to match minimum segment size.")
             Logger.shared.log(message: "Enlarging it to \(newDesiredDuration)s")
@@ -198,7 +198,7 @@ final class DataProcessor {
     /// By applying that extenstion to the requested duration the requirement should be matched (xcept some rounding issues).
     /// - Parameter requestedDuaration: The duration the `currentRelativeTimes` should take, used to compute the difference needed to match the threshold.
     /// - Returns: A time interval that must be added to `requestedDuaration` or `nil` if no extension needs to be applied to match the threshold.
-    private func currentPlayingDurationExtensionIfNeccessary(toMeet requestedDuaration: TimeInterval) throws -> TimeInterval? {
+    func currentPlayingDurationExtensionIfNeccessary(toMeet requestedDuaration: TimeInterval) throws -> TimeInterval? {
         // Between each segment there should be at least 0.025 seconds == 250ms to get a good result.
         let minimumPlayingSegmentDuration: TimeInterval = 0.025
         let comparisonThreshold: TimeInterval = 0.0001

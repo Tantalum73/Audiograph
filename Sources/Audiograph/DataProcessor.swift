@@ -22,6 +22,7 @@ final class DataProcessor {
     var maxFrequency: Frequency = 2600
     
     var playingDuration: PlayingDuration = .recommended
+    var smoothing: SmoothingOption = .default
     
     var completion: (() -> Void)?
     
@@ -63,7 +64,8 @@ final class DataProcessor {
         
         currentFrequencies = information.frequencies
         currentRelativeTimes = information.relativeTimes
-
+        
+        applySmoothing()
         try scaleTimes(desiredDuration: requestedPlayingDuration())
         scaleCurrentFrequencies()
         
@@ -86,6 +88,27 @@ final class DataProcessor {
     
     @objc private func stopNotificationReceived() {
         shouldStopComputation = true
+    }
+    
+    private func applySmoothing() {
+        //TODO: remove when graphical prototyping is completed.
+        return
+        
+        let alpha: Double
+        switch smoothing {
+        case .none:
+            return
+        case .default:
+            alpha = 0.33
+        case .custom(let value):
+            alpha = max(min(value, 1), 0.0001)
+        }
+        
+        var output = currentRelativeTimes.first ?? 0
+        currentRelativeTimes = currentRelativeTimes.map({ timestamp -> RelativeTime in
+            output += alpha * (timestamp - output)
+            return output
+        })
     }
     
     /// **Starts** the scaling process of `currentRelativeTimes` into the specified `desiredDuration`. The parameter is only a suggestion as the final duration will be computed in progress.

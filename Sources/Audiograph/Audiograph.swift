@@ -21,6 +21,12 @@ public enum PlayingDuration {
     case exactly(DispatchTimeInterval)
 }
 
+public enum SmoothingOption {
+    case none
+    case `default`
+    case custom(Double)
+}
+
 /// Indicates that this view is capable of playing an Audiograph. If so, it must provide the right data to the system but stopping the playback when the view loses focus is done automatically.
 public protocol AudiographPlayable: UIView, AudiographProvider {
 }
@@ -78,6 +84,12 @@ public final class Audiograph {
     public var playingDuration: PlayingDuration {
         get { dataProcessor.playingDuration }
         set { dataProcessor.playingDuration = newValue }
+    }
+    
+    //TODO: does nothing yet until prototyping is not completed.
+    public var smoothing: SmoothingOption {
+        get { dataProcessor.smoothing }
+        set { dataProcessor.smoothing = newValue }
     }
     
     /**

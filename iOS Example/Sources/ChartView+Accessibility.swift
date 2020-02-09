@@ -18,7 +18,7 @@ import Audiograph
  */
 extension ChartView: AudiographPlayable {
     var graphContent: [CGPoint] {
-        scaledPoints
+        correctedPoints
     }
     var accessibilityLabelText: String { "Chart, price over time" }
     var accessibilityHintText: String { "Actions for playing Audiograph available." }

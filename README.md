@@ -123,7 +123,7 @@ If you are already using [CocoaPods](http://cocoapods.org), just add 'Audiograph
 If you are already using [Carthage](https://github.com/Carthage/Carthage), just add to your `Cartfile`:
 
 ```ogdl
-github "Tantalum73/Audiograph" ~> 0.1
+github "Tantalum73/Audiograph" ~> 0.3
 ```
 
 Then run `carthage update` to build the framework and drag the built `Audiograph`.framework into your Xcode project.

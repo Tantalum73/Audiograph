@@ -148,7 +148,7 @@ final class DataProcessor {
             // Trim if the neccessary duration would be too long:
             if newDesiredDuration > maximumPlayingDuration {
                 let beforeCount = currentRelativeTimes.count
-                removeElements(level: 20)
+                removeElements(level: 2)
                 
                 Logger.shared.log(message: "Removed \(beforeCount - currentRelativeTimes.count) elements from \(beforeCount)")
                 
@@ -158,13 +158,13 @@ final class DataProcessor {
         }
     }
     
+    /// Removes elements from `currentRelativeTimes` and `currentFrequencies`. Call this method when the data to not fit into the maximum playing duration. Consider it as last resort as it decreases resolution of the output.
+    /// - Parameter level: Determines how many elements should be removed. The bigger the more elements are deleted.
     private func removeElements(level: Int) {
-        let intermediary = zip(currentRelativeTimes, currentFrequencies).enumerated().compactMap { (offset, element) -> (RelativeTime, Frequency)? in
-            return offset % level == 0 ? nil : element
-        }
+        // Combine two data points to one, in both time and frequency.
         
-        currentRelativeTimes = intermediary.map { $0.0 }
-        currentFrequencies = intermediary.map { $0.1 }
+        currentRelativeTimes = currentRelativeTimes.chunkFromEveryNThElement(level, intoSize: 2).map{ $0.average() }
+        currentFrequencies = currentFrequencies.chunkFromEveryNThElement(level, intoSize: 2).map{ $0.average() }
     }
     
     private func scaleCurrentFrequencies() {

@@ -91,9 +91,6 @@ final class DataProcessor {
     }
     
     private func applySmoothing() {
-        //TODO: remove when graphical prototyping is completed.
-        return
-        
         let alpha: Double
         switch smoothing {
         case .none:
@@ -258,5 +255,49 @@ private extension Array where Element == RelativeTime {
         }
         
         return duration
+    }
+}
+
+private extension Array {
+    func chunkFromEveryNThElement(_ n: Int, intoSize size: Int) -> [[Element]] {
+        /* [1, 2, 3, 4, 5, 6, 7, 8], n = 2, size = 3
+         ==> [1, 2, 3], [4, 5], [6, 7, 8],
+         */
+        
+        var result = [[Element]]()
+        // In the worst case, n=1, size=1 and we need a new array for every element.
+        // In the best case we only need one.
+        // Reserve enough space for the worst case to avoid copying the array content in memory as it grows.
+        result.reserveCapacity(self.count)
+        
+        
+        var index = 0
+        // Store incase count is expensive to compute:
+        let numberOfElements = count
+        while index < numberOfElements {
+            if index % n == 0 {
+                // Use the next `size` elements
+                let lastIndex = Swift.min(index + size, numberOfElements)
+                let subarray = self[index ..< lastIndex]
+                result.append(Array(subarray))
+                
+                index += size
+            } else {
+                // Use the element as is
+                result.append([self[index]])
+                
+                index += 1
+            }
+        }
+        return result
+    }
+}
+
+private extension Array where Element: FloatingPoint {
+    
+    func average() -> Element {
+        guard !isEmpty else { return 0 }
+        let sum = reduce(0, +)
+        return sum / Element(count)
     }
 }

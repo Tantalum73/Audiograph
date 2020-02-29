@@ -1,4 +1,4 @@
-![](Media/Logo.jpg)
+![](https://github.com/Tantalum73/Audiograph/raw/master/Media//Logo.jpg)
 Audio-Feedback on Charts for visually impaired Users
 
 ![GitHub tag (0.1.0)](https://img.shields.io/github/v/tag/Tantalum73/Audiograph)
@@ -10,13 +10,13 @@ Audio-Feedback on Charts for visually impaired Users
 iOS 13 introduced an awesome way to provide stocks-charts to visually impaired users. Using a custom accessibility-rotor they are providing spoken chart analysis and an audiograph that renders the chart by using audio. That's the most accurate way of describing a chart that otherwise would only be available visually.  
 Take a look at the following video if you haven't tried it out yourself:
 
-<a href="https://anerma.de/uploads/iOS_13_Audiograph.mp4"><img height=600 src="Media/iOS_13_preview.png" alt="Screenshot" /></a>
+<a href="https://anerma.de/uploads/iOS_13_Audiograph.mp4"><img height=600 src="https://github.com/Tantalum73/Audiograph/raw/master/Media//iOS_13_preview.png" alt="Screenshot" /></a>
 
 ## Audiograph
 Unfortunately there is no public API from Apple that enables developers to implement it in their apps (yet). I think that charts can provide a great way of presenting information, but we should not limit their use to those without impairments.  
 This is where Audiograph comes into play:
 
-<a href="https://anerma.de/uploads/Audiograph_Demo_small.mp4"><img height=600 src="Media/Audiograph_preview.png" alt="Screenshot" /></a>
+<a href="https://anerma.de/uploads/Audiograph_Demo_small.mp4"><img height=600 src="https://github.com/Tantalum73/Audiograph/raw/master/Media/Audiograph_preview.png" alt="Screenshot" /></a>
 
 ## Example
 The example app provides many things related to presenting a cool chart. I wrote about the chart in my [blog](https://anerma.de/blog/tear-down-trade-republic-charts). However, this project is about accessibility.  
@@ -31,7 +31,7 @@ You need to store a strong reference to `Audiograph`.
 
 ```swift
 let audiograph: Audiograph = {
-    let completion = NSLocalizedString("CHART_ACCESSIBILITY_AUDIOGRAPH_COMPLETION_PHREASE", comment: "This phrase is read when the Audiograph has completed describing the chart using audio. Should be something like 'complete'.")
+    let completion = NSLocalizedString("CHART_ACCESSIBILITY_AUDIOGRAPH_COMPLETION_PHRASE", comment: "This phrase is read when the Audiograph has completed describing the chart using audio. Should be something like 'complete'.")
     let indication = NSLocalizedString("CHART_PLAY_AUDIOGRAPH_ACTION", comment: "The title of the accessibility action that starts playing the audiograph. 'Play audiograph.' for example.")
     let localizations = AudiographLocalizations(completionIndicationUtterance: completion, accessibilityIndicationTitle: indication)
 
@@ -123,7 +123,7 @@ If you are already using [CocoaPods](http://cocoapods.org), just add 'Audiograph
 If you are already using [Carthage](https://github.com/Carthage/Carthage), just add to your `Cartfile`:
 
 ```ogdl
-github "Tantalum73/Audiograph" ~> 0.1
+github "Tantalum73/Audiograph" ~> 0.3
 ```
 
 Then run `carthage update` to build the framework and drag the built `Audiograph`.framework into your Xcode project.

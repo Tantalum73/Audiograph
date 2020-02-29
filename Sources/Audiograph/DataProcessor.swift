@@ -261,7 +261,7 @@ private extension Array where Element == RelativeTime {
 private extension Array {
     func chunkFromEveryNThElement(_ n: Int, intoSize size: Int) -> [[Element]] {
         /* [1, 2, 3, 4, 5, 6, 7, 8], n = 2, size = 3
-         ==> [1, 2, 3], [4, 5], [6, 7, 8],
+         ==> [1, 2, 3], [4, 5], [6, 7, 8]
          */
         
         var result = [[Element]]()
@@ -272,7 +272,7 @@ private extension Array {
         
         
         var index = 0
-        // Store incase count is expensive to compute:
+        // Store in case count is expensive to compute:
         let numberOfElements = count
         while index < numberOfElements {
             if index % n == 0 {

@@ -21,9 +21,13 @@ public enum PlayingDuration {
     case exactly(DispatchTimeInterval)
 }
 
+/// Provides a set of smoothing options to control this step of prepreocessing before an Audiograph is played.
 public enum SmoothingOption {
+    /// Do not use any smoothing. The input data are not altered.
     case none
+    /// Use the default smoothing setting.
     case `default`
+    /// Provide a custom setting for computing a smoother graph. That value must be in between `[0, 1]` where `1` means the original data is used and `0` indicates maximal smoothness *(most likely a steady line)*.
     case custom(Double)
 }
 
@@ -91,6 +95,33 @@ public final class Audiograph {
 
      Image it as an moving average where values in the past matter less than the more recent ones.
      It's recommended to use the `.default` value but it can be turned off completely (`.none`) or fine-tuned to a custom value `.custom(Double)`.
+     
+     Before the Audiograph is produced, the library makes the curve smoother in order to produce an audio file that is not that volatile to large spikes. This step is useful in cases where the user rather is interested in a trend, not in every detail of the chart.
+     
+     **For example** this input graph:
+     ```
+                                    
+                               _   /
+                              / \_/
+              _   _   _     _/
+         -   / \_/ \_/ \   /
+        / \_/           \_/
+      _/
+     /
+     
+     ```
+     Will be sound more like this:
+     ```
+                             /
+                           _/
+                          /
+          ____________   /
+        _/            \_/
+       /
+      /
+     /
+     
+     ```
      */
     public var smoothing: SmoothingOption {
         get { dataProcessor.smoothing }

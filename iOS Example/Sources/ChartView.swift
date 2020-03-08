@@ -93,15 +93,6 @@ final class ChartView: UIView {
         return layer
     }()
     
-    private let correctionGraphLayer: GraphLayer = {
-        let layer = GraphLayer()
-        layer.name = "CorrectionLayer"
-        layer.graphColor = UIColor.lightGray
-        layer.opacity = 0.5
-        
-        return layer
-    }()
-    
     private static let timingFunction = CAMediaTimingFunction(controlPoints: 0.64, 0, 0, 1)
     
     private let dataProcessor = ChartViewDataProcessor()
@@ -122,7 +113,6 @@ final class ChartView: UIView {
         layer.isGeometryFlipped = true
         layer.addSublayer(baselineLayer)
         layer.addSublayer(graphLayer)
-        layer.addSublayer(correctionGraphLayer)
         layer.addSublayer(touchindicatorLayer)
     }
     
@@ -132,7 +122,6 @@ final class ChartView: UIView {
         CATransaction.setDisableActions(true)
         
         graphLayer.frame = bounds
-        correctionGraphLayer.frame = bounds
         touchindicatorLayer.frame = CGRect(origin: touchindicatorLayer.frame.origin, size: CGSize(width: 2.0, height: bounds.height))
         
         baselineLayer.frame = CGRect(x: 0, y: baselineLayer.frame.origin.y, width: bounds.width, height: 1.0)
@@ -163,40 +152,8 @@ final class ChartView: UIView {
         
         updateBaselineLayerPosition(animated: true)
         graphLayer.transform(towards: newPath, animated: true)
-        
-        updateCorrection(using: scaledPoints)
     }
-    
-    var correctedPoints = [CGPoint]()
-    private func updateCorrection(using scaledPoints: [CGPoint]) {
-//        let points = scaledPoints.map { CGPoint(x: $0.x, y: $0.y - 20) }
-        var points = [CGPoint]()
-        
-        // Option2:
-        var output: CGFloat = (scaledPoints.first ?? .zero).y
-        let alpha: CGFloat = 0.33
-        for point in scaledPoints {
-            output = output + alpha * (point.y - output)
-            points.append(CGPoint(x: point.x, y: output))
-        }
 
-        
-        // Option1:
-//        var average: CGFloat = 0.0
-//        var counter: CGFloat = 0.0
-//        let factor: CGFloat = 50.0
-//
-//        for point in scaledPoints {
-//            counter += 1
-//            average = average + (point.y - average) / Swift.min(factor, counter)
-//            points.append(CGPoint(x: point.x, y: average))
-//        }
-        
-        correctedPoints = points
-        let path = dataProcessor.path(for: points)
-        correctionGraphLayer.transform(towards: path, animated: false)
-    }
-    
     // MARK: - Touch handling
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

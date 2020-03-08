@@ -107,6 +107,36 @@ It might be convenient to specify `0` when running unit tests. If the use-case r
 The video above was ended by a Siri-voice saying "complete". The parameter `completionIndicationUtterance` controls what phrase the system says after playing Audiograph was completed.  
 Even though this phrase can be set to an empty string, it is recommended to inform the user that there is nothing more to expect. However, it must be set by the application because a Swift-Package can not contain localization files at the time of the development.
 
+### Smoothing
+When playing the Audiograph for a chart the user is most likely not interested in every detail of the curve. The user rather wants to hear at what point in time the chart is moving into which direction.  
+In order to achieve that, the library can smoothen the graph before generating the Audiograph.
+
+Consider the following input graph:
+```
+
+                          _   /
+                         / \_/
+         _   _   _     _/
+    -   / \_/ \_/ \   /
+   / \_/           \_/
+ _/
+/
+
+```
+With smoothing applied, it will be sound more like this:
+```
+                        /
+                      _/
+                     /
+     ____________   /
+   _/            \_/
+  /
+ /
+/
+
+```
+By default the smoothing is set to a parameter set suitable for most needs. However, you can turn if off completely (by setting it to `.none`) or fine tune it to deliver the best user experience for your specific use-case.  
+It uses an exponential moving average and custom values should be between `[0, 1]` where `1` means the original data is used and `0` indicates maximal smoothness.
 
 ## Installation
 

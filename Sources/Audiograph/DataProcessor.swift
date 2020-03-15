@@ -42,6 +42,17 @@ final class DataProcessor {
     private var currentRelativeTimes = [RelativeTime]()
     private var currentFrequencies = [Frequency]()
     private var shouldStopComputation = false
+    /**
+     When trying to enlarge the playing duration, this thresholds determines how much time to surpass the suggested extension is still acceptable.
+     
+     **Example**:
+     * Given `neccessaryTimeExtensionAcceptencyThreshold = 0.005`
+     * Calculated current playing duration = 3.1234 sec
+     * Time-extension-suggestion needed so that every segment is long enough: 0.01 sec
+     * `0.01sec < 0.005sec` so no further enlargement is made and the playing duration is accepted.
+     Current playing duration: 3.002sec
+     */
+    private let neccessaryTimeExtensionAcceptencyThreshold = 0.005
     
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(stopNotificationReceived), name: .stopAudiograph, object: nil)
@@ -143,8 +154,17 @@ final class DataProcessor {
     private func enlargedAndScaledSoThatSegmentDurationIsLongEnough(desiredDuration: TimeInterval) throws {
 
         if let neccessaryExtension = try currentPlayingDurationExtensionIfNeccessary(toMeet: desiredDuration) {
-            let newDesiredDuration = desiredDuration + neccessaryExtension
+            
             Logger.shared.log(message: "Duration of \(desiredDuration)s was too short to match minimum segment size.")
+            
+            if neccessaryExtension < neccessaryTimeExtensionAcceptencyThreshold {
+                Logger.shared.log(message: "This is below the acceptency threshold of \(neccessaryTimeExtensionAcceptencyThreshold) and thus enlarging is completed.")
+                
+                return
+            }
+            
+            let newDesiredDuration = desiredDuration + neccessaryExtension
+            
             Logger.shared.log(message: "Enlarging it to \(newDesiredDuration)s")
             
             // Trim if the neccessary duration would be too long:

@@ -107,7 +107,7 @@ final class DataProcessor {
         let alpha: Double
         switch smoothing {
         case .default:
-            alpha = 0.33
+            alpha = 0.35
         case .custom(let value):
             alpha = max(min(value, 1), 0.0001)
         case .none:
@@ -149,7 +149,7 @@ final class DataProcessor {
     
     /// **Checks** that the `currentRelativeTimes` fit into the provided `desiredDuration`. If not, it **computes** the duration that the information would need or even **removes** data points in order to fit. Then the scaling is **restarted** from the beginning.
     ///
-    /// By using `currentPlayingDurationExtensionIfNeccessary`, the entire playback duration is computed that would be needed for each segment to being long enough (so that it's distunguishable). If `desiredDuration` is not long enough, the duration is computed that *would* be long enough.
+    /// By using `currentPlayingDurationExtensionIfNeccessary`, the entire playback duration is computed that would be needed for each segment to being long enough (so that it's distunguishable). If `desiredDuration` is not long enough, the duration is computed that *would* be long enough. If that duration is either not needed or below `neccessaryTimeExtensionAcceptencyThreshold`, the scaling is finished.
     /// - Parameter desiredDuration: The duration that the playback should take.
     private func enlargedAndScaledSoThatSegmentDurationIsLongEnough(desiredDuration: TimeInterval) throws {
 
@@ -170,7 +170,7 @@ final class DataProcessor {
             // Trim if the neccessary duration would be too long:
             if newDesiredDuration > maximumPlayingDuration {
                 let beforeCount = currentRelativeTimes.count
-                removeElements(level: 2)
+                reduceNumberOfElements(level: 2)
                 
                 Logger.shared.log(message: "Removed \(beforeCount - currentRelativeTimes.count) elements from \(beforeCount)")
                 
@@ -182,8 +182,8 @@ final class DataProcessor {
     
     /// Removes elements from `currentRelativeTimes` and `currentFrequencies`. Call this method when the data to not fit into the maximum playing duration. Consider it as last resort as it decreases resolution of the output.
     /// - Parameter level: Determines how many elements should be removed. The bigger the more elements are deleted.
-    private func removeElements(level: Int) {
-        // Combine two data points to one, in both time and frequency.
+    private func reduceNumberOfElements(level: Int) {
+        // Combine two (or `level`) data points to one, in both time and frequency.
         
         currentRelativeTimes = currentRelativeTimes.chunked(into: level).map{ $0.average() }
         currentFrequencies = currentFrequencies.chunked(into: level).map{ $0.average() }

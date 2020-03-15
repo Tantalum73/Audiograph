@@ -65,7 +65,7 @@ final class DataProcessor {
         currentFrequencies = information.frequencies
         currentRelativeTimes = information.relativeTimes
         
-        applySmoothing()
+        applySmoothingIfRequested()
         try scaleTimes(desiredDuration: requestedPlayingDuration())
         scaleCurrentFrequencies()
         
@@ -90,15 +90,17 @@ final class DataProcessor {
         shouldStopComputation = true
     }
     
-    private func applySmoothing() {
+    private func applySmoothingIfRequested() {
+        guard !shouldStopComputation else { return }
+        
         let alpha: Double
         switch smoothing {
-        case .none:
-            return
         case .default:
             alpha = 0.33
         case .custom(let value):
             alpha = max(min(value, 1), 0.0001)
+        case .none:
+            return
         }
         
         var output = currentRelativeTimes.first ?? 0
@@ -163,8 +165,8 @@ final class DataProcessor {
     private func removeElements(level: Int) {
         // Combine two data points to one, in both time and frequency.
         
-        currentRelativeTimes = currentRelativeTimes.chunkFromEveryNThElement(level, intoSize: 2).map{ $0.average() }
-        currentFrequencies = currentFrequencies.chunkFromEveryNThElement(level, intoSize: 2).map{ $0.average() }
+        currentRelativeTimes = currentRelativeTimes.chunked(into: level).map{ $0.average() }
+        currentFrequencies = currentFrequencies.chunked(into: level).map{ $0.average() }
     }
     
     private func scaleCurrentFrequencies() {
@@ -258,42 +260,13 @@ private extension Array where Element == RelativeTime {
     }
 }
 
-private extension Array {
-    func chunkFromEveryNThElement(_ n: Int, intoSize size: Int) -> [[Element]] {
-        /* [1, 2, 3, 4, 5, 6, 7, 8], n = 2, size = 3
-         ==> [1, 2, 3], [4, 5], [6, 7, 8]
-         */
-        
-        var result = [[Element]]()
-        // In the worst case, n=1, size=1 and we need a new array for every element.
-        // In the best case we only need one.
-        // Reserve enough space for the worst case to avoid copying the array content in memory as it grows.
-        result.reserveCapacity(self.count)
-        
-        
-        var index = 0
-        // Store in case count is expensive to compute:
-        let numberOfElements = count
-        while index < numberOfElements {
-            if index % n == 0 {
-                // Use the next `size` elements
-                let lastIndex = Swift.min(index + size, numberOfElements)
-                let subarray = self[index ..< lastIndex]
-                result.append(Array(subarray))
-                
-                index += size
-            } else {
-                // Use the element as is
-                result.append([self[index]])
-                
-                index += 1
-            }
-        }
-        return result
-    }
-}
-
 private extension Array where Element: FloatingPoint {
+    
+    func chunked(into size: Int) -> [[Element]] {
+        stride(from: 0, to: count, by: size).map {
+            Array(self[$0 ..< Swift.min($0 + size, count)])
+        }
+    }
     
     func average() -> Element {
         guard !isEmpty else { return 0 }

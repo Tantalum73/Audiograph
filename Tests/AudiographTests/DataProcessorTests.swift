@@ -99,7 +99,7 @@ final class DataProcessorTests: XCTestCase {
         let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
         
         let result = try! dataProcessor.scaledInFrequencyAndTime(information: inputInformation)
-        XCTAssertEqual(result.count, 40)
+        XCTAssertEqual(result.count, 26)
         // For .abbreviative, maximum duration is 3
         assertFrequenciesAndTime(in: result, haveDurationOf: 3.0)
     }
@@ -116,7 +116,7 @@ final class DataProcessorTests: XCTestCase {
         let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
         
         let result = try! dataProcessor.scaledInFrequencyAndTime(information: inputInformation)
-        XCTAssertEqual(result.count, 40)
+        XCTAssertEqual(result.count, 126)
         assertFrequenciesAndTime(in: result, haveDurationOf: 10)
     }
     func test_scaling_capingAtMaximum_10seconds() {
@@ -132,7 +132,7 @@ final class DataProcessorTests: XCTestCase {
         let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
         
         let result = try! dataProcessor.scaledInFrequencyAndTime(information: inputInformation)
-        XCTAssertEqual(result.count, 40)
+        XCTAssertEqual(result.count, 126)
 
         assertFrequenciesAndTime(in: result, haveDurationOf: 10)
     }
@@ -149,7 +149,7 @@ final class DataProcessorTests: XCTestCase {
         let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
         
         let result = try! dataProcessor.scaledInFrequencyAndTime(information: inputInformation)
-        XCTAssertEqual(result.count, 46)
+        XCTAssertEqual(result.count, 501)
 
         assertFrequenciesAndTime(in: result, haveDurationOf: 20)
     }

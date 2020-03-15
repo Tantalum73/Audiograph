@@ -103,9 +103,9 @@ final class DataProcessor {
             return
         }
         
-        var output = currentRelativeTimes.first ?? 0
-        currentRelativeTimes = currentRelativeTimes.map({ timestamp -> RelativeTime in
-            output += alpha * (timestamp - output)
+        var output = currentFrequencies.first ?? 0
+        currentFrequencies = currentFrequencies.map({ frequency -> Frequency in
+            output += alpha * (frequency - output)
             return output
         })
     }

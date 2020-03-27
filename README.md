@@ -123,7 +123,7 @@ Consider the following input graph:
 /
 
 ```
-With smoothing applied, it will be sound more like this:
+With smoothing applied, it will sound more like this:
 ```
                         /
                       _/
@@ -135,8 +135,8 @@ With smoothing applied, it will be sound more like this:
 /
 
 ```
-By default the smoothing is set to a parameter set suitable for most needs. However, you can turn if off completely (by setting it to `.none`) or fine tune it to deliver the best user experience for your specific use-case.  
-It uses an exponential moving average and custom values should be between `[0, 1]` where `1` means the original data is used and `0` indicates maximal smoothness.
+By default the smoothing is set to a parameter suitable for most needs. However, you can turn if off completely (by setting it to `.none`) or fine tune it to deliver the best user experience for your specific use-case.  
+For that, it uses an uses an exponential moving average and custom values should be between `[0, 1]` where `1` means the original data is used and `0` indicates maximal smoothness.
 
 ## Installation
 

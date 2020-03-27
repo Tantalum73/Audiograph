@@ -91,7 +91,10 @@ public final class Audiograph {
     }
     
     /**
-     Before playing the chart data as Audiograph, the input can be smoothened to give the user a sound with less volatility. The value is in between `[0, 1]` where `1` means the original data is used and `0` indicates maximal smoothness *(most likely a steady line)*.
+     Before playing the chart data as Audiograph, the input can be smoothened to give the user a sound with less volatility to large spikes.
+     
+     This step is useful in cases where the user rather is interested in a trend, not in every detail of the chart.
+     The value is in between `[0, 1]` where `1` means the original data is used and `0` indicates maximal smoothness *(most likely a steady line)*.
 
      Image it as an moving average where values in the past matter less than the more recent ones.
      It's recommended to use the `.default` value but it can be turned off completely (`.none`) or fine-tuned to a custom value `.custom(Double)`.
@@ -171,7 +174,7 @@ public final class Audiograph {
     /// Use a custom accessibility action retrieved from `Audiograph.createCustomAccessibilityAction(using:)` or `Audiograph.createCustomAccessibilityAction(for:)` in your view. This will play the Audiograph automatically.
     ///
     ///Audiograph can also be started by calling `Audiograph.play(graphContent:completion:)` passing in the points that are used to draw the UI.
-    /// - Parameter localizations: Information to fill the parts that are not providable by the library as interaction indication phrases.
+    /// - Parameter localizations: Information to fill the parts that are not providable by the library such as interaction indication phrases.
     public init(localizations: AudiographLocalizations) {
         self.localizationConfigurations = localizations
         synthesizer.completionIndicationString = localizations.completionIndicationUtterance

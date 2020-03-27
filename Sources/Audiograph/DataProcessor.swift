@@ -50,7 +50,6 @@ final class DataProcessor {
      * Calculated current playing duration = 3.1234 sec
      * Time-extension-suggestion needed so that every segment is long enough: 0.01 sec
      * `0.01sec < 0.005sec` so no further enlargement is made and the playing duration is accepted.
-     Current playing duration: 3.002sec
      */
     private let neccessaryTimeExtensionAcceptencyThreshold = 0.005
     
@@ -180,7 +179,7 @@ final class DataProcessor {
         }
     }
     
-    /// Removes elements from `currentRelativeTimes` and `currentFrequencies`. Call this method when the data to not fit into the maximum playing duration. Consider it as last resort as it decreases resolution of the output.
+    /// Removes elements from `currentRelativeTimes` and `currentFrequencies`. Call this method when the data do not fit into the maximum playing duration. Consider it as last resort as it decreases resolution of the output.
     /// - Parameter level: Determines how many elements should be removed. The bigger the more elements are deleted.
     private func reduceNumberOfElements(level: Int) {
         // Combine two (or `level`) data points to one, in both time and frequency.

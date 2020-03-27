@@ -45,7 +45,7 @@ final class ChartView: UIView {
     /// The color of the graph. Changes will be animated.
     var chartColor: UIColor = .red {
         didSet {
-            graphLayer.strokeColor = chartColor.cgColor
+            graphLayer.graphColor = chartColor
         }
     }
     
@@ -153,7 +153,7 @@ final class ChartView: UIView {
         updateBaselineLayerPosition(animated: true)
         graphLayer.transform(towards: newPath, animated: true)
     }
-    
+
     // MARK: - Touch handling
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

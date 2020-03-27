@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 Audiograph adheres to [Semantic Versioning](http://semver.org/).
 
 ## Next Release:
+- Introducing smoothing: the data is pre-processed to contain less spikes, `SmoothingOption` and `smoothing` were added to public API.
 
 ## 0.3.1 (03.02.2020):
 - Improved audio experience by using Double instead of Float32.

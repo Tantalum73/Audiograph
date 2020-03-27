@@ -22,6 +22,7 @@ final class DataProcessor {
     var maxFrequency: Frequency = 2600
     
     var playingDuration: PlayingDuration = .recommended
+    var smoothing: SmoothingOption = .default
     
     var completion: (() -> Void)?
     
@@ -41,6 +42,16 @@ final class DataProcessor {
     private var currentRelativeTimes = [RelativeTime]()
     private var currentFrequencies = [Frequency]()
     private var shouldStopComputation = false
+    /**
+     When trying to enlarge the playing duration, this thresholds determines how much time to surpass the suggested extension is still acceptable.
+     
+     **Example**:
+     * Given `neccessaryTimeExtensionAcceptencyThreshold = 0.005`
+     * Calculated current playing duration = 3.1234 sec
+     * Time-extension-suggestion needed so that every segment is long enough: 0.01 sec
+     * `0.01sec < 0.005sec` so no further enlargement is made and the playing duration is accepted.
+     */
+    private let neccessaryTimeExtensionAcceptencyThreshold = 0.005
     
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(stopNotificationReceived), name: .stopAudiograph, object: nil)
@@ -63,7 +74,8 @@ final class DataProcessor {
         
         currentFrequencies = information.frequencies
         currentRelativeTimes = information.relativeTimes
-
+        
+        applySmoothingIfRequested()
         try scaleTimes(desiredDuration: requestedPlayingDuration())
         scaleCurrentFrequencies()
         
@@ -86,6 +98,26 @@ final class DataProcessor {
     
     @objc private func stopNotificationReceived() {
         shouldStopComputation = true
+    }
+    
+    private func applySmoothingIfRequested() {
+        guard !shouldStopComputation else { return }
+        
+        let alpha: Double
+        switch smoothing {
+        case .default:
+            alpha = 0.35
+        case .custom(let value):
+            alpha = max(min(value, 1), 0.0001)
+        case .none:
+            return
+        }
+        
+        var output = currentFrequencies.first ?? 0
+        currentFrequencies = currentFrequencies.map({ frequency -> Frequency in
+            output += alpha * (frequency - output)
+            return output
+        })
     }
     
     /// **Starts** the scaling process of `currentRelativeTimes` into the specified `desiredDuration`. The parameter is only a suggestion as the final duration will be computed in progress.
@@ -116,19 +148,28 @@ final class DataProcessor {
     
     /// **Checks** that the `currentRelativeTimes` fit into the provided `desiredDuration`. If not, it **computes** the duration that the information would need or even **removes** data points in order to fit. Then the scaling is **restarted** from the beginning.
     ///
-    /// By using `currentPlayingDurationExtensionIfNeccessary`, the entire playback duration is computed that would be needed for each segment to being long enough (so that it's distunguishable). If `desiredDuration` is not long enough, the duration is computed that *would* be long enough.
+    /// By using `currentPlayingDurationExtensionIfNeccessary`, the entire playback duration is computed that would be needed for each segment to being long enough (so that it's distunguishable). If `desiredDuration` is not long enough, the duration is computed that *would* be long enough. If that duration is either not needed or below `neccessaryTimeExtensionAcceptencyThreshold`, the scaling is finished.
     /// - Parameter desiredDuration: The duration that the playback should take.
     private func enlargedAndScaledSoThatSegmentDurationIsLongEnough(desiredDuration: TimeInterval) throws {
 
         if let neccessaryExtension = try currentPlayingDurationExtensionIfNeccessary(toMeet: desiredDuration) {
-            let newDesiredDuration = desiredDuration + neccessaryExtension
+            
             Logger.shared.log(message: "Duration of \(desiredDuration)s was too short to match minimum segment size.")
+            
+            if neccessaryExtension < neccessaryTimeExtensionAcceptencyThreshold {
+                Logger.shared.log(message: "This is below the acceptency threshold of \(neccessaryTimeExtensionAcceptencyThreshold) and thus enlarging is completed.")
+                
+                return
+            }
+            
+            let newDesiredDuration = desiredDuration + neccessaryExtension
+            
             Logger.shared.log(message: "Enlarging it to \(newDesiredDuration)s")
             
             // Trim if the neccessary duration would be too long:
             if newDesiredDuration > maximumPlayingDuration {
                 let beforeCount = currentRelativeTimes.count
-                removeElements(level: 20)
+                reduceNumberOfElements(level: 2)
                 
                 Logger.shared.log(message: "Removed \(beforeCount - currentRelativeTimes.count) elements from \(beforeCount)")
                 
@@ -138,13 +179,13 @@ final class DataProcessor {
         }
     }
     
-    private func removeElements(level: Int) {
-        let intermediary = zip(currentRelativeTimes, currentFrequencies).enumerated().compactMap { (offset, element) -> (RelativeTime, Frequency)? in
-            return offset % level == 0 ? nil : element
-        }
+    /// Removes elements from `currentRelativeTimes` and `currentFrequencies`. Call this method when the data do not fit into the maximum playing duration. Consider it as last resort as it decreases resolution of the output.
+    /// - Parameter level: Determines how many elements should be removed. The bigger the more elements are deleted.
+    private func reduceNumberOfElements(level: Int) {
+        // Combine two (or `level`) data points to one, in both time and frequency.
         
-        currentRelativeTimes = intermediary.map { $0.0 }
-        currentFrequencies = intermediary.map { $0.1 }
+        currentRelativeTimes = currentRelativeTimes.chunked(into: level).map{ $0.average() }
+        currentFrequencies = currentFrequencies.chunked(into: level).map{ $0.average() }
     }
     
     private func scaleCurrentFrequencies() {
@@ -235,5 +276,20 @@ private extension Array where Element == RelativeTime {
         }
         
         return duration
+    }
+}
+
+private extension Array where Element: FloatingPoint {
+    
+    func chunked(into size: Int) -> [[Element]] {
+        stride(from: 0, to: count, by: size).map {
+            Array(self[$0 ..< Swift.min($0 + size, count)])
+        }
+    }
+    
+    func average() -> Element {
+        guard !isEmpty else { return 0 }
+        let sum = reduce(0, +)
+        return sum / Element(count)
     }
 }

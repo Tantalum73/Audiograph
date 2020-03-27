@@ -105,12 +105,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func playSoundButtonPressed(_ sender: Any) {
-        let pointsFromLeftToRight = displayablePoints()
-        
         /*
          The first way: manually triggering the Audiograph by calling `.play`.
          */
-        audiograph.play(graphContent: Array(pointsFromLeftToRight))
+        audiograph.play(graphContent: chartView.graphContent)
     }
     
     /// Converts `currentData` from the model into an array of `[CGPoint]`. They can be used to pass into chart view or to derive audiograph data.

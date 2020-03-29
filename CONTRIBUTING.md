@@ -2,17 +2,15 @@
 
 All contributors are welcome. Please use issues and pull requests to contribute to the project. And update [CHANGELOG.md](CHANGELOG.md) when committing.
 
-## Making a change
+## Making a Change
 
 When you commit a change, please add a note to [CHANGELOG.md](CHANGELOG.md).
 
-## Release process
+## Release Process
 
 1. Push a release commit
-   1. Create a new Master section at the top
-   2. Rename the old Master section like:
-          ## [1.0.5](https://github.com/Tantalum73/Audiograph/releases/tag/1.0.5)
-          Released on 2019-10-15.
+    1. Update  [CHANGELOG.md](CHANGELOG.md) (by including version number and date of release like `## 0.3.0 (02.02.2020):`)
+   2. Update Xcode version number
    3. Update the Podspec version number
 2. Create a GitHub release
    1. Tag the release (like `1.0.5`)

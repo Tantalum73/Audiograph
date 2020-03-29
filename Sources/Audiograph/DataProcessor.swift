@@ -225,7 +225,7 @@ final class DataProcessor {
         let minimumSegmentDuration: TimeInterval = 0.035
         
         /// Minimum enlargement produced by this function:
-        let minimalNecessaryEnlargement: TimeInterval = 0.005
+        let minimalNecessaryEnlargement: TimeInterval = 0.02
         
         /// Used for comparing float values
         let comparisonPercision: TimeInterval = 0.005

@@ -63,6 +63,8 @@ final class Synthesizer: NSObject {
         
         let finalBuffer = generator.sweep(content)
         
+        
+        
         // Play the sound on the main queue.
         DispatchQueue.main.async {
             self.configureBufferAndPlay(finalBuffer)
@@ -102,9 +104,7 @@ final class Synthesizer: NSObject {
     
     private func readDelayedCompletionUtterance() {
         guard !completionIndicationString.isEmpty, volumeCorrectionFactor != 0 else {
-            DispatchQueue.main.async {
-                self.callCompletionAndReset(completedSuccessfully: true)
-            }
+            callCompletionAndReset(completedSuccessfully: true)
             return
         }
         
@@ -139,8 +139,11 @@ final class Synthesizer: NSObject {
     }
     
     private func callCompletionAndReset(completedSuccessfully argument: Bool) {
-        completion?(argument)
-        completion = nil
+        DispatchQueue.main.async {
+            self.completion?(argument)
+            self.completion = nil
+        }
+        
     }
 }
 

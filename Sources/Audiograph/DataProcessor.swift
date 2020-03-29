@@ -24,6 +24,7 @@ final class DataProcessor {
     var playingDuration: PlayingDuration = .recommended
     var smoothing: SmoothingOption = .default
     
+    /// Executed when processing is completed.
     var completion: (() -> Void)?
     
     private var maximumPlayingDuration: TimeInterval {
@@ -89,6 +90,7 @@ final class DataProcessor {
         shouldStopComputation = true
     }
     
+    /// When the current `smoothing` is set, this function applies it to the `currentFrequencies`.
     private func applySmoothingIfRequested() {
         guard !shouldStopComputation else { return }
         
@@ -102,6 +104,7 @@ final class DataProcessor {
             return
         }
         
+        // Exponential moving average, more recent values are valued more than older data points:
         var output = currentFrequencies.first ?? 0
         currentFrequencies = currentFrequencies.map({ frequency -> Frequency in
             output += alpha * (frequency - output)
@@ -151,7 +154,6 @@ final class DataProcessor {
             reduceNumberOfElements(level: 2)
             
             Logger.shared.log(message: "Removed \(numberOfSamplesBeforeScaling - currentRelativeTimes.count) elements from \(numberOfSamplesBeforeScaling)")
-            
         }
         
         // Try to scale again but now into the suggested/instrinsic duration:

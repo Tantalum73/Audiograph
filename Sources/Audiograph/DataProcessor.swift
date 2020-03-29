@@ -217,7 +217,10 @@ final class DataProcessor {
     }
     
     /// Checks if each segment plays long enough to hear (a minimum-playing-duration-threshold needs to be superceeded). If that is not the case, a suggestion of an extension is made.
-    /// By applying that extenstion to the requested duration the requirement should be matched (xcept some rounding issues).
+    ///
+    /// By applying that extenstion to the requested duration the requirement should be closer to a match.
+    ///
+    /// When a segment violates the minimum playing duration, it is guaranteed that at least a small amount of time is returned to prevent infinite recursion by adding a too-small value to the entire duration.
     /// - Parameter requestedDuaration: The duration the `currentRelativeTimes` should take, used to compute the difference needed to match the threshold.
     /// - Returns: A time interval that must be added to `requestedDuaration` or `nil` if no extension needs to be applied to match the threshold.
     func currentPlayingDurationExtensionIfNeccessary(toMeet requestedDuaration: TimeInterval) throws -> TimeInterval? {
@@ -225,7 +228,7 @@ final class DataProcessor {
         let minimumSegmentDuration: TimeInterval = 0.035
         
         /// Minimum enlargement produced by this function:
-        let minimalNecessaryEnlargement: TimeInterval = 0.02
+        let minimalNecessaryEnlargement: TimeInterval = 0.03
         
         /// Used for comparing float values
         let comparisonPercision: TimeInterval = 0.005

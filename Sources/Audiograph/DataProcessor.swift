@@ -122,7 +122,7 @@ final class DataProcessor {
         
         // 1. Boundary check for playing duration
         let duration = min(desiredDuration, maximumPlayingDuration)
-        Logger.shared.log(message: "Setting desired duration to \(duration) instead of \(desiredDuration)")
+        Logger.shared.log(message: "Setting desired duration to \(duration) instead of requested \(desiredDuration)")
         
         // 2. Scale into the desired duration
         scaleCurrentTimes(toFit: duration)
@@ -131,7 +131,7 @@ final class DataProcessor {
             Logger.shared.log(message: "After scaling, duration is \(playingDuration)s")
         }
         
-        // 3. Check if minimum playing duration is not violated and iterate on playing duration if so
+        // 3. Check if minimum segment-playing duration is not violated and iterate on playing duration if so
         try checkForMinimumSegmentDurationAndRestartIfNeeded(desiredDuration: duration)
     }
     
@@ -146,11 +146,11 @@ final class DataProcessor {
         }
         
         Logger.shared.log(message: "Duration of \(desiredDuration)s was too short to match minimum segment size.")
-        let newDesiredDuration = desiredDuration + necessaryExtension
-        Logger.shared.log(message: "Enlarging it to \(newDesiredDuration)s")
+        let expandedDuration = desiredDuration + necessaryExtension
+        Logger.shared.log(message: "Enlarging it to \(expandedDuration)s")
         
         // Boundary check:
-        if newDesiredDuration > maximumPlayingDuration {
+        if expandedDuration > maximumPlayingDuration {
             // It's necessary to remove elements:
             
             let numberOfSamplesBeforeScaling = currentRelativeTimes.count
@@ -160,7 +160,7 @@ final class DataProcessor {
         }
         
         // Try to scale again but now into the suggested/instrinsic duration:
-        try startScalingRelativeTimesIteratively(desiredDuration: newDesiredDuration)
+        try startScalingRelativeTimesIteratively(desiredDuration: expandedDuration)
     }
     
     /// Removes elements from `currentRelativeTimes` and `currentFrequencies`. Call this method when the data do not fit into the maximum playing duration. Consider it as last resort as it decreases resolution of the output.

@@ -26,7 +26,7 @@ final class Synthesizer: NSObject {
     private let audioEngine = AVAudioEngine()
     private let playerNode = AVAudioPlayerNode()
     private static let sampleRate = 44100.0
-    private let audioFormat = AVAudioFormat(standardFormatWithSampleRate: Synthesizer.sampleRate, channels: 1)
+    private let audioFormat = AVAudioFormat(standardFormatWithSampleRate: Synthesizer.sampleRate, channels: 2)
     private let speechSynthesizer = AVSpeechSynthesizer()
     private var completionUtterance: AVSpeechUtterance {
         AVSpeechUtterance(string: completionIndicationString)

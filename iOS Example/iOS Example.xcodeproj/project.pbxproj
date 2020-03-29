@@ -347,6 +347,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.anerma.iOS-Example";
 				PRODUCT_NAME = "Audiograph Test";
 				SWIFT_VERSION = 5.0;
@@ -365,6 +366,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.anerma.iOS-Example";
 				PRODUCT_NAME = "Audiograph Test";
 				SWIFT_VERSION = 5.0;

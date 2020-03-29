@@ -13,7 +13,7 @@ struct Logger {
         // Initially empty to prevent wrong usage of this singleton.
     }
     
-    var loggingEnabled: Bool = false
+    var isLoggingEnabled: Bool = false
     
     func log(message: String) {
         print(message)

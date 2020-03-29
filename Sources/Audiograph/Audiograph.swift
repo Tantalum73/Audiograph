@@ -148,7 +148,7 @@ public final class Audiograph {
     /// If set, errors are printed to standard-output for the programmer to diagnose what went wrong. Those log statements can be suppressed as needed.
     public var printDiagnostics = true {
         didSet {
-            Logger.shared.loggingEnabled = printDiagnostics
+            Logger.shared.isLoggingEnabled = printDiagnostics
         }
     }
     

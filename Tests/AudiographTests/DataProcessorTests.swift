@@ -12,7 +12,7 @@ import XCTest
 
 final class DataProcessorTests: XCTestCase {
     
-    let dataProcessor = DataProcessor()
+    var dataProcessor: DataProcessor!
     
     static var allTests = [
         ("test_scalingFrequenciesMinMax", test_scalingFrequenciesMinMax),
@@ -25,6 +25,10 @@ final class DataProcessorTests: XCTestCase {
         ("test_scaling_capingAtMaximum_10seconds", test_scaling_capingAtMaximum_10seconds),
         ("test_scaling_capingAtMaximum_whateverItTakes", test_scaling_capingAtMaximum_whateverItTakes)
         ]
+    
+    override func setUp() {
+        dataProcessor = DataProcessor()
+    }
     
     // MARK: Scaling Frequencies
     func test_scalingFrequenciesMinMax() {

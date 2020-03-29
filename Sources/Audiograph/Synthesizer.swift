@@ -46,9 +46,9 @@ final class Synthesizer: NSObject {
         
         speechSynthesizer.delegate = self
     }
+    
     deinit {
         audioEngine.stop()
-        callCompletionAndReset(completedSuccessfully: false)
     }
     
     /// Expects scaled audio information that already have the correct duration and frequencies.
@@ -143,7 +143,6 @@ final class Synthesizer: NSObject {
             self.completion?(argument)
             self.completion = nil
         }
-        
     }
 }
 

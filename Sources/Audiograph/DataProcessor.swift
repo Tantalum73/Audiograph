@@ -60,7 +60,10 @@ final class DataProcessor {
         shouldStopComputation = false
         
         defer {
-            completion?()
+            DispatchQueue.main.async {
+                self.completion?()
+                self.completion = nil
+            }
         }
         currentFrequencies = information.frequencies
         currentRelativeTimes = information.relativeTimes

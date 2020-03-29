@@ -12,6 +12,7 @@ When you commit a change, please add a note to [CHANGELOG.md](CHANGELOG.md).
     1. Update  [CHANGELOG.md](CHANGELOG.md) (by including version number and date of release like `## 0.3.0 (02.02.2020):`)
    2. Update Xcode version number
    3. Update the Podspec version number
+2. Create release branch with name of version number (don't forget to push it)   
 2. Create a GitHub release
    1. Tag the release (like `1.0.5`)
    2. Paste notes from [CHANGELOG.md](CHANGELOG.md)

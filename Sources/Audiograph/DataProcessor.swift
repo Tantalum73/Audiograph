@@ -24,6 +24,7 @@ final class DataProcessor {
     var playingDuration: PlayingDuration = .recommended
     var smoothing: SmoothingOption = .default
     
+    /// Executed when processing is completed.
     var completion: (() -> Void)?
     
     private var maximumPlayingDuration: TimeInterval {
@@ -42,17 +43,7 @@ final class DataProcessor {
     private var currentRelativeTimes = [RelativeTime]()
     private var currentFrequencies = [Frequency]()
     private var shouldStopComputation = false
-    /**
-     When trying to enlarge the playing duration, this thresholds determines how much time to surpass the suggested extension is still acceptable.
-     
-     **Example**:
-     * Given `neccessaryTimeExtensionAcceptencyThreshold = 0.005`
-     * Calculated current playing duration = 3.1234 sec
-     * Time-extension-suggestion needed so that every segment is long enough: 0.01 sec
-     * `0.01sec < 0.005sec` so no further enlargement is made and the playing duration is accepted.
-     */
-    private let neccessaryTimeExtensionAcceptencyThreshold = 0.005
-    
+
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(stopNotificationReceived), name: .stopAudiograph, object: nil)
     }
@@ -69,14 +60,16 @@ final class DataProcessor {
         shouldStopComputation = false
         
         defer {
-            completion?()
+            DispatchQueue.main.async {
+                self.completion?()
+                self.completion = nil
+            }
         }
-        
         currentFrequencies = information.frequencies
         currentRelativeTimes = information.relativeTimes
         
         applySmoothingIfRequested()
-        try scaleTimes(desiredDuration: requestedPlayingDuration())
+        try startScalingRelativeTimesIteratively(desiredDuration: requestedPlayingDuration())
         scaleCurrentFrequencies()
         
         return AudioInformation(relativeTimes: currentRelativeTimes, frequencies: currentFrequencies)
@@ -100,6 +93,7 @@ final class DataProcessor {
         shouldStopComputation = true
     }
     
+    /// When the current `smoothing` is set, this function applies it to the `currentFrequencies`.
     private func applySmoothingIfRequested() {
         guard !shouldStopComputation else { return }
         
@@ -113,6 +107,7 @@ final class DataProcessor {
             return
         }
         
+        // Exponential moving average, more recent values are valued more than older data points:
         var output = currentFrequencies.first ?? 0
         currentFrequencies = currentFrequencies.map({ frequency -> Frequency in
             output += alpha * (frequency - output)
@@ -122,61 +117,50 @@ final class DataProcessor {
     
     /// **Starts** the scaling process of `currentRelativeTimes` into the specified `desiredDuration`. The parameter is only a suggestion as the final duration will be computed in progress.
     /// - Parameter desiredDuration: The duration that the entire playback should take. Clamped to `maximumPlayingDuration`.
-    private func scaleTimes(desiredDuration: TimeInterval) throws {
+    private func startScalingRelativeTimesIteratively(desiredDuration: TimeInterval) throws {
         guard !shouldStopComputation else { return }
         
+        // 1. Boundary check for playing duration
         let duration = min(desiredDuration, maximumPlayingDuration)
-        Logger.shared.log(message: "Setting desired duration to \(duration) instead of \(desiredDuration)")
+        Logger.shared.log(message: "Setting desired duration to \(duration) instead of requested \(desiredDuration)")
         
-        try performScaling(toFit: duration)
-    }
-    
-    /// **Performs** the scaling of `currentRelativeTimes` into the specified `desiredDuration`.
-    ///
-    /// After performing the first attempt to scale, `enlargedAndScaledSoThatSegmentDurationIsLongEnough` is called to ensure that each segment has enough plaback duration to be distinguishable.
-    /// - Parameter desiredDuration: The duration in which the scaled playback should fit.
-    private func performScaling(toFit desiredDuration: TimeInterval) throws {
-        
-        Logger.shared.log(message: "Before scaling, duration is \(currentRelativeTimes.playingDuration())s")
-        
-        scaleCurrentTimes(toFit: desiredDuration)
-        
-        Logger.shared.log(message: "After scaling, duration is \(currentRelativeTimes.playingDuration())s")
-        
-        try enlargedAndScaledSoThatSegmentDurationIsLongEnough(desiredDuration: desiredDuration)
-    }
-    
-    /// **Checks** that the `currentRelativeTimes` fit into the provided `desiredDuration`. If not, it **computes** the duration that the information would need or even **removes** data points in order to fit. Then the scaling is **restarted** from the beginning.
-    ///
-    /// By using `currentPlayingDurationExtensionIfNeccessary`, the entire playback duration is computed that would be needed for each segment to being long enough (so that it's distunguishable). If `desiredDuration` is not long enough, the duration is computed that *would* be long enough. If that duration is either not needed or below `neccessaryTimeExtensionAcceptencyThreshold`, the scaling is finished.
-    /// - Parameter desiredDuration: The duration that the playback should take.
-    private func enlargedAndScaledSoThatSegmentDurationIsLongEnough(desiredDuration: TimeInterval) throws {
-
-        if let neccessaryExtension = try currentPlayingDurationExtensionIfNeccessary(toMeet: desiredDuration) {
-            
-            Logger.shared.log(message: "Duration of \(desiredDuration)s was too short to match minimum segment size.")
-            
-            if neccessaryExtension < neccessaryTimeExtensionAcceptencyThreshold {
-                Logger.shared.log(message: "This is below the acceptency threshold of \(neccessaryTimeExtensionAcceptencyThreshold) and thus enlarging is completed.")
-                
-                return
-            }
-            
-            let newDesiredDuration = desiredDuration + neccessaryExtension
-            
-            Logger.shared.log(message: "Enlarging it to \(newDesiredDuration)s")
-            
-            // Trim if the neccessary duration would be too long:
-            if newDesiredDuration > maximumPlayingDuration {
-                let beforeCount = currentRelativeTimes.count
-                reduceNumberOfElements(level: 2)
-                
-                Logger.shared.log(message: "Removed \(beforeCount - currentRelativeTimes.count) elements from \(beforeCount)")
-                
-            }
-            // Try to scale again but now into the suggested/instrinsic duration:
-            try scaleTimes(desiredDuration: newDesiredDuration)
+        // 2. Scale into the desired duration
+        scaleCurrentTimes(toFit: duration)
+        if Logger.shared.isLoggingEnabled {
+            let playingDuration = currentRelativeTimes.playingDuration()
+            Logger.shared.log(message: "After scaling, duration is \(playingDuration)s")
         }
+        
+        // 3. Check if minimum segment-playing duration is not violated and iterate on playing duration if so
+        try checkForMinimumSegmentDurationAndRestartIfNeeded(desiredDuration: duration)
+    }
+    
+    /// Checks if the `currentRelativeTimes` contain only segments whose duration do not violate the minimum segment duration.
+    /// - Parameter desiredDuration: The duration of the `currentRelativeTimes` so that it does not need to be computed again.
+    /// - Throws: May throw if invalid data was passed set as `currentRelativeTimes`.
+    private func checkForMinimumSegmentDurationAndRestartIfNeeded(desiredDuration: TimeInterval) throws {
+        
+        guard let necessaryExtension = try currentPlayingDurationExtensionIfNeccessary(toMeet: desiredDuration) else {
+            // Scaling has worked fine, no extension needed.
+            return
+        }
+        
+        Logger.shared.log(message: "Duration of \(desiredDuration)s was too short to match minimum segment size.")
+        let expandedDuration = desiredDuration + necessaryExtension
+        Logger.shared.log(message: "Enlarging it to \(expandedDuration)s")
+        
+        // Boundary check:
+        if expandedDuration > maximumPlayingDuration {
+            // It's necessary to remove elements:
+            
+            let numberOfSamplesBeforeScaling = currentRelativeTimes.count
+            reduceNumberOfElements(level: 2)
+            
+            Logger.shared.log(message: "Removed \(numberOfSamplesBeforeScaling - currentRelativeTimes.count) elements from \(numberOfSamplesBeforeScaling)")
+        }
+        
+        // Try to scale again but now into the suggested/instrinsic duration:
+        try startScalingRelativeTimesIteratively(desiredDuration: expandedDuration)
     }
     
     /// Removes elements from `currentRelativeTimes` and `currentFrequencies`. Call this method when the data do not fit into the maximum playing duration. Consider it as last resort as it decreases resolution of the output.
@@ -236,23 +220,36 @@ final class DataProcessor {
     }
     
     /// Checks if each segment plays long enough to hear (a minimum-playing-duration-threshold needs to be superceeded). If that is not the case, a suggestion of an extension is made.
-    /// By applying that extenstion to the requested duration the requirement should be matched (xcept some rounding issues).
+    ///
+    /// By applying that extenstion to the requested duration the requirement should be closer to a match.
+    ///
+    /// When a segment violates the minimum playing duration, it is guaranteed that at least a small amount of time is returned to prevent infinite recursion by adding a too-small value to the entire duration.
     /// - Parameter requestedDuaration: The duration the `currentRelativeTimes` should take, used to compute the difference needed to match the threshold.
     /// - Returns: A time interval that must be added to `requestedDuaration` or `nil` if no extension needs to be applied to match the threshold.
     func currentPlayingDurationExtensionIfNeccessary(toMeet requestedDuaration: TimeInterval) throws -> TimeInterval? {
-        // Between each segment there should be at least 0.025 seconds == 250ms to get a good result.
-        let minimumPlayingSegmentDuration: TimeInterval = 0.025
-        let comparisonThreshold: TimeInterval = 0.0001
+        /// Between each segment there should be at least 0.035 seconds == 35ms to get a good result.
+        let minimumSegmentDuration: TimeInterval = 0.035
+        
+        /// Minimum enlargement produced by this function:
+        let minimalNecessaryEnlargement: TimeInterval = 0.03
+        
+        /// Used for comparing float values
+        let comparisonPercision: TimeInterval = 0.005
+        
+        /// Stores result of this function.
         var suggestedPlayingDuration: TimeInterval = 0
         
+        /// For diagnostics, the shortest time interval is stored.
         var minSegmentDurationForDiagnostics: TimeInterval = 10000
+        
+        
         for (start, end) in zip(currentRelativeTimes, currentRelativeTimes.dropFirst()) {
             let segmentDuration = end - start
             
             guard segmentDuration > 0 else { throw SanityCheckError.negativeContentInTimestamps }
             
-            if segmentDuration + comparisonThreshold < minimumPlayingSegmentDuration {
-                suggestedPlayingDuration += minimumPlayingSegmentDuration
+            if segmentDuration + comparisonPercision < minimumSegmentDuration {
+                suggestedPlayingDuration += minimumSegmentDuration
             } else {
                 suggestedPlayingDuration += segmentDuration
             }
@@ -262,8 +259,12 @@ final class DataProcessor {
         
         Logger.shared.log(message: "Minimum segment duration: \(minSegmentDurationForDiagnostics)")
         Logger.shared.log(message: "suggesting a playing duration of \(suggestedPlayingDuration), requested: \(requestedDuaration)")
-        let difference = requestedDuaration - suggestedPlayingDuration
-        return difference < 0 ? -difference : nil
+        let difference = suggestedPlayingDuration - requestedDuaration
+        
+        return difference > 0 ?
+            Swift.max(difference, minimalNecessaryEnlargement)
+            :
+            nil
     }
 }
 

@@ -148,7 +148,7 @@ public final class Audiograph {
     /// If set, errors are printed to standard-output for the programmer to diagnose what went wrong. Those log statements can be suppressed as needed.
     public var printDiagnostics = true {
         didSet {
-            Logger.shared.loggingEnabled = printDiagnostics
+            Logger.shared.isLoggingEnabled = printDiagnostics
         }
     }
     
@@ -208,7 +208,9 @@ public final class Audiograph {
             let audioInformation = AudioInformation(points: graphContent)
             
             guard self.sanityCheckPassing(for: audioInformation) else {
-                completion?(false)
+                DispatchQueue.main.async {
+                    completion?(false)
+                }
                 return
             }
             
@@ -221,7 +223,9 @@ public final class Audiograph {
                 
             } catch let error as SanityCheckError {
                 self.printSanityCheckDiagnostics(for: error)
-                completion?(false)
+                DispatchQueue.main.async {
+                    completion?(false)
+                }
             } catch {
                 assertionFailure("The sanity check threw an unknown error.")
             }

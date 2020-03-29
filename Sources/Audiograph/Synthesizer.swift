@@ -26,7 +26,7 @@ final class Synthesizer: NSObject {
     private let audioEngine = AVAudioEngine()
     private let playerNode = AVAudioPlayerNode()
     private static let sampleRate = 44100.0
-    private let audioFormat = AVAudioFormat(standardFormatWithSampleRate: Synthesizer.sampleRate, channels: 1)
+    private let audioFormat = AVAudioFormat(standardFormatWithSampleRate: Synthesizer.sampleRate, channels: 2)
     private let speechSynthesizer = AVSpeechSynthesizer()
     private var completionUtterance: AVSpeechUtterance {
         AVSpeechUtterance(string: completionIndicationString)
@@ -46,9 +46,9 @@ final class Synthesizer: NSObject {
         
         speechSynthesizer.delegate = self
     }
+    
     deinit {
         audioEngine.stop()
-        callCompletionAndReset(completedSuccessfully: false)
     }
     
     /// Expects scaled audio information that already have the correct duration and frequencies.
@@ -62,6 +62,8 @@ final class Synthesizer: NSObject {
         let generator = SoundGenerator(sampleRate: Synthesizer.sampleRate, volumeCorrectionFactor: self.volumeCorrectionFactor)
         
         let finalBuffer = generator.sweep(content)
+        
+        
         
         // Play the sound on the main queue.
         DispatchQueue.main.async {
@@ -102,9 +104,7 @@ final class Synthesizer: NSObject {
     
     private func readDelayedCompletionUtterance() {
         guard !completionIndicationString.isEmpty, volumeCorrectionFactor != 0 else {
-            DispatchQueue.main.async {
-                self.callCompletionAndReset(completedSuccessfully: true)
-            }
+            callCompletionAndReset(completedSuccessfully: true)
             return
         }
         
@@ -139,8 +139,10 @@ final class Synthesizer: NSObject {
     }
     
     private func callCompletionAndReset(completedSuccessfully argument: Bool) {
-        completion?(argument)
-        completion = nil
+        DispatchQueue.main.async {
+            self.completion?(argument)
+            self.completion = nil
+        }
     }
 }
 

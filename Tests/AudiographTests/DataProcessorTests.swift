@@ -12,7 +12,7 @@ import XCTest
 
 final class DataProcessorTests: XCTestCase {
     
-    let dataProcessor = DataProcessor()
+    var dataProcessor: DataProcessor!
     
     static var allTests = [
         ("test_scalingFrequenciesMinMax", test_scalingFrequenciesMinMax),
@@ -25,6 +25,10 @@ final class DataProcessorTests: XCTestCase {
         ("test_scaling_capingAtMaximum_10seconds", test_scaling_capingAtMaximum_10seconds),
         ("test_scaling_capingAtMaximum_whateverItTakes", test_scaling_capingAtMaximum_whateverItTakes)
         ]
+    
+    override func setUp() {
+        dataProcessor = DataProcessor()
+    }
     
     // MARK: Scaling Frequencies
     func test_scalingFrequenciesMinMax() {
@@ -99,7 +103,7 @@ final class DataProcessorTests: XCTestCase {
         let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
         
         let result = try! dataProcessor.scaledInFrequencyAndTime(information: inputInformation)
-        XCTAssertEqual(result.count, 26)
+        XCTAssertEqual(result.count, 51)
         // For .abbreviative, maximum duration is 3
         assertFrequenciesAndTime(in: result, haveDurationOf: 3.0)
     }
@@ -149,7 +153,7 @@ final class DataProcessorTests: XCTestCase {
         let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
         
         let result = try! dataProcessor.scaledInFrequencyAndTime(information: inputInformation)
-        XCTAssertEqual(result.count, 501)
+        XCTAssertEqual(result.count, 251)
 
         assertFrequenciesAndTime(in: result, haveDurationOf: 20)
     }

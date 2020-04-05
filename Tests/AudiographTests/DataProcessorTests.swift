@@ -13,19 +13,7 @@ import XCTest
 final class DataProcessorTests: XCTestCase {
     
     var dataProcessor: DataProcessor!
-    
-    static var allTests = [
-        ("test_scalingFrequenciesMinMax", test_scalingFrequenciesMinMax),
-        ("test_scaling_abbreviative", test_scaling_abbreviative),
-        ("test_scaling_longEnough", test_scaling_longEnough),
-        ("test_scaling_10seconds", test_scaling_10seconds),
-        ("test_scaling_veryLong", test_scaling_veryLong),
-        ("test_scaling_capingAtMaximum_abbreviative", test_scaling_capingAtMaximum_abbreviative),
-        ("test_scaling_capingAtMaximum_longEnough", test_scaling_capingAtMaximum_longEnough),
-        ("test_scaling_capingAtMaximum_10seconds", test_scaling_capingAtMaximum_10seconds),
-        ("test_scaling_capingAtMaximum_whateverItTakes", test_scaling_capingAtMaximum_whateverItTakes)
-        ]
-    
+
     override func setUp() {
         dataProcessor = DataProcessor()
     }

@@ -2,26 +2,6 @@ import XCTest
 @testable import Audiograph
 
 final class AudiographTests: XCTestCase {
-    static var allTests = [
-        ("test_indexOfLatestChangeInSign_whenEndIsPositive", test_indexOfLatestChangeInSign_whenEndIsPositive),
-        ("test_indexOfLatestChangeInSign_whenEndIsNegative", test_indexOfLatestChangeInSign_whenEndIsNegative),
-        ("test_indexOfLatestChangeInSign_whenNoChange_negative", test_indexOfLatestChangeInSign_whenNoChange_negative),
-        ("test_indexOfLatestChangeInSign_whenNoChange_positive", test_indexOfLatestChangeInSign_whenNoChange_positive),
-        ("test_cutOffIndex_whenEndingOnPositive", test_cutOffIndex_whenEndingOnPositive),
-        ("test_cutOffIndex_whenEndingOnNegative", test_cutOffIndex_whenEndingOnNegative),
-        ("test_cutOffIndex_whenNoZeroIncluded", test_cutOffIndex_whenNoZeroIncluded),
-        ("test_edgeCaseNoCrash_NoInput", test_edgeCaseNoCrash_NoInput),
-        ("test_edgeCaseNoCrash_OneInput", test_edgeCaseNoCrash_OneInput),
-        ("test_edgeCaseNoCrash_input_zero", test_edgeCaseNoCrash_input_zero),
-        ("test_edgeCaseNoCrash_inputTimes_negative", test_edgeCaseNoCrash_inputTimes_negative),
-        ("test_edgeCaseNoCrash_inputFrequency_negative", test_edgeCaseNoCrash_inputFrequency_negative),
-        ("test_edgeCaseNoCrash_noTimeDifference", test_edgeCaseNoCrash_noTimeDifference),
-        ("test_edgeCaseNoCrash_noFrequencyDifference", test_edgeCaseNoCrash_noFrequencyDifference),
-        ("test_edgeCaseNoCrash_sameDataMultipleTimes", test_edgeCaseNoCrash_sameDataMultipleTimes),
-        ("test_edgeCaseNoCrash_inputNotSorted", test_edgeCaseNoCrash_inputNotSorted),
-        ("test_performance_realData", test_performance_realData)
-    ]
-    
     let generator = SoundGenerator(sampleRate: 44100.0, volumeCorrectionFactor: 1)
     
     func test_indexOfLatestChangeInSign_whenEndIsPositive() {
@@ -83,14 +63,14 @@ final class AudiographTests: XCTestCase {
     }
     
     
-    func test_edgeCaseNoCrash_NoInput() {
+    func test_edgeCaseNoCrash_emptyInput() {
         let audiograph = Audiograph(localizations: .defaultEnglish)
         audiograph.volumeCorrectionFactor = 0
         
         let input = [CGPoint]()
         audiograph.play(graphContent: input)
     }
-    func test_edgeCaseNoCrash_OneInput() {
+    func test_edgeCaseNoCrash_oneInput() {
         let audiograph = Audiograph(localizations: .defaultEnglish)
         audiograph.volumeCorrectionFactor = 0
         

@@ -155,4 +155,82 @@ final class DataProcessorTests: XCTestCase {
         XCTAssertEqual(result.last?.relativeTime ?? -1, duration, accuracy: 0.11)
     }
     
+    // MARK: Exeption Handling
+    
+    func test_edgeCase_emptyInput() {
+        let inputFrequencies: [Double] = []
+        let inputTimes: [Frequency] = []
+        
+        let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
+        
+        XCTAssertNoThrow(try dataProcessor.scaledInFrequencyAndTime(information: inputInformation))
+    }
+    func test_edgeCase_oneInput() {
+        let inputFrequencies: [Double] = [10]
+        let inputTimes: [Frequency] = [10]
+        
+        let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
+        
+        XCTAssertNoThrow(try dataProcessor.scaledInFrequencyAndTime(information: inputInformation))
+    }
+    
+    func test_edgeCase_inputZero() {
+        let inputFrequencies: [Double] = [0]
+        let inputTimes: [Frequency] = [0]
+        
+        let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
+        
+        XCTAssertNoThrow(try dataProcessor.scaledInFrequencyAndTime(information: inputInformation))
+    }
+    
+    func test_edgeCase_inputTimes_negative() {
+        let inputFrequencies: [Double] = [0]
+        let inputTimes: [Frequency] = [-10]
+        
+        let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
+        
+        XCTAssertNoThrow(try dataProcessor.scaledInFrequencyAndTime(information: inputInformation))
+    }
+    
+    func test_edgeCase_noTimeDifference() {
+        let inputFrequencies: [Double] = [1, 2]
+        let inputTimes: [Frequency] = [10, 10]
+        
+        let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
+        
+        XCTAssertNoThrow(try dataProcessor.scaledInFrequencyAndTime(information: inputInformation))
+    }
+    
+    func test_edgeCase_noFrequencyDifference() {
+        let inputFrequencies: [Double] = [1, 1]
+        let inputTimes: [Frequency] = [10, 20]
+        
+        let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
+        
+        XCTAssertNoThrow(try dataProcessor.scaledInFrequencyAndTime(information: inputInformation))
+    }
+    
+    func test_edgeCase_sameDataMultipleTimes() {
+        let inputFrequencies: [Double] = [1, 1, 2]
+        let inputTimes: [Frequency] = [10, 10, 20]
+        
+        let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
+        
+        XCTAssertNoThrow(try dataProcessor.scaledInFrequencyAndTime(information: inputInformation))
+    }
+    
+    func test_edgeCase_inputNotSorted() {
+        let inputFrequencies: [Double] = [10, 5, 20]
+        let inputTimes: [Frequency] = [10, 10, 20]
+        
+        let inputInformation = AudioInformation(relativeTimes: inputTimes, frequencies: inputFrequencies)
+        do {
+            let _ = try dataProcessor.scaledInFrequencyAndTime(information: inputInformation)
+        } catch let error as SanityCheckError {
+            XCTAssertEqual(error, SanityCheckError.negativeContentInTimestamps)
+        } catch {
+            XCTFail("Wrong type of error thrown.")
+        }
+    }
+    
 }

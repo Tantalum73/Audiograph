@@ -60,6 +60,7 @@ final class FrequencyGenerator: Sequence, IteratorProtocol {
             let segmentDeltaF = deltaFBetween(f1: f1, f2: f2, in: segmentDuration)
             
             let numberOfSamplesInSegment = Int(segmentDuration * sampleRate)
+            guard numberOfSamplesInSegment > 0 else { continue }
             
             for _ in 1...numberOfSamplesInSegment {
                 currentF += segmentDeltaF

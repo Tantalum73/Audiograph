@@ -245,8 +245,7 @@ final class DataProcessor {
         
         for (start, end) in zip(currentRelativeTimes, currentRelativeTimes.dropFirst()) {
             let segmentDuration = end - start
-            
-            guard segmentDuration > 0 else { throw SanityCheckError.negativeContentInTimestamps }
+            guard segmentDuration > 0 else { continue }
             
             if segmentDuration + comparisonPercision < minimumSegmentDuration {
                 suggestedPlayingDuration += minimumSegmentDuration

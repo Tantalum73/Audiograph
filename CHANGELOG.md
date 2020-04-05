@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 Audiograph adheres to [Semantic Versioning](http://semver.org/).
 
 ## Next Release:
+- Completion Utterance is now only read once, even though the autiograph was started multiple times.
 - Setting diagnostics output to false by default.
 - Now it's possible to pass in data that contains multiple elements at the same x-position (which translates into time).
 

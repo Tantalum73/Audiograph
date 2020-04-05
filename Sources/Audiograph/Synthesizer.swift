@@ -34,6 +34,7 @@ final class Synthesizer: NSObject {
     /// Delay between speaking the `completionIndicationUtterance` and the end of the Audiograph playback.
     private let completionSpeachDelay: Double = 0.5
     private var stoppedByUser = false
+    private var isPlaying = false
     
     override init() {
         super.init()
@@ -59,12 +60,11 @@ final class Synthesizer: NSObject {
     ///   - content: In time and frequency preprocessed audio information.
     func playScaledContent(_ content: AudioInformation) {
         stoppedByUser = false
+        
         let generator = SoundGenerator(sampleRate: Synthesizer.sampleRate, volumeCorrectionFactor: self.volumeCorrectionFactor)
         
         let finalBuffer = generator.sweep(content)
-        
-        
-        
+                
         // Play the sound on the main queue.
         DispatchQueue.main.async {
             self.configureBufferAndPlay(finalBuffer)
@@ -92,7 +92,10 @@ final class Synthesizer: NSObject {
             leftChannel?[index] = Float32(sample)
             rightChannel?[index] = Float32(sample)
         }
+        
+        isPlaying = true
         playerNode.scheduleBuffer(buffer) {
+            self.isPlaying = false
             Logger.shared.log(message: "Complete.")
             if !self.stoppedByUser {
                 self.readDelayedCompletionUtterance()
@@ -109,6 +112,9 @@ final class Synthesizer: NSObject {
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + completionSpeachDelay) {
+            guard !self.stoppedByUser else { return }
+            guard !self.isPlaying else { return }
+            
             self.speechSynthesizer.speak(self.completionUtterance)
         }
     }

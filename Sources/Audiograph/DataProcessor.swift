@@ -173,18 +173,21 @@ final class DataProcessor {
     }
     
     private func scaleCurrentFrequencies() {
-        var maxContainedFrequency = currentFrequencies.max() ?? 0
-        var minContainedFrequency = currentFrequencies.min() ?? 0
+        let maxContainedFrequency = currentFrequencies.max() ?? 0
+        let minContainedFrequency = currentFrequencies.min() ?? 0
         
-        if abs(maxContainedFrequency - minContainedFrequency) < 0.003 {
+        guard abs(maxContainedFrequency - minContainedFrequency) > 0.003 else {
             Logger.shared.log(message: "⚠️ The data does not contain frequencies that are distinct enough from each other!")
             
-            maxContainedFrequency = 1
-            minContainedFrequency = 0
+            // Fallback: use the medium frequency for all points
+            let midFrequency = (maxFrequency + minFrequency) / 2
+            
+            currentFrequencies = Array(repeating: midFrequency, count: currentFrequencies.count)
+            return
         }
         
-        currentFrequencies = currentFrequencies.map { frequency -> Frequency in
-            var newFrequency = (frequency - minContainedFrequency) * (maxFrequency - minFrequency) / (maxContainedFrequency - minContainedFrequency)
+        currentFrequencies = currentFrequencies.map { unscaledYValue -> Frequency in
+            var newFrequency = (unscaledYValue - minContainedFrequency) * (maxFrequency - minFrequency) / (maxContainedFrequency - minContainedFrequency)
             newFrequency += minFrequency
             return newFrequency
         }

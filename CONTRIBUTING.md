@@ -12,13 +12,9 @@ When you commit a change, please add a note to [CHANGELOG.md](CHANGELOG.md).
     1. Update  [CHANGELOG.md](CHANGELOG.md) (by including version number and date of release like `## 0.3.0 (02.02.2020):`)
    2. Update Xcode version number
    3. Update the Podspec version number
-2. Create release branch with name of version number (don't forget to push it)   
-2. Create a GitHub release
+3. Create release branch with name of version number (don't forget to push it)   
+4. Create a GitHub release
    1. Tag the release (like `1.0.5`)
    2. Paste notes from [CHANGELOG.md](CHANGELOG.md)
-3. Push the Podspec to CocoaPods
+5. Push the Podspec to CocoaPods
    1. `pod trunk push`
-4. Create Carthage binaries
-   1. `carthage build --no-skip-current`
-   2. `carthage archive Audiograph`
-   3. Add to the GitHub release

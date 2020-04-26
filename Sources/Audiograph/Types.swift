@@ -110,8 +110,8 @@ extension Samples {
         append(0)
     }
     
+    /// Finds the last transition from `<0` to `>= 0`. Elements after this index can be clipped.
     func numberOfElementsToRemoveAtEnd() -> Int {
-        // Find the last transition from <0 to >= 0
         guard let last = last else { return 0 }
         
         let latestNumberIsPositive = last > 0

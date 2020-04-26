@@ -1,7 +1,7 @@
 ![](https://github.com/Tantalum73/Audiograph/raw/master/Media//Logo.jpg)
 Audio-Feedback on Charts for visually impaired Users
 
-![GitHub tag (0.1.0)](https://img.shields.io/github/v/tag/Tantalum73/Audiograph)
+![GitHub tag (0.5.0)](https://img.shields.io/github/v/tag/Tantalum73/Audiograph)
 [![License](https://img.shields.io/github/license/Tantalum73/Audiograph)](LICENSE)
 
 **Please** provide feedback on the API, its integration, documentation and examples! :)
@@ -153,7 +153,7 @@ If you are already using [CocoaPods](http://cocoapods.org), just add 'Audiograph
 If you are already using [Carthage](https://github.com/Carthage/Carthage), just add to your `Cartfile`:
 
 ```ogdl
-github "Tantalum73/Audiograph" ~> 0.3
+github "Tantalum73/Audiograph" ~> 0.5
 ```
 
 Then run `carthage update` to build the framework and drag the built `Audiograph`.framework into your Xcode project.

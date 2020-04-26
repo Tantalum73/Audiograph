@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Audiograph'
-  s.version          = '0.4.0'
+  s.version          = '0.5.0'
   s.summary          = 'Audio-Feedback on Charts for visually impaired Users'
 
 # This description is used to generate tags and improve search results.

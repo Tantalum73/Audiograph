@@ -4,8 +4,6 @@ Audio-Feedback on Charts for visually impaired Users
 ![GitHub tag (0.5.0)](https://img.shields.io/github/v/tag/Tantalum73/Audiograph)
 [![License](https://img.shields.io/github/license/Tantalum73/Audiograph)](LICENSE)
 
-**Please** provide feedback on the API, its integration, documentation and examples! :)
-
 ## Background
 iOS 13 introduced an awesome way to provide stocks-charts to visually impaired users. Using a custom accessibility-rotor they are providing spoken chart analysis and an audiograph that renders the chart by using audio. That's the most accurate way of describing a chart that otherwise would only be available visually.  
 Take a look at the following video if you haven't tried it out yourself:
@@ -45,13 +43,13 @@ Now you have multiple options to play the Audiograph.
 
 The second option is only encouraged if you exactly know when to play the Audiograph. In any other cases, option one will work best for you.
 
-In order to make use of the system, start making your chart conform to `AudiographPlayable`.  
+In order to make use of the system, start making your chart conform to `AudiographProvidable`.  
 When doing so, the view can deliver data points by setting `graphContent` to the `[CGPoint]`s that are also used to draw the UI.
 
 When you configure the accessibility attributes, make sure to use `audiograph.createCustomAccessibilityAction(for: )` as a custom action:
 
 ```swift
-extension ChartView: AudiographPlayable {
+extension ChartView: AudiographProvidable {
     var graphContent: [CGPoint] {
         scaledPoints
     }
@@ -70,8 +68,6 @@ extension ChartView: AudiographPlayable {
 ```
 
 You can find examples on how to configure it in the file "ChatzChartView+Accessibility.swift"
-
-This project is still young. When you find a better way of playing Audiograph in response to accessibility events *please* update that file or [tell me](https://twitter.com/Klaarname/)!
 
 ## Configuration
 

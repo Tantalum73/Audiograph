@@ -193,6 +193,7 @@ public final class Audiograph {
     
     public func createCustomAccessibilityAction(for chartView: AudiographPlayable) -> UIAccessibilityCustomAction {
         self.chartView = chartView
+        setupLoseFocusNotificationObservation()
         return createCustomAccessibilityAction(using: chartView)
     }
     

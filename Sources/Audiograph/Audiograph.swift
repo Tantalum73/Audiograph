@@ -1,6 +1,6 @@
 //
 //  Audiograph.swift
-//  ChartAndSound
+//  Audiograph
 //
 //  Created by Andreas Neusüß on 26.10.19.
 //  Copyright © 2019 Anerma. All rights reserved.

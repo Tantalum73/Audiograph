@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 Audiograph adheres to [Semantic Versioning](http://semver.org/).
 
 ## Next Release:
+- When chart view loses accessibility focus playing audiograph is stopped.
 
 ## 0.5.0 (26.04.2020):
 - Covered edge case where the input data does not contain enough distint y-coordinates and a steady line is played.

@@ -23,7 +23,7 @@ public enum PlayingDuration {
 
 /// Provides a set of smoothing options to control this step of prepreocessing before an Audiograph is played.
 public enum SmoothingOption {
-    /// Do not use any smoothing. The input data are not altered.
+    /// Do not use any smoothing. The input data is not altered.
     case none
     /// Use the default smoothing setting.
     case `default`
@@ -170,7 +170,7 @@ public final class Audiograph {
     
     /// Creates an instance of Audiograph. The localizations passed in are used to improve the Audiograph experience.
     ///
-    /// Use a custom accessibility action retrieved from `Audiograph.createCustomAccessibilityAction(using:)` or `Audiograph.createCustomAccessibilityAction(for:)` in your view. This will play the Audiograph automatically.
+    /// Use a custom accessibility action retrieved from `Audiograph.createCustomAccessibilityAction(using:)` or `Audiograph.createCustomAccessibilityAction(for:)` in your view. Those will play the Audiograph automatically.
     ///
     ///Audiograph can also be started by calling `Audiograph.play(graphContent:completion:)` passing in the points that are used to draw the UI.
     /// - Parameter localizations: Information to fill the parts that are not providable by the library such as interaction indication phrases.
@@ -244,6 +244,7 @@ public final class Audiograph {
         }
     }
     
+    /// Stops the preprocessing or audio playback.
     public func stop() {
         NotificationCenter.default.post(name: .stopAudiograph, object: nil)
     }

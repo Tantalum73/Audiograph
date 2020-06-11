@@ -184,6 +184,13 @@ public final class Audiograph {
         NotificationCenter.default.removeObserver(self)
     }
     // MARK: - Public Functions
+    
+    
+    /// Creates an accessibility-action that can be applied to the chart-view. The action is configured with the given `AudiographLocalizations` and triggers the Audiograph when activated.
+    ///
+    /// Rather use `Audiograph.createCustomAccessibilityAction(for:)` when you have direct access to the view.
+    /// - Parameter dataProvider: The object that is able to deliver the chart data to the Audiograph-System.
+    /// - Returns: An action that can be used to populate `accessibilityCustomActions` of a view.
     public func createCustomAccessibilityAction(using dataProvider: AudiographProvider) -> UIAccessibilityCustomAction {
         chartDataProvider = dataProvider
         let title = localizationConfigurations.accessibilityIndicationTitle
@@ -191,6 +198,9 @@ public final class Audiograph {
         return UIAccessibilityCustomAction(name: title, target: self, selector: #selector(playAudiographUsingDataProvider))
     }
     
+    /// Creates an accessibility-action that can be applied to the view. The action is configured with the given `AudiographLocalizations` and triggers the Audiograph when activated.
+    /// - Parameter chartView: The view that can deliver chart data and will receive the created accessibility action.
+    /// - Returns: An action that can be used to populate `accessibilityCustomActions` of a view.
     public func createCustomAccessibilityAction(for chartView: AudiographPlayable) -> UIAccessibilityCustomAction {
         self.chartView = chartView
         setupLoseFocusNotificationObservation()

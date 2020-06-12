@@ -63,7 +63,9 @@ public typealias AudiographPlayingView = (UIView & AudiographProvider)
 
 //TODO: Document and update readme
 @objc(ANNAudiographLocalizationsProvider) public protocol AudiographLocalizationsProvidable {
+    /// A phrase that is read when the Audiograph completes. Should say something like "complete".
     var completionIndicationUtterance: String { get }
+    /// This title is used as custom accessibility action title. Should say something like "Play Audiograph".
     var accessibilityIndicationTitle: String { get }
 }
 

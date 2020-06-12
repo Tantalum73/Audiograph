@@ -7,8 +7,9 @@
 //
 
 #import "ObjCChartView.h"
+@import Audiograph;
 
-@interface ObjCChartView()
+@interface ObjCChartView() <ANNAudiographProvider, ANNAudiographLocalizationsProvider>
 @property (nonatomic) ANNAudiograph *audiograph;
 
 - (void)configureAccessibility;
@@ -18,7 +19,7 @@
 
 - (ANNAudiograph *)audiograph {
     if (!_audiograph) {
-        _audiograph = [[ANNAudiograph alloc] initWithLocalizations:AudiographLocalizations.defaultEnglish];
+        _audiograph = [[ANNAudiograph alloc] initWithLocalizations:self];
         
         // Perform different configurations like this:
         [_audiograph setExactSmoothing:0.3];
@@ -30,6 +31,14 @@
     }
     
     return _audiograph;
+}
+
+- (NSString *)completionIndicationUtterance {
+    return @"Complete";
+}
+
+- (NSString *)accessibilityIndicationTitle {
+    return @"Play Audiograph";
 }
 
 - (NSArray* )graphContent {

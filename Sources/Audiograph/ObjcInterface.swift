@@ -107,8 +107,8 @@ import UIKit
     ///
     ///Audiograph can also be started by calling `Audiograph.play(graphContent:completion:)` passing in the points that are used to draw the UI.
     /// - Parameter localizations: Information to fill the parts that are not providable by the library such as interaction indication phrases.
-    @objc public init(localizations: AudiographLocalizations) {
-        audiograph = Audiograph(localizations: localizations)
+    @objc public init(localizations: AudiographLocalizationsProvidable) {
+        audiograph = Audiograph(localizationProvider: localizations)
     }
     
     // MARK: - Public Functions

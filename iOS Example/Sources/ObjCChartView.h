@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@import Audiograph;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ObjCChartView : UIView <ANNAudiographProvider>
+@interface ObjCChartView : UIView
 
 @end
 

@@ -61,14 +61,20 @@ public typealias AudiographPlayingView = (UIView & AudiographProvider)
     var graphContent: [CGPoint] { get }
 }
 
+//TODO: Document and update readme
+@objc(ANNAudiographLocalizationsProvider) public protocol AudiographLocalizationsProvidable {
+    var completionIndicationUtterance: String { get }
+    var accessibilityIndicationTitle: String { get }
+}
+
 /// A wrapper around localized strings used during discovery and playback of the chart.
 ///
 /// Because Swift-PM projects can not contain .strings-files at the time of implementation, the phrase needs to be localized by the containing app.
-@objc public class AudiographLocalizations: NSObject {
+@objc(ANNAudiographLocalizations) public class AudiographLocalizations: NSObject, AudiographLocalizationsProvidable {
     /// A phrase that is read when the Audiograph completes. Should say something like "complete".
-    @objc let completionIndicationUtterance: String
+    @objc public let completionIndicationUtterance: String
     /// This title is used as custom accessibility action title. Should say something like "Play Audiograph".
-    @objc let accessibilityIndicationTitle: String
+    @objc public let accessibilityIndicationTitle: String
     
     @objc public init(completionIndicationUtterance: String, accessibilityIndicationTitle: String) {
         self.completionIndicationUtterance = completionIndicationUtterance
@@ -183,7 +189,7 @@ public final class Audiograph {
     private let preprocessingQueue = DispatchQueue(label: "de.anerma.Audiograph.PreprocessingQueue", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: .global())
     private let synthesizer = Synthesizer()
     private let dataProcessor = DataProcessor()
-    private let localizationConfigurations: AudiographLocalizations
+    private let localizationProvider: AudiographLocalizationsProvidable
     
     private weak var chartView: AudiographPlayingView?
     private weak var chartDataProvider: AudiographProvider?
@@ -194,10 +200,10 @@ public final class Audiograph {
     /// Use a custom accessibility action retrieved from `Audiograph.createCustomAccessibilityAction(using:)` or `Audiograph.createCustomAccessibilityAction(for:)` in your view. Those will play the Audiograph automatically.
     ///
     ///Audiograph can also be started by calling `Audiograph.play(graphContent:completion:)` passing in the points that are used to draw the UI.
-    /// - Parameter localizations: Information to fill the parts that are not providable by the library such as interaction indication phrases.
-    public init(localizations: AudiographLocalizations) {
-        self.localizationConfigurations = localizations
-        synthesizer.completionIndicationString = localizations.completionIndicationUtterance
+    /// - Parameter localizationProvider: Information to fill the parts that are not providable by the library such as interaction indication phrases.
+    public init(localizationProvider: AudiographLocalizationsProvidable) {
+        self.localizationProvider = localizationProvider
+        synthesizer.completionIndicationString = localizationProvider.completionIndicationUtterance
     }
     
     deinit {
@@ -214,7 +220,7 @@ public final class Audiograph {
     /// - Returns: An action that can be used to populate `accessibilityCustomActions` of a view.
     public func createCustomAccessibilityAction(using dataProvider: AudiographProvider) -> UIAccessibilityCustomAction {
         chartDataProvider = dataProvider
-        let title = localizationConfigurations.accessibilityIndicationTitle
+        let title = localizationProvider.accessibilityIndicationTitle
         
         return UIAccessibilityCustomAction(name: title, target: self, selector: #selector(playAudiographUsingDataProvider))
     }

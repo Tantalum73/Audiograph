@@ -14,6 +14,7 @@
 		A17B549C23AFEF60006BB0A4 /* GDAXI.csv in Resources */ = {isa = PBXBuildFile; fileRef = A17B549723AFEF60006BB0A4 /* GDAXI.csv */; };
 		A17B549D23AFEF60006BB0A4 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17B549823AFEF60006BB0A4 /* DataStore.swift */; };
 		A17B549F23AFEF67006BB0A4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17B549E23AFEF67006BB0A4 /* ViewController.swift */; };
+		A186723B2493D805000E7186 /* ObjCChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = A186723A2493D805000E7186 /* ObjCChartView.m */; };
 		A1B28D7E23D4A733005CB615 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A1B28D8023D4A733005CB615 /* Localizable.strings */; };
 		A1F0BCCD23C244B800795323 /* GraphLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F0BCCC23C244B800795323 /* GraphLayer.swift */; };
 		A1F0BCCF23C244C200795323 /* BaselineLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F0BCCE23C244C200795323 /* BaselineLayer.swift */; };
@@ -33,6 +34,8 @@
 		A17B549723AFEF60006BB0A4 /* GDAXI.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GDAXI.csv; sourceTree = "<group>"; };
 		A17B549823AFEF60006BB0A4 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		A17B549E23AFEF67006BB0A4 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A18672392493D805000E7186 /* ObjCChartView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjCChartView.h; sourceTree = "<group>"; };
+		A186723A2493D805000E7186 /* ObjCChartView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObjCChartView.m; sourceTree = "<group>"; };
 		A1B28D7B23D4A561005CB615 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		A1B28D7F23D4A733005CB615 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A1B28D8123D4A735005CB615 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -80,6 +83,8 @@
 			isa = PBXGroup;
 			children = (
 				A17B549623AFEF5F006BB0A4 /* ChartView.swift */,
+				A18672392493D805000E7186 /* ObjCChartView.h */,
+				A186723A2493D805000E7186 /* ObjCChartView.m */,
 				A17B549423AFEF5F006BB0A4 /* ChartView+Accessibility.swift */,
 				A1F0BCCC23C244B800795323 /* GraphLayer.swift */,
 				A1F0BCCE23C244C200795323 /* BaselineLayer.swift */,
@@ -141,6 +146,7 @@
 				TargetAttributes = {
 					D9A12771235699C600D136A5 = {
 						CreatedOnToolsVersion = 11.1;
+						LastSwiftMigration = 1150;
 					};
 				};
 			};
@@ -191,6 +197,7 @@
 				A17B549F23AFEF67006BB0A4 /* ViewController.swift in Sources */,
 				D9A12778235699C600D136A5 /* SceneDelegate.swift in Sources */,
 				A1F0BCCF23C244C200795323 /* BaselineLayer.swift in Sources */,
+				A186723B2493D805000E7186 /* ObjCChartView.m in Sources */,
 				A1F0BCD123C244DD00795323 /* ChartViewDataProcessor.swift in Sources */,
 				A17B549B23AFEF60006BB0A4 /* ChartView.swift in Sources */,
 			);
@@ -340,6 +347,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6XYLSQ4577;
 				INFOPLIST_FILE = Sources/Info.plist;
@@ -350,6 +358,7 @@
 				MARKETING_VERSION = 0.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.anerma.iOS-Example";
 				PRODUCT_NAME = "Audiograph Test";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -359,6 +368,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6XYLSQ4577;
 				INFOPLIST_FILE = Sources/Info.plist;

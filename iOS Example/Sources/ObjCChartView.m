@@ -27,13 +27,12 @@
         [_audiograph setExactPlayingDuration:2.0];
         [_audiograph setPlayingDuration:ANNPlayingDurationRecommended];
         
-        
     }
     
     return _audiograph;
 }
 
-- (NSArray* ) graphContent {
+- (NSArray* )graphContent {
     
     // Use your chart content here:
     return @[[NSValue valueWithCGPoint:CGPointMake(0, 0)], [NSValue valueWithCGPoint:CGPointMake(10, 20)], [NSValue valueWithCGPoint:CGPointMake(30, 10)]];

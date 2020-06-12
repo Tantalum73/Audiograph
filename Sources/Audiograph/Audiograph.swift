@@ -35,7 +35,7 @@ public enum SmoothingOption {
 public typealias AudiographPlayingView = (UIView & AudiographProvider)
 
 /// The conformant object can provide the correct set of chart data to the Audiograph.
-@objc public protocol AudiographProvider: AnyObject {
+@objc(ANNAudiographProvider) public protocol AudiographProvider: AnyObject {
     /// The points that will participate in the Audiograph. They most likely will be the same as used to draw the chart UI.
     var graphContent: [CGPoint] { get }
 }

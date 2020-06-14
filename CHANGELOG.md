@@ -4,6 +4,7 @@ Audiograph adheres to [Semantic Versioning](http://semver.org/).
 
 ## Next Release:
 - When chart view loses accessibility focus playing audiograph is stopped.
+- Added wrapper for interoperability with Objective-C.
 - Changed public initializer from `Audiograph(localizations: localizations)` to `Audiograph(localizationProvider: localizations)`
 - Changed `AudiographPlayable` to `AudiographProvidable` for an object to declare that it can provide chart data.
 - Introduced `AudiographPlayingView` as a view that can provide audiograph data.

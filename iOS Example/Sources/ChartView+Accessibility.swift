@@ -16,7 +16,7 @@ import Audiograph
  Solution using custom accessibility actions (user needs to chose the action to play Audiograph)
  **************
  */
-extension ChartView: AudiographProvider {
+extension ChartView: AudiographProvidable {
     var graphContent: [CGPoint] {
         scaledPoints
     }

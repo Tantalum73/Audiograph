@@ -4,6 +4,11 @@ Audiograph adheres to [Semantic Versioning](http://semver.org/).
 
 ## Next Release:
 - When chart view loses accessibility focus playing audiograph is stopped.
+- Changed public initializer from `Audiograph(localizations: localizations)` to `Audiograph(localizationProvider: localizations)`
+- Changed `AudiographPlayable` to `AudiographProvidable` for an object to declare that it can provide chart data.
+- Introduced `AudiographPlayingView` as a view that can provide audiograph data.
+- Introduced `AudiographLocalizationsProvidable` so that more object can be used to deliver localization context.
+- `AudiographLocalizations` is conforming to `AudiographLocalizationsProvidable` and can be used with custom localizations. It also is a class now to interoperate with Objective-C.
 
 ## 0.5.0 (26.04.2020):
 - Covered edge case where the input data does not contain enough distint y-coordinates and a steady line is played.

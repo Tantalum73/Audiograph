@@ -216,10 +216,10 @@ public final class Audiograph {
     // MARK: - Public Functions
     
     
-    /// Creates an accessibility-action that can be applied to the chart-view. The action is configured with the given `AudiographLocalizations` and triggers the Audiograph when activated.
+    /// Creates an accessibility-action that can be applied to any view. The action is configured with the given `AudiographLocalizations` and triggers the Audiograph when activated.
     ///
-    /// Rather use `Audiograph.createCustomAccessibilityAction(for:)` when you have direct access to the view.
-    /// - Parameter dataProvider: The object that is able to deliver the chart data to the Audiograph-System.
+    /// Rather use `Audiograph.createCustomAccessibilityAction(for:)` when you have direct access to the chart-view to make it known to Audiograph, too.
+    /// - Parameter dataProvider: The object that is able to deliver chart data to the Audiograph-System.
     /// - Returns: An action that can be used to populate `accessibilityCustomActions` of a view.
     public func createCustomAccessibilityAction(using dataProvider: AudiographProvidable) -> UIAccessibilityCustomAction {
         chartDataProvider = dataProvider
@@ -229,8 +229,10 @@ public final class Audiograph {
     }
     
     /// Creates an accessibility-action that can be applied to the view. The action is configured with the given `AudiographLocalizations` and triggers the Audiograph when activated.
-    /// - Parameter chartView: The view that can deliver chart data and will receive the created accessibility action.
-    /// - Returns: An action that can be used to populate `accessibilityCustomActions` of a view.
+    ///
+    /// Prefer this method over `Audiograph.createCustomAccessibilityAction(using:)` to make the chart-view known to Audiograph.
+    /// - Parameter chartView: The view that can deliver chart data. The returned action may be applied to that view.
+    /// - Returns: An action that can be used to populate `accessibilityCustomActions` of the chart-view.
     public func createCustomAccessibilityAction(for chartView: AudiographPlayingView) -> UIAccessibilityCustomAction {
         self.chartView = chartView
         setupLoseFocusNotificationObservation()
@@ -274,7 +276,7 @@ public final class Audiograph {
         }
     }
     
-    /// Stops the preprocessing or audio playback.
+    /// Stops the preprocessing and audio playback.
     public func stop() {
         NotificationCenter.default.post(name: .stopAudiograph, object: nil)
     }

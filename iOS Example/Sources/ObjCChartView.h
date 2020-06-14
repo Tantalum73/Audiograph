@@ -10,6 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+// Mock object for demonstrating Objective-C interface.
 @interface ObjCChartView : UIView
 
 @end

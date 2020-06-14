@@ -9,6 +9,8 @@
 #import "ObjCChartView.h"
 @import Audiograph;
 
+// Mock object for demonstrating Objective-C interface.
+
 @interface ObjCChartView() <ANNAudiographProvider, ANNAudiographLocalizationsProvider>
 @property (nonatomic) ANNAudiograph *audiograph;
 
@@ -21,7 +23,7 @@
     if (!_audiograph) {
         _audiograph = [[ANNAudiograph alloc] initWithLocalizations:self];
         
-        // Perform different configurations like this:
+        // Perform configurations like this:
         [_audiograph setExactSmoothing:0.3];
         [_audiograph setSmoothing:ANNSmoothingOptionDefault];
         

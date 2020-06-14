@@ -33,7 +33,7 @@ let audiograph: Audiograph = {
     let indication = NSLocalizedString("CHART_PLAY_AUDIOGRAPH_ACTION", comment: "The title of the accessibility action that starts playing the audiograph. 'Play audiograph.' for example.")
     let localizations = AudiographLocalizations(completionIndicationUtterance: completion, accessibilityIndicationTitle: indication)
 
-    return Audiograph(localizations: localizations)
+    return Audiograph(localizationProvider: localizations)
 }()
 ```
 
@@ -43,7 +43,7 @@ Now you have multiple options to play the Audiograph.
 
 The second option is only encouraged if you exactly know when to play the Audiograph. In any other cases, option one will work best for you.
 
-In order to make use of the system, start making your chart conform to `AudiographProvidable`.  
+In order to make use of the system, start making your chart-view conform to `AudiographProvidable`.  
 When doing so, the view can deliver data points by setting `graphContent` to the `[CGPoint]`s that are also used to draw the UI.
 
 When you configure the accessibility attributes, make sure to use `audiograph.createCustomAccessibilityAction(for: )` as a custom action:
@@ -66,6 +66,7 @@ extension ChartView: AudiographProvidable {
     }
 }
 ```
+When doing it like this, Audiograph and the returned action will take care of starting and stopping the playback. 
 
 You can find examples on how to configure it in the file "ChatzChartView+Accessibility.swift"
 

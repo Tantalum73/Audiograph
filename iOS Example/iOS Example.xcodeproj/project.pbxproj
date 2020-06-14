@@ -82,9 +82,9 @@
 		D9A12774235699C600D136A5 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				A17B549623AFEF5F006BB0A4 /* ChartView.swift */,
 				A18672392493D805000E7186 /* ObjCChartView.h */,
 				A186723A2493D805000E7186 /* ObjCChartView.m */,
+				A17B549623AFEF5F006BB0A4 /* ChartView.swift */,
 				A17B549423AFEF5F006BB0A4 /* ChartView+Accessibility.swift */,
 				A1F0BCCC23C244B800795323 /* GraphLayer.swift */,
 				A1F0BCCE23C244C200795323 /* BaselineLayer.swift */,

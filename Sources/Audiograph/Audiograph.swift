@@ -52,16 +52,17 @@ public enum SmoothingOption {
     case custom(Double)
 }
 
-/// This type is a view that is capable of playing an Audiograph. If so, it must provide the right data to the system.
-public typealias AudiographPlayingView = (UIView & AudiographProvider)
+/// This type is a view that is capable of playing an Audiograph. Therefore it must provide the right data to the system.
+public typealias AudiographPlayingView = (UIView & AudiographProvidable)
 
 /// The conformant object can provide the correct set of chart data to the Audiograph.
-@objc(ANNAudiographProvider) public protocol AudiographProvider: AnyObject {
+@objc(ANNAudiographProvider) public protocol AudiographProvidable: AnyObject {
     /// The points that will participate in the Audiograph. They most likely will be the same as used to draw the chart UI.
     var graphContent: [CGPoint] { get }
 }
 
-//TODO: Document and update readme
+
+/// Properties declared in this protocol are used to improve the localized experience of Audiograph.
 @objc(ANNAudiographLocalizationsProvider) public protocol AudiographLocalizationsProvidable {
     /// A phrase that is read when the Audiograph completes. Should say something like "complete".
     var completionIndicationUtterance: String { get }
@@ -194,7 +195,7 @@ public final class Audiograph {
     private let localizationProvider: AudiographLocalizationsProvidable
     
     private weak var chartView: AudiographPlayingView?
-    private weak var chartDataProvider: AudiographProvider?
+    private weak var chartDataProvider: AudiographProvidable?
 
     
     /// Creates an instance of Audiograph. The localizations passed in are used to improve the Audiograph experience.
@@ -220,7 +221,7 @@ public final class Audiograph {
     /// Rather use `Audiograph.createCustomAccessibilityAction(for:)` when you have direct access to the view.
     /// - Parameter dataProvider: The object that is able to deliver the chart data to the Audiograph-System.
     /// - Returns: An action that can be used to populate `accessibilityCustomActions` of a view.
-    public func createCustomAccessibilityAction(using dataProvider: AudiographProvider) -> UIAccessibilityCustomAction {
+    public func createCustomAccessibilityAction(using dataProvider: AudiographProvidable) -> UIAccessibilityCustomAction {
         chartDataProvider = dataProvider
         let title = localizationProvider.accessibilityIndicationTitle
         

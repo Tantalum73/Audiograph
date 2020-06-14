@@ -192,7 +192,8 @@ public final class Audiograph {
     private let preprocessingQueue = DispatchQueue(label: "de.anerma.Audiograph.PreprocessingQueue", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: .global())
     private let synthesizer = Synthesizer()
     private let dataProcessor = DataProcessor()
-    private let localizationProvider: AudiographLocalizationsProvidable
+    
+    private weak var localizationProvider: AudiographLocalizationsProvidable?
     
     private weak var chartView: AudiographPlayingView?
     private weak var chartDataProvider: AudiographProvidable?
@@ -223,7 +224,7 @@ public final class Audiograph {
     /// - Returns: An action that can be used to populate `accessibilityCustomActions` of a view.
     public func createCustomAccessibilityAction(using dataProvider: AudiographProvidable) -> UIAccessibilityCustomAction {
         chartDataProvider = dataProvider
-        let title = localizationProvider.accessibilityIndicationTitle
+        let title = (localizationProvider ?? AudiographLocalizations.defaultEnglish).accessibilityIndicationTitle
         
         return UIAccessibilityCustomAction(name: title, target: self, selector: #selector(playAudiographUsingDataProvider))
     }

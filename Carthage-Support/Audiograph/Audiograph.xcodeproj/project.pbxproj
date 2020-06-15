@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A18D2E7F2497AA5100759786 /* Audiograph.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D2E782497AA5100759786 /* Audiograph.swift */; };
-		A18D2E802497AA5100759786 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D2E792497AA5100759786 /* Logging.swift */; };
-		A18D2E812497AA5100759786 /* Synthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D2E7A2497AA5100759786 /* Synthesizer.swift */; };
-		A18D2E822497AA5100759786 /* DataProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D2E7B2497AA5100759786 /* DataProcessor.swift */; };
-		A18D2E832497AA5100759786 /* FrequencyGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D2E7C2497AA5100759786 /* FrequencyGenerator.swift */; };
-		A18D2E842497AA5100759786 /* SoundGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D2E7D2497AA5100759786 /* SoundGenerator.swift */; };
-		A18D2E852497AA5100759786 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D2E7E2497AA5100759786 /* Types.swift */; };
+		A1A1C2412497AECD008877B6 /* Audiograph.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A1C23A2497AECD008877B6 /* Audiograph.swift */; };
+		A1A1C2422497AECD008877B6 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A1C23B2497AECD008877B6 /* Logging.swift */; };
+		A1A1C2432497AECD008877B6 /* Synthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A1C23C2497AECD008877B6 /* Synthesizer.swift */; };
+		A1A1C2442497AECD008877B6 /* DataProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A1C23D2497AECD008877B6 /* DataProcessor.swift */; };
+		A1A1C2452497AECD008877B6 /* FrequencyGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A1C23E2497AECD008877B6 /* FrequencyGenerator.swift */; };
+		A1A1C2462497AECD008877B6 /* SoundGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A1C23F2497AECD008877B6 /* SoundGenerator.swift */; };
+		A1A1C2472497AECD008877B6 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A1C2402497AECD008877B6 /* Types.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,13 +30,13 @@
 
 /* Begin PBXFileReference section */
 		A13821AA2497A68B003699A6 /* libAudiograph.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAudiograph.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		A18D2E782497AA5100759786 /* Audiograph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audiograph.swift; sourceTree = "<group>"; };
-		A18D2E792497AA5100759786 /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
-		A18D2E7A2497AA5100759786 /* Synthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synthesizer.swift; sourceTree = "<group>"; };
-		A18D2E7B2497AA5100759786 /* DataProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProcessor.swift; sourceTree = "<group>"; };
-		A18D2E7C2497AA5100759786 /* FrequencyGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrequencyGenerator.swift; sourceTree = "<group>"; };
-		A18D2E7D2497AA5100759786 /* SoundGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundGenerator.swift; sourceTree = "<group>"; };
-		A18D2E7E2497AA5100759786 /* Types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
+		A1A1C23A2497AECD008877B6 /* Audiograph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audiograph.swift; sourceTree = "<group>"; };
+		A1A1C23B2497AECD008877B6 /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
+		A1A1C23C2497AECD008877B6 /* Synthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synthesizer.swift; sourceTree = "<group>"; };
+		A1A1C23D2497AECD008877B6 /* DataProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProcessor.swift; sourceTree = "<group>"; };
+		A1A1C23E2497AECD008877B6 /* FrequencyGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrequencyGenerator.swift; sourceTree = "<group>"; };
+		A1A1C23F2497AECD008877B6 /* SoundGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundGenerator.swift; sourceTree = "<group>"; };
+		A1A1C2402497AECD008877B6 /* Types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,24 +69,23 @@
 		A13821AC2497A68B003699A6 /* Audiograph */ = {
 			isa = PBXGroup;
 			children = (
-				A18D2E772497AA5100759786 /* Audiograph */,
+				A1A1C2392497AECD008877B6 /* Audiograph */,
 			);
 			path = Audiograph;
 			sourceTree = "<group>";
 		};
-		A18D2E772497AA5100759786 /* Audiograph */ = {
+		A1A1C2392497AECD008877B6 /* Audiograph */ = {
 			isa = PBXGroup;
 			children = (
-				A18D2E782497AA5100759786 /* Audiograph.swift */,
-				A18D2E792497AA5100759786 /* Logging.swift */,
-				A18D2E7A2497AA5100759786 /* Synthesizer.swift */,
-				A18D2E7B2497AA5100759786 /* DataProcessor.swift */,
-				A18D2E7C2497AA5100759786 /* FrequencyGenerator.swift */,
-				A18D2E7D2497AA5100759786 /* SoundGenerator.swift */,
-				A18D2E7E2497AA5100759786 /* Types.swift */,
+				A1A1C23A2497AECD008877B6 /* Audiograph.swift */,
+				A1A1C23B2497AECD008877B6 /* Logging.swift */,
+				A1A1C23C2497AECD008877B6 /* Synthesizer.swift */,
+				A1A1C23D2497AECD008877B6 /* DataProcessor.swift */,
+				A1A1C23E2497AECD008877B6 /* FrequencyGenerator.swift */,
+				A1A1C23F2497AECD008877B6 /* SoundGenerator.swift */,
+				A1A1C2402497AECD008877B6 /* Types.swift */,
 			);
-			name = Audiograph;
-			path = ../../../../../../Desktop/CocoaPodsTest/CarthageTest/Carthage/Checkouts/Audiograph/Sources/Audiograph;
+			path = Audiograph;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,13 +147,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A18D2E822497AA5100759786 /* DataProcessor.swift in Sources */,
-				A18D2E7F2497AA5100759786 /* Audiograph.swift in Sources */,
-				A18D2E802497AA5100759786 /* Logging.swift in Sources */,
-				A18D2E852497AA5100759786 /* Types.swift in Sources */,
-				A18D2E842497AA5100759786 /* SoundGenerator.swift in Sources */,
-				A18D2E832497AA5100759786 /* FrequencyGenerator.swift in Sources */,
-				A18D2E812497AA5100759786 /* Synthesizer.swift in Sources */,
+				A1A1C2442497AECD008877B6 /* DataProcessor.swift in Sources */,
+				A1A1C2412497AECD008877B6 /* Audiograph.swift in Sources */,
+				A1A1C2422497AECD008877B6 /* Logging.swift in Sources */,
+				A1A1C2472497AECD008877B6 /* Types.swift in Sources */,
+				A1A1C2462497AECD008877B6 /* SoundGenerator.swift in Sources */,
+				A1A1C2452497AECD008877B6 /* FrequencyGenerator.swift in Sources */,
+				A1A1C2432497AECD008877B6 /* Synthesizer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -211,7 +210,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -265,7 +264,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

@@ -7,29 +7,40 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A13821652497A4EC003699A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13821642497A4EC003699A6 /* AppDelegate.swift */; };
-		A13821672497A4EC003699A6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13821662497A4EC003699A6 /* SceneDelegate.swift */; };
-		A13821692497A4EC003699A6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13821682497A4EC003699A6 /* ViewController.swift */; };
-		A138216C2497A4EC003699A6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A138216A2497A4EC003699A6 /* Main.storyboard */; };
-		A138216E2497A4ED003699A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A138216D2497A4ED003699A6 /* Assets.xcassets */; };
-		A13821712497A4ED003699A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A138216F2497A4ED003699A6 /* LaunchScreen.storyboard */; };
-		A13821A02497A57C003699A6 /* Audiograph in Resources */ = {isa = PBXBuildFile; fileRef = A138219F2497A57C003699A6 /* Audiograph */; };
+		A18D2E622497A6DA00759786 /* DataProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D2E5B2497A6DA00759786 /* DataProcessor.swift */; };
+		A18D2E632497A6DA00759786 /* Audiograph.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D2E5C2497A6DA00759786 /* Audiograph.swift */; };
+		A18D2E642497A6DA00759786 /* SoundGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D2E5D2497A6DA00759786 /* SoundGenerator.swift */; };
+		A18D2E652497A6DA00759786 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D2E5E2497A6DA00759786 /* Types.swift */; };
+		A18D2E662497A6DA00759786 /* Synthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D2E5F2497A6DA00759786 /* Synthesizer.swift */; };
+		A18D2E672497A6DA00759786 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D2E602497A6DA00759786 /* Logging.swift */; };
+		A18D2E682497A6DA00759786 /* FrequencyGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D2E612497A6DA00759786 /* FrequencyGenerator.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		A13821A82497A68B003699A6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		A13821612497A4EC003699A6 /* Audiograph.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Audiograph.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A13821642497A4EC003699A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A13821662497A4EC003699A6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		A13821682497A4EC003699A6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		A138216B2497A4EC003699A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		A138216D2497A4ED003699A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A13821702497A4ED003699A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A13821722497A4ED003699A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A138219F2497A57C003699A6 /* Audiograph */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Audiograph; path = ../../Sources/Audiograph; sourceTree = "<group>"; };
+		A13821AA2497A68B003699A6 /* libAudiograph.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAudiograph.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A18D2E5B2497A6DA00759786 /* DataProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataProcessor.swift; path = ../../../Sources/Audiograph/DataProcessor.swift; sourceTree = "<group>"; };
+		A18D2E5C2497A6DA00759786 /* Audiograph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Audiograph.swift; path = ../../../Sources/Audiograph/Audiograph.swift; sourceTree = "<group>"; };
+		A18D2E5D2497A6DA00759786 /* SoundGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SoundGenerator.swift; path = ../../../Sources/Audiograph/SoundGenerator.swift; sourceTree = "<group>"; };
+		A18D2E5E2497A6DA00759786 /* Types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Types.swift; path = ../../../Sources/Audiograph/Types.swift; sourceTree = "<group>"; };
+		A18D2E5F2497A6DA00759786 /* Synthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Synthesizer.swift; path = ../../../Sources/Audiograph/Synthesizer.swift; sourceTree = "<group>"; };
+		A18D2E602497A6DA00759786 /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Logging.swift; path = ../../../Sources/Audiograph/Logging.swift; sourceTree = "<group>"; };
+		A18D2E612497A6DA00759786 /* FrequencyGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrequencyGenerator.swift; path = ../../../Sources/Audiograph/FrequencyGenerator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		A138215E2497A4EC003699A6 /* Frameworks */ = {
+		A13821A72497A68B003699A6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -39,33 +50,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A13821582497A4EC003699A6 = {
+		A13821A12497A68B003699A6 = {
 			isa = PBXGroup;
 			children = (
-				A13821632497A4EC003699A6 /* Audiograph */,
-				A13821622497A4EC003699A6 /* Products */,
+				A13821AC2497A68B003699A6 /* Audiograph */,
+				A13821AB2497A68B003699A6 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		A13821622497A4EC003699A6 /* Products */ = {
+		A13821AB2497A68B003699A6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A13821612497A4EC003699A6 /* Audiograph.app */,
+				A13821AA2497A68B003699A6 /* libAudiograph.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A13821632497A4EC003699A6 /* Audiograph */ = {
+		A13821AC2497A68B003699A6 /* Audiograph */ = {
 			isa = PBXGroup;
 			children = (
-				A13821642497A4EC003699A6 /* AppDelegate.swift */,
-				A13821662497A4EC003699A6 /* SceneDelegate.swift */,
-				A13821682497A4EC003699A6 /* ViewController.swift */,
-				A138216A2497A4EC003699A6 /* Main.storyboard */,
-				A138216D2497A4ED003699A6 /* Assets.xcassets */,
-				A138216F2497A4ED003699A6 /* LaunchScreen.storyboard */,
-				A13821722497A4ED003699A6 /* Info.plist */,
-				A138219F2497A57C003699A6 /* Audiograph */,
+				A18D2E5C2497A6DA00759786 /* Audiograph.swift */,
+				A18D2E5B2497A6DA00759786 /* DataProcessor.swift */,
+				A18D2E612497A6DA00759786 /* FrequencyGenerator.swift */,
+				A18D2E602497A6DA00759786 /* Logging.swift */,
+				A18D2E5D2497A6DA00759786 /* SoundGenerator.swift */,
+				A18D2E5F2497A6DA00759786 /* Synthesizer.swift */,
+				A18D2E5E2497A6DA00759786 /* Types.swift */,
 			);
 			path = Audiograph;
 			sourceTree = "<group>";
@@ -73,13 +83,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A13821602497A4EC003699A6 /* Audiograph */ = {
+		A13821A92497A68B003699A6 /* Audiograph */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A13821752497A4ED003699A6 /* Build configuration list for PBXNativeTarget "Audiograph" */;
+			buildConfigurationList = A13821B12497A68B003699A6 /* Build configuration list for PBXNativeTarget "Audiograph" */;
 			buildPhases = (
-				A138215D2497A4EC003699A6 /* Sources */,
-				A138215E2497A4EC003699A6 /* Frameworks */,
-				A138215F2497A4EC003699A6 /* Resources */,
+				A13821A62497A68B003699A6 /* Sources */,
+				A13821A72497A68B003699A6 /* Frameworks */,
+				A13821A82497A68B003699A6 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -87,25 +97,26 @@
 			);
 			name = Audiograph;
 			productName = Audiograph;
-			productReference = A13821612497A4EC003699A6 /* Audiograph.app */;
-			productType = "com.apple.product-type.application";
+			productReference = A13821AA2497A68B003699A6 /* libAudiograph.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		A13821592497A4EC003699A6 /* Project object */ = {
+		A13821A22497A68B003699A6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1150;
 				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = Anerma;
 				TargetAttributes = {
-					A13821602497A4EC003699A6 = {
+					A13821A92497A68B003699A6 = {
 						CreatedOnToolsVersion = 11.5;
+						LastSwiftMigration = 1150;
 					};
 				};
 			};
-			buildConfigurationList = A138215C2497A4EC003699A6 /* Build configuration list for PBXProject "Audiograph" */;
+			buildConfigurationList = A13821A52497A68B003699A6 /* Build configuration list for PBXProject "Audiograph" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -113,64 +124,35 @@
 				en,
 				Base,
 			);
-			mainGroup = A13821582497A4EC003699A6;
-			productRefGroup = A13821622497A4EC003699A6 /* Products */;
+			mainGroup = A13821A12497A68B003699A6;
+			productRefGroup = A13821AB2497A68B003699A6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A13821602497A4EC003699A6 /* Audiograph */,
+				A13821A92497A68B003699A6 /* Audiograph */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		A138215F2497A4EC003699A6 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A13821712497A4ED003699A6 /* LaunchScreen.storyboard in Resources */,
-				A138216E2497A4ED003699A6 /* Assets.xcassets in Resources */,
-				A13821A02497A57C003699A6 /* Audiograph in Resources */,
-				A138216C2497A4EC003699A6 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		A138215D2497A4EC003699A6 /* Sources */ = {
+		A13821A62497A68B003699A6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A13821692497A4EC003699A6 /* ViewController.swift in Sources */,
-				A13821652497A4EC003699A6 /* AppDelegate.swift in Sources */,
-				A13821672497A4EC003699A6 /* SceneDelegate.swift in Sources */,
+				A18D2E662497A6DA00759786 /* Synthesizer.swift in Sources */,
+				A18D2E672497A6DA00759786 /* Logging.swift in Sources */,
+				A18D2E642497A6DA00759786 /* SoundGenerator.swift in Sources */,
+				A18D2E622497A6DA00759786 /* DataProcessor.swift in Sources */,
+				A18D2E682497A6DA00759786 /* FrequencyGenerator.swift in Sources */,
+				A18D2E632497A6DA00759786 /* Audiograph.swift in Sources */,
+				A18D2E652497A6DA00759786 /* Types.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		A138216A2497A4EC003699A6 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A138216B2497A4EC003699A6 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		A138216F2497A4ED003699A6 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A13821702497A4ED003699A6 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		A13821732497A4ED003699A6 /* Debug */ = {
+		A13821AF2497A68B003699A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -230,7 +212,7 @@
 			};
 			name = Debug;
 		};
-		A13821742497A4ED003699A6 /* Release */ = {
+		A13821B02497A68B003699A6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -284,35 +266,38 @@
 			};
 			name = Release;
 		};
-		A13821762497A4ED003699A6 /* Debug */ = {
+		A13821B22497A68B003699A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Audiograph/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = de.anerma.Audiograph;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		A13821772497A4ED003699A6 /* Release */ = {
+		A13821B32497A68B003699A6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Audiograph/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = de.anerma.Audiograph;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -321,25 +306,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A138215C2497A4EC003699A6 /* Build configuration list for PBXProject "Audiograph" */ = {
+		A13821A52497A68B003699A6 /* Build configuration list for PBXProject "Audiograph" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A13821732497A4ED003699A6 /* Debug */,
-				A13821742497A4ED003699A6 /* Release */,
+				A13821AF2497A68B003699A6 /* Debug */,
+				A13821B02497A68B003699A6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A13821752497A4ED003699A6 /* Build configuration list for PBXNativeTarget "Audiograph" */ = {
+		A13821B12497A68B003699A6 /* Build configuration list for PBXNativeTarget "Audiograph" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A13821762497A4ED003699A6 /* Debug */,
-				A13821772497A4ED003699A6 /* Release */,
+				A13821B22497A68B003699A6 /* Debug */,
+				A13821B32497A68B003699A6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = A13821592497A4EC003699A6 /* Project object */;
+	rootObject = A13821A22497A68B003699A6 /* Project object */;
 }

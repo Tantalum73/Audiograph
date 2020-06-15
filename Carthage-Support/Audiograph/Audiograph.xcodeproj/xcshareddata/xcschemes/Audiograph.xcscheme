@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A13821602497A4EC003699A6"
-               BuildableName = "Audiograph.app"
+               BlueprintIdentifier = "A13821A92497A68B003699A6"
+               BuildableName = "libAudiograph.a"
                BlueprintName = "Audiograph"
                ReferencedContainer = "container:Audiograph.xcodeproj">
             </BuildableReference>
@@ -40,16 +40,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A13821602497A4EC003699A6"
-            BuildableName = "Audiograph.app"
-            BlueprintName = "Audiograph"
-            ReferencedContainer = "container:Audiograph.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -57,16 +47,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A13821602497A4EC003699A6"
-            BuildableName = "Audiograph.app"
+            BlueprintIdentifier = "A13821A92497A68B003699A6"
+            BuildableName = "libAudiograph.a"
             BlueprintName = "Audiograph"
             ReferencedContainer = "container:Audiograph.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

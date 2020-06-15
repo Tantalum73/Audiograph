@@ -7,40 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A1A1C2412497AECD008877B6 /* Audiograph.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A1C23A2497AECD008877B6 /* Audiograph.swift */; };
-		A1A1C2422497AECD008877B6 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A1C23B2497AECD008877B6 /* Logging.swift */; };
-		A1A1C2432497AECD008877B6 /* Synthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A1C23C2497AECD008877B6 /* Synthesizer.swift */; };
-		A1A1C2442497AECD008877B6 /* DataProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A1C23D2497AECD008877B6 /* DataProcessor.swift */; };
-		A1A1C2452497AECD008877B6 /* FrequencyGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A1C23E2497AECD008877B6 /* FrequencyGenerator.swift */; };
-		A1A1C2462497AECD008877B6 /* SoundGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A1C23F2497AECD008877B6 /* SoundGenerator.swift */; };
-		A1A1C2472497AECD008877B6 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A1C2402497AECD008877B6 /* Types.swift */; };
+		A157B4642497AFA0007F4578 /* Audiograph.h in Headers */ = {isa = PBXBuildFile; fileRef = A157B4622497AFA0007F4578 /* Audiograph.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A157B46B2497AFBA007F4578 /* Audiograph in Resources */ = {isa = PBXBuildFile; fileRef = A157B46A2497AFBA007F4578 /* Audiograph */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		A13821A82497A68B003699A6 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "include/$(PRODUCT_NAME)";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		A13821AA2497A68B003699A6 /* libAudiograph.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAudiograph.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		A1A1C23A2497AECD008877B6 /* Audiograph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audiograph.swift; sourceTree = "<group>"; };
-		A1A1C23B2497AECD008877B6 /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
-		A1A1C23C2497AECD008877B6 /* Synthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synthesizer.swift; sourceTree = "<group>"; };
-		A1A1C23D2497AECD008877B6 /* DataProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProcessor.swift; sourceTree = "<group>"; };
-		A1A1C23E2497AECD008877B6 /* FrequencyGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrequencyGenerator.swift; sourceTree = "<group>"; };
-		A1A1C23F2497AECD008877B6 /* SoundGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundGenerator.swift; sourceTree = "<group>"; };
-		A1A1C2402497AECD008877B6 /* Types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
+		A157B45F2497AFA0007F4578 /* Audiograph.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Audiograph.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A157B4622497AFA0007F4578 /* Audiograph.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Audiograph.h; sourceTree = "<group>"; };
+		A157B4632497AFA0007F4578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A157B46A2497AFBA007F4578 /* Audiograph */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Audiograph; path = ../../../Sources/Audiograph; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		A13821A72497A68B003699A6 /* Frameworks */ = {
+		A157B45C2497AFA0007F4578 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -50,54 +29,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A13821A12497A68B003699A6 = {
+		A157B4552497AFA0007F4578 = {
 			isa = PBXGroup;
 			children = (
-				A13821AC2497A68B003699A6 /* Audiograph */,
-				A13821AB2497A68B003699A6 /* Products */,
+				A157B4612497AFA0007F4578 /* Audiograph */,
+				A157B4602497AFA0007F4578 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		A13821AB2497A68B003699A6 /* Products */ = {
+		A157B4602497AFA0007F4578 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A13821AA2497A68B003699A6 /* libAudiograph.a */,
+				A157B45F2497AFA0007F4578 /* Audiograph.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A13821AC2497A68B003699A6 /* Audiograph */ = {
+		A157B4612497AFA0007F4578 /* Audiograph */ = {
 			isa = PBXGroup;
 			children = (
-				A1A1C2392497AECD008877B6 /* Audiograph */,
-			);
-			path = Audiograph;
-			sourceTree = "<group>";
-		};
-		A1A1C2392497AECD008877B6 /* Audiograph */ = {
-			isa = PBXGroup;
-			children = (
-				A1A1C23A2497AECD008877B6 /* Audiograph.swift */,
-				A1A1C23B2497AECD008877B6 /* Logging.swift */,
-				A1A1C23C2497AECD008877B6 /* Synthesizer.swift */,
-				A1A1C23D2497AECD008877B6 /* DataProcessor.swift */,
-				A1A1C23E2497AECD008877B6 /* FrequencyGenerator.swift */,
-				A1A1C23F2497AECD008877B6 /* SoundGenerator.swift */,
-				A1A1C2402497AECD008877B6 /* Types.swift */,
+				A157B4622497AFA0007F4578 /* Audiograph.h */,
+				A157B4632497AFA0007F4578 /* Info.plist */,
+				A157B46A2497AFBA007F4578 /* Audiograph */,
 			);
 			path = Audiograph;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		A157B45A2497AFA0007F4578 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A157B4642497AFA0007F4578 /* Audiograph.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
-		A13821A92497A68B003699A6 /* Audiograph */ = {
+		A157B45E2497AFA0007F4578 /* Audiograph */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A13821B12497A68B003699A6 /* Build configuration list for PBXNativeTarget "Audiograph" */;
+			buildConfigurationList = A157B4672497AFA0007F4578 /* Build configuration list for PBXNativeTarget "Audiograph" */;
 			buildPhases = (
-				A13821A62497A68B003699A6 /* Sources */,
-				A13821A72497A68B003699A6 /* Frameworks */,
-				A13821A82497A68B003699A6 /* CopyFiles */,
+				A157B45A2497AFA0007F4578 /* Headers */,
+				A157B45B2497AFA0007F4578 /* Sources */,
+				A157B45C2497AFA0007F4578 /* Frameworks */,
+				A157B45D2497AFA0007F4578 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -105,26 +84,24 @@
 			);
 			name = Audiograph;
 			productName = Audiograph;
-			productReference = A13821AA2497A68B003699A6 /* libAudiograph.a */;
-			productType = "com.apple.product-type.library.static";
+			productReference = A157B45F2497AFA0007F4578 /* Audiograph.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		A13821A22497A68B003699A6 /* Project object */ = {
+		A157B4562497AFA0007F4578 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1150;
 				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = Anerma;
 				TargetAttributes = {
-					A13821A92497A68B003699A6 = {
+					A157B45E2497AFA0007F4578 = {
 						CreatedOnToolsVersion = 11.5;
-						LastSwiftMigration = 1150;
 					};
 				};
 			};
-			buildConfigurationList = A13821A52497A68B003699A6 /* Build configuration list for PBXProject "Audiograph" */;
+			buildConfigurationList = A157B4592497AFA0007F4578 /* Build configuration list for PBXProject "Audiograph" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -132,35 +109,39 @@
 				en,
 				Base,
 			);
-			mainGroup = A13821A12497A68B003699A6;
-			productRefGroup = A13821AB2497A68B003699A6 /* Products */;
+			mainGroup = A157B4552497AFA0007F4578;
+			productRefGroup = A157B4602497AFA0007F4578 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A13821A92497A68B003699A6 /* Audiograph */,
+				A157B45E2497AFA0007F4578 /* Audiograph */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		A157B45D2497AFA0007F4578 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A157B46B2497AFBA007F4578 /* Audiograph in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
-		A13821A62497A68B003699A6 /* Sources */ = {
+		A157B45B2497AFA0007F4578 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1A1C2442497AECD008877B6 /* DataProcessor.swift in Sources */,
-				A1A1C2412497AECD008877B6 /* Audiograph.swift in Sources */,
-				A1A1C2422497AECD008877B6 /* Logging.swift in Sources */,
-				A1A1C2472497AECD008877B6 /* Types.swift in Sources */,
-				A1A1C2462497AECD008877B6 /* SoundGenerator.swift in Sources */,
-				A1A1C2452497AECD008877B6 /* FrequencyGenerator.swift in Sources */,
-				A1A1C2432497AECD008877B6 /* Synthesizer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		A13821AF2497A68B003699A6 /* Debug */ = {
+		A157B4652497AFA0007F4578 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -193,6 +174,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -210,17 +192,19 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		A13821B02497A68B003699A6 /* Release */ = {
+		A157B4662497AFA0007F4578 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -253,6 +237,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -264,47 +249,58 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
-		A13821B22497A68B003699A6 /* Debug */ = {
+		A157B4682497AFA0007F4578 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Audiograph/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = de.anerma.Audiograph;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		A13821B32497A68B003699A6 /* Release */ = {
+		A157B4692497AFA0007F4578 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Audiograph/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = de.anerma.Audiograph;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -314,25 +310,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A13821A52497A68B003699A6 /* Build configuration list for PBXProject "Audiograph" */ = {
+		A157B4592497AFA0007F4578 /* Build configuration list for PBXProject "Audiograph" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A13821AF2497A68B003699A6 /* Debug */,
-				A13821B02497A68B003699A6 /* Release */,
+				A157B4652497AFA0007F4578 /* Debug */,
+				A157B4662497AFA0007F4578 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A13821B12497A68B003699A6 /* Build configuration list for PBXNativeTarget "Audiograph" */ = {
+		A157B4672497AFA0007F4578 /* Build configuration list for PBXNativeTarget "Audiograph" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A13821B22497A68B003699A6 /* Debug */,
-				A13821B32497A68B003699A6 /* Release */,
+				A157B4682497AFA0007F4578 /* Debug */,
+				A157B4692497AFA0007F4578 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = A13821A22497A68B003699A6 /* Project object */;
+	rootObject = A157B4562497AFA0007F4578 /* Project object */;
 }

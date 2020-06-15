@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A13821A92497A68B003699A6"
-               BuildableName = "libAudiograph.a"
+               BlueprintIdentifier = "A157B45E2497AFA0007F4578"
+               BuildableName = "Audiograph.framework"
                BlueprintName = "Audiograph"
                ReferencedContainer = "container:Audiograph.xcodeproj">
             </BuildableReference>
@@ -50,8 +50,8 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A13821A92497A68B003699A6"
-            BuildableName = "libAudiograph.a"
+            BlueprintIdentifier = "A157B45E2497AFA0007F4578"
+            BuildableName = "Audiograph.framework"
             BlueprintName = "Audiograph"
             ReferencedContainer = "container:Audiograph.xcodeproj">
          </BuildableReference>

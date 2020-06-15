@@ -8,6 +8,7 @@ Audiograph adheres to [Semantic Versioning](http://semver.org/).
 - Changed `AudiographPlayable` to `AudiographProvidable` for an object to declare that it can provide chart data.
 - Introduced `AudiographPlayingView` as a view that can provide Audiograph data.
 - `AudiographLocalizations` is a class now in order to interoperate with Objective-C.
+- Improved support for carthage
 
 ## 0.5.0 (26.04.2020):
 - Covered edge case where the input data does not contain enough distint y-coordinates and a steady line is played.

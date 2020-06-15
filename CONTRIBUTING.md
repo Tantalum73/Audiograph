@@ -18,3 +18,5 @@ When you commit a change, please add a note to [CHANGELOG.md](CHANGELOG.md).
    2. Paste notes from [CHANGELOG.md](CHANGELOG.md)
 5. Push the Podspec to CocoaPods
    1. `pod trunk push`
+6. Don't break Carthage   
+   1. Check if Carthage-Support/Audiograph/ contains changes and is still building (files are only linked there)

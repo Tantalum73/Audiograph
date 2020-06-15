@@ -11,7 +11,7 @@
 
 // Mock object for demonstrating Objective-C interface.
 
-@interface ObjCChartView() <ANNAudiographProvider, ANNAudiographLocalizationsProvider>
+@interface ObjCChartView() <ANNAudiographProvider>
 @property (nonatomic) ANNAudiograph *audiograph;
 
 - (void)configureAccessibility;
@@ -21,7 +21,9 @@
 
 - (ANNAudiograph *)audiograph {
     if (!_audiograph) {
-        _audiograph = [[ANNAudiograph alloc] initWithLocalizations:self];
+        
+        ANNAudiographLocalizations *localizations = [[ANNAudiographLocalizations alloc] initWithCompletionIndicationUtterance:@"Complete" accessibilityIndicationTitle:@"Play Audiograph."];
+        _audiograph = [[ANNAudiograph alloc] initWithLocalizations:localizations];
         
         // Perform configurations like this:
         [_audiograph setExactSmoothing:0.3];

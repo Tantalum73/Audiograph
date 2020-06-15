@@ -37,14 +37,6 @@
     return _audiograph;
 }
 
-- (NSString *)completionIndicationUtterance {
-    return @"Complete";
-}
-
-- (NSString *)accessibilityIndicationTitle {
-    return @"Play Audiograph";
-}
-
 - (NSArray* )graphContent {
     
     // Use your chart content here:

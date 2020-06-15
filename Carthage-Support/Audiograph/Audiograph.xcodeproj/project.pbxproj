@@ -8,14 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		A157B4642497AFA0007F4578 /* Audiograph.h in Headers */ = {isa = PBXBuildFile; fileRef = A157B4622497AFA0007F4578 /* Audiograph.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A157B46B2497AFBA007F4578 /* Audiograph in Resources */ = {isa = PBXBuildFile; fileRef = A157B46A2497AFBA007F4578 /* Audiograph */; };
+		A157B4742497B048007F4578 /* Audiograph.swift in Sources */ = {isa = PBXBuildFile; fileRef = A157B46D2497B048007F4578 /* Audiograph.swift */; };
+		A157B4752497B048007F4578 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = A157B46E2497B048007F4578 /* Logging.swift */; };
+		A157B4762497B048007F4578 /* Synthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A157B46F2497B048007F4578 /* Synthesizer.swift */; };
+		A157B4772497B048007F4578 /* DataProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A157B4702497B048007F4578 /* DataProcessor.swift */; };
+		A157B4782497B048007F4578 /* FrequencyGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A157B4712497B048007F4578 /* FrequencyGenerator.swift */; };
+		A157B4792497B048007F4578 /* SoundGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A157B4722497B048007F4578 /* SoundGenerator.swift */; };
+		A157B47A2497B048007F4578 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = A157B4732497B048007F4578 /* Types.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A157B45F2497AFA0007F4578 /* Audiograph.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Audiograph.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A157B4622497AFA0007F4578 /* Audiograph.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Audiograph.h; sourceTree = "<group>"; };
 		A157B4632497AFA0007F4578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A157B46A2497AFBA007F4578 /* Audiograph */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Audiograph; path = ../../../Sources/Audiograph; sourceTree = "<group>"; };
+		A157B46D2497B048007F4578 /* Audiograph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audiograph.swift; sourceTree = "<group>"; };
+		A157B46E2497B048007F4578 /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
+		A157B46F2497B048007F4578 /* Synthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synthesizer.swift; sourceTree = "<group>"; };
+		A157B4702497B048007F4578 /* DataProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProcessor.swift; sourceTree = "<group>"; };
+		A157B4712497B048007F4578 /* FrequencyGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrequencyGenerator.swift; sourceTree = "<group>"; };
+		A157B4722497B048007F4578 /* SoundGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundGenerator.swift; sourceTree = "<group>"; };
+		A157B4732497B048007F4578 /* Types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,11 +60,26 @@
 		A157B4612497AFA0007F4578 /* Audiograph */ = {
 			isa = PBXGroup;
 			children = (
+				A157B46C2497B048007F4578 /* Audiograph */,
 				A157B4622497AFA0007F4578 /* Audiograph.h */,
 				A157B4632497AFA0007F4578 /* Info.plist */,
-				A157B46A2497AFBA007F4578 /* Audiograph */,
 			);
 			path = Audiograph;
+			sourceTree = "<group>";
+		};
+		A157B46C2497B048007F4578 /* Audiograph */ = {
+			isa = PBXGroup;
+			children = (
+				A157B46D2497B048007F4578 /* Audiograph.swift */,
+				A157B46E2497B048007F4578 /* Logging.swift */,
+				A157B46F2497B048007F4578 /* Synthesizer.swift */,
+				A157B4702497B048007F4578 /* DataProcessor.swift */,
+				A157B4712497B048007F4578 /* FrequencyGenerator.swift */,
+				A157B4722497B048007F4578 /* SoundGenerator.swift */,
+				A157B4732497B048007F4578 /* Types.swift */,
+			);
+			name = Audiograph;
+			path = ../../../Sources/Audiograph;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,7 +151,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A157B46B2497AFBA007F4578 /* Audiograph in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +161,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A157B4772497B048007F4578 /* DataProcessor.swift in Sources */,
+				A157B4742497B048007F4578 /* Audiograph.swift in Sources */,
+				A157B4752497B048007F4578 /* Logging.swift in Sources */,
+				A157B47A2497B048007F4578 /* Types.swift in Sources */,
+				A157B4792497B048007F4578 /* SoundGenerator.swift in Sources */,
+				A157B4782497B048007F4578 /* FrequencyGenerator.swift in Sources */,
+				A157B4762497B048007F4578 /* Synthesizer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

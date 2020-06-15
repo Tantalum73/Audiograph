@@ -1,9 +1,30 @@
 //
 //  Audiograph.swift
-//  ChartAndSound
+//  Audiograph
 //
 //  Created by Andreas Neusüß on 26.10.19.
-//  Copyright © 2019 Anerma. All rights reserved.
+//
+//  MIT License
+//
+//  Copyright (c) 2019 Andreas Neusüß
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
 //
 
 import Foundation
@@ -23,7 +44,7 @@ public enum PlayingDuration {
 
 /// Provides a set of smoothing options to control this step of prepreocessing before an Audiograph is played.
 public enum SmoothingOption {
-    /// Do not use any smoothing. The input data are not altered.
+    /// Do not use any smoothing. The input data is not altered.
     case none
     /// Use the default smoothing setting.
     case `default`
@@ -31,12 +52,11 @@ public enum SmoothingOption {
     case custom(Double)
 }
 
-/// Indicates that this view is capable of playing an Audiograph. If so, it must provide the right data to the system but stopping the playback when the view loses focus is done automatically.
-public protocol AudiographPlayable: UIView, AudiographProvider {
-}
+/// This type is a view that is capable of playing an Audiograph. Therefore it must provide the right data to the system.
+public typealias AudiographPlayingView = (UIView & AudiographProvidable)
 
 /// The conformant object can provide the correct set of chart data to the Audiograph.
-public protocol AudiographProvider: AnyObject {
+@objc(ANNAudiographProvider) public protocol AudiographProvidable: AnyObject {
     /// The points that will participate in the Audiograph. They most likely will be the same as used to draw the chart UI.
     var graphContent: [CGPoint] { get }
 }
@@ -44,18 +64,18 @@ public protocol AudiographProvider: AnyObject {
 /// A wrapper around localized strings used during discovery and playback of the chart.
 ///
 /// Because Swift-PM projects can not contain .strings-files at the time of implementation, the phrase needs to be localized by the containing app.
-public struct AudiographLocalizations {
+@objc(ANNAudiographLocalizations) public class AudiographLocalizations: NSObject {
     /// A phrase that is read when the Audiograph completes. Should say something like "complete".
-    let completionIndicationUtterance: String
+    @objc public let completionIndicationUtterance: String
     /// This title is used as custom accessibility action title. Should say something like "Play Audiograph".
-    let accessibilityIndicationTitle: String
+    @objc public let accessibilityIndicationTitle: String
     
-    public init(completionIndicationUtterance: String, accessibilityIndicationTitle: String) {
+    @objc public init(completionIndicationUtterance: String, accessibilityIndicationTitle: String) {
         self.completionIndicationUtterance = completionIndicationUtterance
         self.accessibilityIndicationTitle = accessibilityIndicationTitle
     }
     
-    public static let defaultEnglish = AudiographLocalizations(completionIndicationUtterance: "Complete", accessibilityIndicationTitle: "Play Audiograph")
+    @objc public static let defaultEnglish = AudiographLocalizations(completionIndicationUtterance: "Complete", accessibilityIndicationTitle: "Play Audiograph")
 }
 
 /**
@@ -163,36 +183,51 @@ public final class Audiograph {
     private let preprocessingQueue = DispatchQueue(label: "de.anerma.Audiograph.PreprocessingQueue", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: .global())
     private let synthesizer = Synthesizer()
     private let dataProcessor = DataProcessor()
-    private let localizationConfigurations: AudiographLocalizations
     
-    private weak var chartView: AudiographPlayable?
-    private weak var chartDataProvider: AudiographProvider?
+    private let localizations: AudiographLocalizations
+    
+    private weak var chartView: AudiographPlayingView?
+    private weak var chartDataProvider: AudiographProvidable?
 
     
     /// Creates an instance of Audiograph. The localizations passed in are used to improve the Audiograph experience.
     ///
-    /// Use a custom accessibility action retrieved from `Audiograph.createCustomAccessibilityAction(using:)` or `Audiograph.createCustomAccessibilityAction(for:)` in your view. This will play the Audiograph automatically.
+    /// Use a custom accessibility action retrieved from `Audiograph.createCustomAccessibilityAction(using:)` or `Audiograph.createCustomAccessibilityAction(for:)` in your view. Those will play the Audiograph automatically.
     ///
     ///Audiograph can also be started by calling `Audiograph.play(graphContent:completion:)` passing in the points that are used to draw the UI.
     /// - Parameter localizations: Information to fill the parts that are not providable by the library such as interaction indication phrases.
     public init(localizations: AudiographLocalizations) {
-        self.localizationConfigurations = localizations
+        self.localizations = localizations
         synthesizer.completionIndicationString = localizations.completionIndicationUtterance
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
+    
     // MARK: - Public Functions
-    public func createCustomAccessibilityAction(using dataProvider: AudiographProvider) -> UIAccessibilityCustomAction {
+    
+    
+    /// Creates an accessibility-action that can be applied to any view. The action is configured with the given `AudiographLocalizations` and triggers the Audiograph when activated.
+    ///
+    /// Rather use `Audiograph.createCustomAccessibilityAction(for:)` when you have direct access to the chart-view to make it known to Audiograph, too.
+    /// - Parameter dataProvider: The object that is able to deliver chart data to the Audiograph-System.
+    /// - Returns: An action that can be used to populate `accessibilityCustomActions` of a view.
+    public func createCustomAccessibilityAction(using dataProvider: AudiographProvidable) -> UIAccessibilityCustomAction {
         chartDataProvider = dataProvider
-        let title = localizationConfigurations.accessibilityIndicationTitle
+        let title = localizations.accessibilityIndicationTitle
         
         return UIAccessibilityCustomAction(name: title, target: self, selector: #selector(playAudiographUsingDataProvider))
     }
     
-    public func createCustomAccessibilityAction(for chartView: AudiographPlayable) -> UIAccessibilityCustomAction {
+    /// Creates an accessibility-action that can be applied to the view. The action is configured with the given `AudiographLocalizations` and triggers the Audiograph when activated.
+    ///
+    /// Prefer this method over `Audiograph.createCustomAccessibilityAction(using:)` to make the chart-view known to Audiograph.
+    /// - Parameter chartView: The view that can deliver chart data. The returned action may be applied to that view.
+    /// - Returns: An action that can be used to populate `accessibilityCustomActions` of the chart-view.
+    public func createCustomAccessibilityAction(for chartView: AudiographPlayingView) -> UIAccessibilityCustomAction {
         self.chartView = chartView
+        setupLoseFocusNotificationObservation()
         return createCustomAccessibilityAction(using: chartView)
     }
     
@@ -233,6 +268,7 @@ public final class Audiograph {
         }
     }
     
+    /// Stops the preprocessing and audio playback.
     public func stop() {
         NotificationCenter.default.post(name: .stopAudiograph, object: nil)
     }

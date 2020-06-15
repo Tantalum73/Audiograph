@@ -61,19 +61,10 @@ public typealias AudiographPlayingView = (UIView & AudiographProvidable)
     var graphContent: [CGPoint] { get }
 }
 
-
-/// Properties declared in this protocol are used to improve the localized experience of Audiograph.
-@objc(ANNAudiographLocalizationsProvider) public protocol AudiographLocalizationsProvidable {
-    /// A phrase that is read when the Audiograph completes. Should say something like "complete".
-    var completionIndicationUtterance: String { get }
-    /// This title is used as custom accessibility action title. Should say something like "Play Audiograph".
-    var accessibilityIndicationTitle: String { get }
-}
-
 /// A wrapper around localized strings used during discovery and playback of the chart.
 ///
 /// Because Swift-PM projects can not contain .strings-files at the time of implementation, the phrase needs to be localized by the containing app.
-@objc(ANNAudiographLocalizations) public class AudiographLocalizations: NSObject, AudiographLocalizationsProvidable {
+@objc(ANNAudiographLocalizations) public class AudiographLocalizations: NSObject {
     /// A phrase that is read when the Audiograph completes. Should say something like "complete".
     @objc public let completionIndicationUtterance: String
     /// This title is used as custom accessibility action title. Should say something like "Play Audiograph".
@@ -193,7 +184,7 @@ public final class Audiograph {
     private let synthesizer = Synthesizer()
     private let dataProcessor = DataProcessor()
     
-    private weak var localizationProvider: AudiographLocalizationsProvidable?
+    private let localizations: AudiographLocalizations
     
     private weak var chartView: AudiographPlayingView?
     private weak var chartDataProvider: AudiographProvidable?
@@ -205,9 +196,9 @@ public final class Audiograph {
     ///
     ///Audiograph can also be started by calling `Audiograph.play(graphContent:completion:)` passing in the points that are used to draw the UI.
     /// - Parameter localizationProvider: Information to fill the parts that are not providable by the library such as interaction indication phrases.
-    public init(localizationProvider: AudiographLocalizationsProvidable) {
-        self.localizationProvider = localizationProvider
-        synthesizer.completionIndicationString = localizationProvider.completionIndicationUtterance
+    public init(localizations: AudiographLocalizations) {
+        self.localizations = localizations
+        synthesizer.completionIndicationString = localizations.completionIndicationUtterance
     }
     
     deinit {
@@ -224,7 +215,7 @@ public final class Audiograph {
     /// - Returns: An action that can be used to populate `accessibilityCustomActions` of a view.
     public func createCustomAccessibilityAction(using dataProvider: AudiographProvidable) -> UIAccessibilityCustomAction {
         chartDataProvider = dataProvider
-        let title = (localizationProvider ?? AudiographLocalizations.defaultEnglish).accessibilityIndicationTitle
+        let title = localizations.accessibilityIndicationTitle
         
         return UIAccessibilityCustomAction(name: title, target: self, selector: #selector(playAudiographUsingDataProvider))
     }

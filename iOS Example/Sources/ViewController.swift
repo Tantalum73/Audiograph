@@ -34,7 +34,7 @@ class ViewController: UIViewController {
         // Being lazy is ok for showcase. The ChartView uses a more sophisticated language.
         let localizations = AudiographLocalizations.defaultEnglish
         
-        return Audiograph(localizationProvider: localizations)
+        return Audiograph(localizations: localizations)
     }()
     
     override func viewDidLoad() {

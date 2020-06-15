@@ -195,7 +195,7 @@ public final class Audiograph {
     /// Use a custom accessibility action retrieved from `Audiograph.createCustomAccessibilityAction(using:)` or `Audiograph.createCustomAccessibilityAction(for:)` in your view. Those will play the Audiograph automatically.
     ///
     ///Audiograph can also be started by calling `Audiograph.play(graphContent:completion:)` passing in the points that are used to draw the UI.
-    /// - Parameter localizationProvider: Information to fill the parts that are not providable by the library such as interaction indication phrases.
+    /// - Parameter localizations: Information to fill the parts that are not providable by the library such as interaction indication phrases.
     public init(localizations: AudiographLocalizations) {
         self.localizations = localizations
         synthesizer.completionIndicationString = localizations.completionIndicationUtterance

@@ -38,6 +38,7 @@ struct Logger {
     var isLoggingEnabled: Bool = false
     
     func log(message: String) {
+        guard isLoggingEnabled else { return }
         print(message)
     }
 }

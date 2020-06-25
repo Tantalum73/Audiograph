@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 Audiograph adheres to [Semantic Versioning](http://semver.org/).
 
 ## Next Release:
+
+## 1.0.0 (25.6.2020):
 - When chart view loses accessibility focus playing audiograph is stopped.
 - Added wrapper for interoperability with Objective-C.
 - Changed `AudiographPlayable` to `AudiographProvidable` for an object to declare that it can provide chart data.
